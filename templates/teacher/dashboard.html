@@ -1,194 +1,395 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>教师仪表盘 - 师生交互系统</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        <div class="container">
-            <a class="navbar-brand" href="/">师生交互系统</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/teacher/dashboard">仪表盘</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="questionsLink">问答管理</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="pollsLink">投票管理</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="discussionsLink">讨论管理</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="feedbackLink">反馈分析</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <span class="navbar-text me-3" id="userInfo">
-                        欢迎，<span id="userName">教师</span>
-                    </span>
-                    <button class="btn btn-outline-light" id="logoutBtn">退出</button>
-                </div>
-            </div>
-        </div>
-    </nav>
+{% extends 'base.html' %}
 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-info">
-                    <h4>演示模式通知</h4>
-                    <p>当前系统处于演示模式，数据不会被保存。这是一个功能展示页面，实际功能需要连接数据库才能使用。</p>
+{% block title %}教师仪表盘{% endblock %}
+
+{% block styles %}
+<style>
+    .dashboard-container {
+        padding: 20px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+        background-color: #f8f9fa;
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 500;
+    }
+    
+    .list-group-item {
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 10px 0;
+    }
+    
+    .list-group-item:last-child {
+        border-bottom: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid dashboard-container">
+    <h1 class="page-title">教师仪表盘</h1>
+    
+    <div id="messageContainer"></div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">互动管理</h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h5>待回答问题</h5>
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">请问下周考试范围是什么？</h6>
+                                    <small>昨天</small>
+                                </div>
+                                <p class="mb-1">想提前了解一下考试范围，方便复习。</p>
+                                <small>提问学生：张三</small>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-primary answer-question-btn" data-question-id="1">回答</button>
+                                    <button class="btn btn-sm btn-secondary ms-2 defer-question-btn" data-question-id="1">稍后回答</button>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">能否再讲解一遍今天的微积分公式推导？</h6>
+                                    <small>3小时前</small>
+                                </div>
+                                <p class="mb-1">课堂上没有完全理解，希望能再讲解一下。</p>
+                                <small>提问学生：李四</small>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-primary answer-question-btn" data-question-id="2">回答</button>
+                                    <button class="btn btn-sm btn-secondary ms-2 defer-question-btn" data-question-id="2">稍后回答</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0">创建新投票</h5>
+                            <button class="btn btn-success btn-sm" id="publish-poll-btn">发布投票</button>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="pollTitle" class="form-label">投票标题</label>
+                                    <input type="text" class="form-control" id="pollTitle" placeholder="输入投票问题">
+                                </div>
+                                <div id="pollOptions">
+                                    <div class="mb-2 d-flex">
+                                        <input type="text" class="form-control me-2" placeholder="选项1">
+                                        <button class="btn btn-outline-danger btn-sm option-delete-btn">删除</button>
+                                    </div>
+                                    <div class="mb-2 d-flex">
+                                        <input type="text" class="form-control me-2" placeholder="选项2">
+                                        <button class="btn btn-outline-danger btn-sm option-delete-btn">删除</button>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary btn-sm mt-2" id="add-option-btn">添加选项</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="row mt-4">
-            <div class="col-md-8">
-                <div class="card mb-4">
-                    <div class="card-header bg-success text-white">
-                        <h4 class="mb-0">互动管理</h4>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">课程统计</h4>
+                </div>
+                <div class="card-body">
+                    <h5>课程参与度</h5>
+                    <div class="list-group mb-3">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            学生提问数
+                            <span class="badge bg-primary rounded-pill">24</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            投票参与率
+                            <span class="badge bg-success rounded-pill">87%</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            讨论活跃度
+                            <span class="badge bg-info rounded-pill">中等</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            平均反馈评分
+                            <span class="badge bg-warning rounded-pill">4.2/5</span>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="mb-4">
-                            <h5>待回答问题</h5>
-                            <div class="list-group">
-                                <div class="list-group-item">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1">请问下周考试范围是什么？</h6>
-                                        <small>昨天</small>
-                                    </div>
-                                    <p class="mb-1">想提前了解一下考试范围，方便复习。</p>
-                                    <small>提问学生：张三</small>
-                                    <div class="mt-2">
-                                        <button class="btn btn-sm btn-primary">回答</button>
-                                        <button class="btn btn-sm btn-secondary ms-2">稍后回答</button>
-                                    </div>
-                                </div>
-                                <div class="list-group-item">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1">能否再讲解一遍今天的微积分公式推导？</h6>
-                                        <small>3小时前</small>
-                                    </div>
-                                    <p class="mb-1">课堂上没有完全理解，希望能再讲解一下。</p>
-                                    <small>提问学生：李四</small>
-                                    <div class="mt-2">
-                                        <button class="btn btn-sm btn-primary">回答</button>
-                                        <button class="btn btn-sm btn-secondary ms-2">稍后回答</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5 class="mb-0">创建新投票</h5>
-                                <button class="btn btn-success btn-sm">发布投票</button>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="mb-3">
-                                        <label for="pollTitle" class="form-label">投票标题</label>
-                                        <input type="text" class="form-control" id="pollTitle" placeholder="输入投票问题">
-                                    </div>
-                                    <div id="pollOptions">
-                                        <div class="mb-2 d-flex">
-                                            <input type="text" class="form-control me-2" placeholder="选项1">
-                                            <button class="btn btn-outline-danger btn-sm">删除</button>
-                                        </div>
-                                        <div class="mb-2 d-flex">
-                                            <input type="text" class="form-control me-2" placeholder="选项2">
-                                            <button class="btn btn-outline-danger btn-sm">删除</button>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline-primary btn-sm mt-2">添加选项</button>
-                                </div>
-                            </div>
-                        </div>
+                    
+                    <h5>课程进度</h5>
+                    <div class="progress mb-3">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div>
+                    </div>
+                    
+                    <h5>学生反馈概览</h5>
+                    <div class="alert alert-success">
+                        最近反馈总体积极，课程难度适中，互动性良好。
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">课程统计</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5>课程参与度</h5>
-                        <div class="list-group mb-3">
-                            <div class="list-group-item d-flex justify-content-between align-items-center">
-                                学生提问数
-                                <span class="badge bg-primary rounded-pill">24</span>
-                            </div>
-                            <div class="list-group-item d-flex justify-content-between align-items-center">
-                                投票参与率
-                                <span class="badge bg-success rounded-pill">87%</span>
-                            </div>
-                            <div class="list-group-item d-flex justify-content-between align-items-center">
-                                讨论活跃度
-                                <span class="badge bg-info rounded-pill">中等</span>
-                            </div>
-                            <div class="list-group-item d-flex justify-content-between align-items-center">
-                                平均反馈评分
-                                <span class="badge bg-warning rounded-pill">4.2/5</span>
-                            </div>
-                        </div>
-                        
-                        <h5>课程进度</h5>
-                        <div class="progress mb-3">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div>
-                        </div>
-                        
-                        <h5>学生反馈概览</h5>
-                        <div class="alert alert-success">
-                            最近反馈总体积极，课程难度适中，互动性良好。
-                        </div>
-                    </div>
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">快速操作</h4>
                 </div>
-                
-                <div class="card">
-                    <div class="card-header bg-info text-white">
-                        <h4 class="mb-0">快速操作</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-outline-primary">创建新讨论</button>
-                            <button class="btn btn-outline-success">发布课堂通知</button>
-                            <button class="btn btn-outline-warning">安排小测验</button>
-                            <button class="btn btn-outline-danger">查看学生名单</button>
-                        </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary" id="create-discussion-btn">创建新讨论</button>
+                        <button class="btn btn-outline-success" id="publish-notice-btn">发布课堂通知</button>
+                        <button class="btn btn-outline-warning" id="schedule-quiz-btn">安排小测验</button>
+                        <a href="/teacher/students" class="btn btn-outline-danger">查看学生名单</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.6.1/dist/socket.io.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 获取用户信息
-            const userInfo = JSON.parse(localStorage.getItem('currentUser') || '{}');
-            document.getElementById('userName').textContent = userInfo.name || '教师';
-            
-            // 退出登录
-            document.getElementById('logoutBtn').addEventListener('click', function() {
-                localStorage.removeItem('auth_token');
-                localStorage.removeItem('currentUser');
+<!-- 回答问题模态框 -->
+<div class="modal fade" id="answer-question-modal" tabindex="-1" aria-labelledby="answerQuestionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="answerQuestionModalLabel">回答问题</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="original-question mb-3">
+                    <label class="form-label">学生问题:</label>
+                    <p id="question-text" class="p-2 bg-light rounded">请问下周考试范围是什么？</p>
+                </div>
+                <div class="mb-3">
+                    <label for="answer-text" class="form-label">您的回答:</label>
+                    <textarea class="form-control" id="answer-text" rows="4" required></textarea>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="public-answer">
+                    <label class="form-check-label" for="public-answer">
+                        公开回答（所有学生可见）
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submit-answer-btn">提交回答</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 发布通知模态框 -->
+<div class="modal fade" id="publish-notice-modal" tabindex="-1" aria-labelledby="publishNoticeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="publishNoticeModalLabel">发布课堂通知</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="notice-title" class="form-label">通知标题:</label>
+                    <input type="text" class="form-control" id="notice-title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="notice-content" class="form-label">通知内容:</label>
+                    <textarea class="form-control" id="notice-content" rows="4" required></textarea>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="urgent-notice">
+                    <label class="form-check-label" for="urgent-notice">
+                        紧急通知
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submit-notice-btn">发布通知</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 角色验证 - 确保只有教师可以访问该页面
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            try {
+                const user = JSON.parse(userData);
+                if (user.role !== 'teacher') {
+                    console.error('非教师角色访问教师仪表盘');
+                    showMessage('您没有权限访问该页面，正在重定向...', 'error');
+                    setTimeout(() => {
+                        window.location.href = user.role === 'student' ? '/student/dashboard' : '/';
+                    }, 2000);
+                    return;
+                }
+                console.log('教师用户验证成功');
+            } catch (e) {
+                console.error('解析用户数据出错:', e);
+            }
+        } else {
+            console.error('未找到用户数据');
+            showMessage('请先登录', 'error');
+            setTimeout(() => {
                 window.location.href = '/';
+            }, 2000);
+            return;
+        }
+
+        console.log('教师仪表盘页面已加载');
+        
+        // 回答问题按钮事件
+        document.querySelectorAll('.answer-question-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const questionId = this.getAttribute('data-question-id');
+                document.getElementById('question-text').textContent = this.closest('.list-group-item').querySelector('.mb-1').textContent;
+                const answerModal = new bootstrap.Modal(document.getElementById('answer-question-modal'));
+                answerModal.show();
             });
         });
-    </script>
-</body>
-</html> 
+        
+        // 提交回答按钮事件
+        document.getElementById('submit-answer-btn').addEventListener('click', function() {
+            const answerText = document.getElementById('answer-text').value;
+            const isPublic = document.getElementById('public-answer').checked;
+            
+            if (!answerText) {
+                showMessage('请输入回答内容', 'error');
+                return;
+            }
+            
+            showMessage('回答已提交', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('answer-question-modal')).hide();
+            
+            // 清空表单
+            document.getElementById('answer-text').value = '';
+            document.getElementById('public-answer').checked = false;
+        });
+        
+        // 发布通知按钮事件
+        document.getElementById('publish-notice-btn').addEventListener('click', function() {
+            const noticeModal = new bootstrap.Modal(document.getElementById('publish-notice-modal'));
+            noticeModal.show();
+        });
+        
+        // 提交通知按钮事件
+        document.getElementById('submit-notice-btn').addEventListener('click', function() {
+            const noticeTitle = document.getElementById('notice-title').value;
+            const noticeContent = document.getElementById('notice-content').value;
+            const isUrgent = document.getElementById('urgent-notice').checked;
+            
+            if (!noticeTitle || !noticeContent) {
+                showMessage('请填写完整的通知信息', 'error');
+                return;
+            }
+            
+            showMessage('通知已发布', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('publish-notice-modal')).hide();
+            
+            // 清空表单
+            document.getElementById('notice-title').value = '';
+            document.getElementById('notice-content').value = '';
+            document.getElementById('urgent-notice').checked = false;
+        });
+        
+        // 添加投票选项按钮事件
+        document.getElementById('add-option-btn').addEventListener('click', function() {
+            const optionIndex = document.querySelectorAll('#pollOptions > div').length + 1;
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'mb-2 d-flex';
+            optionDiv.innerHTML = `
+                <input type="text" class="form-control me-2" placeholder="选项${optionIndex}">
+                <button class="btn btn-outline-danger btn-sm option-delete-btn">删除</button>
+            `;
+            document.getElementById('pollOptions').appendChild(optionDiv);
+            
+            // 给新添加的删除按钮绑定事件
+            optionDiv.querySelector('.option-delete-btn').addEventListener('click', function() {
+                this.closest('div').remove();
+            });
+        });
+        
+        // 删除投票选项按钮事件
+        document.querySelectorAll('.option-delete-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.closest('div').remove();
+            });
+        });
+        
+        // 发布投票按钮事件
+        document.getElementById('publish-poll-btn').addEventListener('click', function() {
+            const pollTitle = document.getElementById('pollTitle').value;
+            const options = Array.from(document.querySelectorAll('#pollOptions input')).map(input => input.value);
+            
+            if (!pollTitle) {
+                showMessage('请输入投票标题', 'error');
+                return;
+            }
+            
+            if (options.length < 2) {
+                showMessage('至少需要添加两个选项', 'error');
+                return;
+            }
+            
+            if (options.some(option => !option)) {
+                showMessage('请填写所有选项', 'error');
+                return;
+            }
+            
+            showMessage('投票已发布', 'success');
+            
+            // 清空表单
+            document.getElementById('pollTitle').value = '';
+            document.querySelectorAll('#pollOptions input').forEach(input => {
+                input.value = '';
+            });
+        });
+    });
+    
+    // 显示消息函数
+    function showMessage(message, type = 'info') {
+        const messageContainer = document.getElementById('messageContainer');
+        if (!messageContainer) {
+            console.error('未找到消息容器');
+            return;
+        }
+        
+        const alertClass = type === 'error' ? 'danger' : type;
+        
+        const alertHtml = `
+            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        
+        messageContainer.innerHTML = alertHtml;
+        
+        // 5秒后自动关闭
+        setTimeout(() => {
+            const alert = messageContainer.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+            }
+        }, 5000);
+    }
+</script>
+{% endblock %} 

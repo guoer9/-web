@@ -1,0 +1,712 @@
+{% extends 'base.html' %}
+
+{% block title %}学习数据分析{% endblock %}
+
+{% block styles %}
+<style>
+    .page-header {
+        padding: 20px 0;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 20px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+        background-color: #f8f9fa;
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 500;
+    }
+    
+    .stat-card {
+        text-align: center;
+        padding: 15px;
+        transition: transform 0.2s;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .stat-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .stat-value {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .stat-title {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    
+    .progress-label {
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+    
+    .tab-pane {
+        padding: 20px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>学习数据分析</h1>
+        <p class="text-muted">查看您的学习情况和进度分析</p>
+    </div>
+
+    <div id="messageContainer"></div>
+    
+    <div class="row">
+        <!-- 左侧筛选栏 -->
+        <div class="col-md-3">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-header">
+                    <i class="fas fa-filter"></i> 数据筛选
+                </div>
+                <div class="card-body">
+                    <form id="analyticsFilterForm">
+                        <div class="mb-3">
+                            <label for="timeRangeFilter" class="form-label">时间范围</label>
+                            <select class="form-select" id="timeRangeFilter">
+                                <option value="week">本周</option>
+                                <option value="month" selected>本月</option>
+                                <option value="semester">本学期</option>
+                                <option value="year">本学年</option>
+                                <option value="all">所有时间</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="courseFilter" class="form-label">课程</label>
+                            <select class="form-select" id="courseFilter">
+                                <option value="all" selected>所有课程</option>
+                                <option value="1">物理</option>
+                                <option value="2">数学</option>
+                                <option value="3">化学</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customDateRange" class="form-label">自定义日期范围</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control" id="startDate">
+                                <span class="input-group-text">至</span>
+                                <input type="date" class="form-control" id="endDate">
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-primary" id="applyFiltersBtn">应用筛选</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧数据展示 -->
+        <div class="col-md-9">
+            <!-- 统计卡片 -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-icon text-primary">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-value">42.5</div>
+                        <div class="stat-title">学习时长 (小时)</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-icon text-success">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="stat-value">85%</div>
+                        <div class="stat-title">作业完成率</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-icon text-warning">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-value">78.5</div>
+                        <div class="stat-title">平均成绩</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-icon text-info">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="stat-value">35</div>
+                        <div class="stat-title">课堂互动次数</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 数据视图选项卡 -->
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="analyticsTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">总览</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="progress-tab" data-bs-toggle="tab" data-bs-target="#progress" type="button" role="tab" aria-controls="progress" aria-selected="false">学习进度</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="grades-tab" data-bs-toggle="tab" data-bs-target="#grades" type="button" role="tab" aria-controls="grades" aria-selected="false">成绩分析</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="activity-tab" data-bs-toggle="tab" data-bs-target="#activity" type="button" role="tab" aria-controls="activity" aria-selected="false">活动记录</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="analyticsTabContent">
+                        <!-- 总览 -->
+                        <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                            <h4>学习概况</h4>
+                            <p>以下是您在本月的学习概况统计</p>
+                            
+                            <div class="chart-container mb-4">
+                                <canvas id="studyTimeChart"></canvas>
+                            </div>
+                            
+                            <h5 class="mt-4">学习时间分布</h5>
+                            <div class="chart-container">
+                                <canvas id="timeDistributionChart"></canvas>
+                            </div>
+                            
+                            <h5 class="mt-4">本月学习亮点</h5>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">最活跃日期</h6>
+                                            <p class="card-text">5月15日 (星期三)</p>
+                                            <p class="text-muted">学习时长: 4.5小时</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">成绩最高的科目</h6>
+                                            <p class="card-text">数学</p>
+                                            <p class="text-muted">平均分: 92分</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">最需要改进的科目</h6>
+                                            <p class="card-text">化学</p>
+                                            <p class="text-muted">平均分: 65分</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 学习进度 -->
+                        <div class="tab-pane fade" id="progress" role="tabpanel" aria-labelledby="progress-tab">
+                            <h4>课程学习进度</h4>
+                            <p>各科目的学习进度和完成情况</p>
+                            
+                            <div class="progress-item mb-4">
+                                <div class="progress-label">
+                                    <span>物理</span>
+                                    <span>75%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="text-muted small mt-1">共完成15个单元，剩余5个单元</div>
+                            </div>
+                            
+                            <div class="progress-item mb-4">
+                                <div class="progress-label">
+                                    <span>数学</span>
+                                    <span>90%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="text-muted small mt-1">共完成18个单元，剩余2个单元</div>
+                            </div>
+                            
+                            <div class="progress-item mb-4">
+                                <div class="progress-label">
+                                    <span>化学</span>
+                                    <span>60%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="text-muted small mt-1">共完成12个单元，剩余8个单元</div>
+                            </div>
+                            
+                            <h5 class="mt-4">近期学习任务</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>任务名称</th>
+                                            <th>课程</th>
+                                            <th>截止日期</th>
+                                            <th>状态</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>物理力学期中考试</td>
+                                            <td>物理</td>
+                                            <td>2023-05-20</td>
+                                            <td><span class="badge bg-warning">待完成</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>数学函数作业</td>
+                                            <td>数学</td>
+                                            <td>2023-05-18</td>
+                                            <td><span class="badge bg-success">已完成</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>化学实验报告</td>
+                                            <td>化学</td>
+                                            <td>2023-05-25</td>
+                                            <td><span class="badge bg-danger">已逾期</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- 成绩分析 -->
+                        <div class="tab-pane fade" id="grades" role="tabpanel" aria-labelledby="grades-tab">
+                            <h4>成绩趋势分析</h4>
+                            <p>查看您各科目的成绩变化趋势</p>
+                            
+                            <div class="chart-container mb-4">
+                                <canvas id="gradesChart"></canvas>
+                            </div>
+                            
+                            <h5 class="mt-4">成绩详情</h5>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>评估项目</th>
+                                            <th>课程</th>
+                                            <th>日期</th>
+                                            <th>分数</th>
+                                            <th>班级平均</th>
+                                            <th>百分位</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>物理期中考试</td>
+                                            <td>物理</td>
+                                            <td>2023-04-15</td>
+                                            <td>85</td>
+                                            <td>78</td>
+                                            <td>75%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>数学周测验</td>
+                                            <td>数学</td>
+                                            <td>2023-05-05</td>
+                                            <td>92</td>
+                                            <td>80</td>
+                                            <td>90%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>化学实验评估</td>
+                                            <td>化学</td>
+                                            <td>2023-05-10</td>
+                                            <td>65</td>
+                                            <td>72</td>
+                                            <td>40%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <h5 class="mt-4">学习建议</h5>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">化学科目</h6>
+                                    <p class="card-text">根据您的成绩分析，建议您增加化学科目的学习时间，特别是关注实验操作和理论知识的结合应用。您可以参考以下学习资源：</p>
+                                    <ul>
+                                        <li>《化学实验基础》参考资料</li>
+                                        <li>周三下午的化学辅导课</li>
+                                        <li>在线化学实验模拟平台</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 活动记录 -->
+                        <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+                            <h4>学习活动记录</h4>
+                            <p>您的学习活动历史记录</p>
+                            
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="搜索活动记录" id="activitySearch">
+                                <button class="btn btn-outline-secondary" type="button" id="searchActivityBtn">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="activity-timeline">
+                                <div class="activity-item d-flex mb-3">
+                                    <div class="activity-icon rounded-circle bg-primary text-white p-2 me-3" style="width: 40px; height: 40px; text-align: center;">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <div class="activity-content flex-grow-1">
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="mb-1">完成《数学函数》章节学习</h6>
+                                            <span class="text-muted small">今天 14:30</span>
+                                        </div>
+                                        <p class="mb-1 text-muted">完成时长: 1小时15分钟</p>
+                                        <div class="progress" style="height: 5px;">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item d-flex mb-3">
+                                    <div class="activity-icon rounded-circle bg-warning text-white p-2 me-3" style="width: 40px; height: 40px; text-align: center;">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </div>
+                                    <div class="activity-content flex-grow-1">
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="mb-1">提交数学作业</h6>
+                                            <span class="text-muted small">今天 11:15</span>
+                                        </div>
+                                        <p class="mb-1 text-muted">已提交《函数微积分习题》</p>
+                                        <span class="badge bg-success">成功</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item d-flex mb-3">
+                                    <div class="activity-icon rounded-circle bg-info text-white p-2 me-3" style="width: 40px; height: 40px; text-align: center;">
+                                        <i class="fas fa-question-circle"></i>
+                                    </div>
+                                    <div class="activity-content flex-grow-1">
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="mb-1">参与课堂提问</h6>
+                                            <span class="text-muted small">昨天 15:40</span>
+                                        </div>
+                                        <p class="mb-1 text-muted">在物理课上提问关于力学平衡的问题</p>
+                                        <span class="badge bg-primary">已回答</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item d-flex mb-3">
+                                    <div class="activity-icon rounded-circle bg-danger text-white p-2 me-3" style="width: 40px; height: 40px; text-align: center;">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                    <div class="activity-content flex-grow-1">
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="mb-1">参加周测验</h6>
+                                            <span class="text-muted small">2天前 10:00</span>
+                                        </div>
+                                        <p class="mb-1 text-muted">完成化学周测验，耗时45分钟</p>
+                                        <span class="badge bg-warning">分数: 65/100</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item d-flex mb-3">
+                                    <div class="activity-icon rounded-circle bg-success text-white p-2 me-3" style="width: 40px; height: 40px; text-align: center;">
+                                        <i class="fas fa-video"></i>
+                                    </div>
+                                    <div class="activity-content flex-grow-1">
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="mb-1">观看教学视频</h6>
+                                            <span class="text-muted small">3天前 19:20</span>
+                                        </div>
+                                        <p class="mb-1 text-muted">观看《物理力学基础》教学视频</p>
+                                        <p class="text-muted">完成度: 100%</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <nav aria-label="活动分页" class="mt-3">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">下一页</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化图表
+        initCharts();
+        
+        // 绑定筛选按钮事件
+        document.getElementById('applyFiltersBtn').addEventListener('click', function() {
+            const timeRange = document.getElementById('timeRangeFilter').value;
+            const course = document.getElementById('courseFilter').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            console.log('应用筛选:', { timeRange, course, startDate, endDate });
+            
+            // 显示消息
+            showMessage('筛选条件已应用', 'info');
+            
+            // 重新加载数据和图表
+            // refreshData();
+        });
+        
+        // 绑定搜索按钮事件
+        document.getElementById('searchActivityBtn').addEventListener('click', function() {
+            const searchTerm = document.getElementById('activitySearch').value.trim();
+            if (searchTerm) {
+                console.log('搜索活动:', searchTerm);
+                showMessage(`正在搜索: "${searchTerm}"`, 'info');
+            }
+        });
+        
+        // 搜索框回车事件
+        document.getElementById('activitySearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('searchActivityBtn').click();
+            }
+        });
+    });
+    
+    // 初始化图表
+    function initCharts() {
+        // 学习时间趋势图
+        const studyTimeCtx = document.getElementById('studyTimeChart').getContext('2d');
+        const studyTimeChart = new Chart(studyTimeCtx, {
+            type: 'line',
+            data: {
+                labels: ['5/1', '5/5', '5/10', '5/15', '5/20', '5/25', '5/30'],
+                datasets: [{
+                    label: '物理',
+                    data: [2, 3, 1.5, 4, 2.5, 3.5, 2],
+                    borderColor: 'rgba(13, 110, 253, 0.8)',
+                    backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }, {
+                    label: '数学',
+                    data: [1.5, 2, 3, 2.5, 4, 3, 3.5],
+                    borderColor: 'rgba(25, 135, 84, 0.8)',
+                    backgroundColor: 'rgba(25, 135, 84, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }, {
+                    label: '化学',
+                    data: [1, 0.5, 2, 1, 1.5, 2, 1],
+                    borderColor: 'rgba(220, 53, 69, 0.8)',
+                    backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '学习时长 (小时)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日期'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '学习时间趋势'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+        
+        // 时间分布饼图
+        const timeDistCtx = document.getElementById('timeDistributionChart').getContext('2d');
+        const timeDistChart = new Chart(timeDistCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['物理', '数学', '化学'],
+                datasets: [{
+                    data: [35, 45, 20],
+                    backgroundColor: [
+                        'rgba(13, 110, 253, 0.7)',
+                        'rgba(25, 135, 84, 0.7)',
+                        'rgba(220, 53, 69, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(13, 110, 253, 1)',
+                        'rgba(25, 135, 84, 1)',
+                        'rgba(220, 53, 69, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '学习时间分布 (%)'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.raw}%`;
+                            }
+                        }
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+        
+        // 成绩趋势图
+        const gradesCtx = document.getElementById('gradesChart').getContext('2d');
+        const gradesChart = new Chart(gradesCtx, {
+            type: 'line',
+            data: {
+                labels: ['3月', '4月', '5月'],
+                datasets: [{
+                    label: '物理',
+                    data: [75, 80, 85],
+                    borderColor: 'rgba(13, 110, 253, 0.8)',
+                    backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                    tension: 0.3,
+                    fill: false,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgba(13, 110, 253, 1)'
+                }, {
+                    label: '数学',
+                    data: [80, 85, 92],
+                    borderColor: 'rgba(25, 135, 84, 0.8)',
+                    backgroundColor: 'rgba(25, 135, 84, 0.1)',
+                    tension: 0.3,
+                    fill: false,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgba(25, 135, 84, 1)'
+                }, {
+                    label: '化学',
+                    data: [70, 68, 65],
+                    borderColor: 'rgba(220, 53, 69, 0.8)',
+                    backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                    tension: 0.3,
+                    fill: false,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgba(220, 53, 69, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 50,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: '分数'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '月份'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '成绩趋势'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+    
+    // 显示消息函数
+    function showMessage(message, type) {
+        const messageContainer = document.getElementById('messageContainer');
+        const alertClass = type === 'error' ? 'danger' : type;
+        
+        const alertHtml = `
+            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        
+        messageContainer.innerHTML = alertHtml;
+        
+        // 5秒后自动关闭
+        setTimeout(() => {
+            const alert = messageContainer.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+            }
+        }, 5000);
+    }
+</script>
+{% endblock %} 

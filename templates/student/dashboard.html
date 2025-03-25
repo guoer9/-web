@@ -1,185 +1,465 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学生仪表盘 - 师生交互系统</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="/">师生交互系统</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/student/dashboard">仪表盘</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="questionsLink">提问</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="pollsLink">投票</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="discussionsLink">讨论</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="feedbackLink">反馈</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <span class="navbar-text me-3" id="userInfo">
-                        欢迎，<span id="userName">学生</span>
-                    </span>
-                    <button class="btn btn-outline-light" id="logoutBtn">退出</button>
-                </div>
-            </div>
-        </div>
-    </nav>
+{% extends 'base.html' %}
 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-info">
-                    <h4>演示模式通知</h4>
-                    <p>当前系统处于演示模式，数据不会被保存。这是一个功能展示页面，实际功能需要连接数据库才能使用。</p>
+{% block title %}学生仪表盘{% endblock %}
+
+{% block styles %}
+<style>
+    .dashboard-container {
+        padding: 20px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+        background-color: #f8f9fa;
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 500;
+    }
+    
+    .question-item, .notification-item {
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .question-item:last-child, .notification-item:last-child {
+        border-bottom: none;
+    }
+    
+    .question-text, .notification-text {
+        margin-bottom: 5px;
+    }
+    
+    .question-meta, .notification-meta {
+        font-size: 0.85em;
+        color: #666;
+    }
+    
+    .badge {
+        padding: 4px 8px;
+        font-size: 0.75em;
+        font-weight: normal;
+    }
+    
+    .time-ago {
+        float: right;
+    }
+    
+    .answer {
+        background-color: #f9f9f9;
+        padding: 8px;
+        border-radius: 5px;
+        margin-top: 5px;
+    }
+    
+    .answer-label {
+        font-weight: bold;
+        font-size: 0.85em;
+        color: #333;
+    }
+    
+    .course-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .course-item:last-child {
+        border-bottom: none;
+    }
+    
+    .course-name {
+        font-weight: 500;
+    }
+    
+    .voting-options {
+        margin-top: 15px;
+    }
+    
+    .voting-option {
+        margin-bottom: 10px;
+    }
+    
+    .option-label {
+        font-weight: normal;
+        width: 100%;
+        cursor: pointer;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        transition: all 0.2s;
+    }
+    
+    .option-label:hover {
+        background-color: #f5f5f5;
+    }
+    
+    input[type="radio"]:checked + .option-label {
+        background-color: #e8f4ff;
+        border-color: #b8daff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid dashboard-container">
+    <h1 class="page-title">学生仪表盘</h1>
+    
+    <div id="messageContainer"></div>
+    
+    <div class="row">
+        <!-- 左侧栏 - 课堂互动 -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-comments"></i> 课堂互动
+                </div>
+                <div class="card-body">
+                    <!-- 最近问题 -->
+                    <h5 class="mb-3">最近问题</h5>
+                    <div class="recent-questions">
+                        <div class="question-item">
+                            <div class="question-text">如何理解牛顿三定律？</div>
+                            <div class="question-meta">
+                                <span class="badge badge-success">已回答</span>
+                                <span class="time-ago">3分钟前</span>
+                            </div>
+                            <div class="answer mt-2">
+                                <div class="answer-label">回答:</div>
+                                <div class="answer-text">请解释一下作用力与反作用力的概念，谢谢老师。</div>
+                            </div>
+                        </div>
+                        <div class="question-item">
+                            <div class="question-text">请问下周考试范围是什么？</div>
+                            <div class="question-meta">
+                                <span class="badge badge-secondary">待回答</span>
+                                <span class="time-ago">昨天</span>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary answer-btn mt-2" data-question-id="2">
+                                补充问题
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button id="ask-question-btn" class="btn btn-primary mt-4">
+                        <i class="fas fa-question-circle"></i> 提出问题
+                    </button>
+                    
+                    <!-- 活跃投票 -->
+                    <h5 class="mt-4 mb-3">活跃投票</h5>
+                    <div class="active-poll">
+                        <div class="poll-question">
+                            <strong>你最喜欢的学习方式是？</strong>
+                        </div>
+                        <form id="vote-form" data-poll-id="1">
+                            <div class="voting-options">
+                                <div class="voting-option">
+                                    <input type="radio" name="poll-option" id="option1" value="1" class="d-none">
+                                    <label for="option1" class="option-label">课堂讲解</label>
+                                </div>
+                                <div class="voting-option">
+                                    <input type="radio" name="poll-option" id="option2" value="2" class="d-none">
+                                    <label for="option2" class="option-label">小组讨论</label>
+                                </div>
+                                <div class="voting-option">
+                                    <input type="radio" name="poll-option" id="option3" value="3" class="d-none">
+                                    <label for="option3" class="option-label">实验操作</label>
+                                </div>
+                                <div class="voting-option">
+                                    <input type="radio" name="poll-option" id="option4" value="4" class="d-none">
+                                    <label for="option4" class="option-label">自主学习</label>
+                                </div>
+                            </div>
+                            <button type="submit" id="submit-vote" class="btn btn-primary mt-3">
+                                <i class="fas fa-vote-yea"></i> 提交投票
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="row mt-4">
-            <div class="col-md-8">
-                <div class="card mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">课堂互动</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-4">
-                            <h5>最近问题</h5>
-                            <div class="list-group">
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1">如何理解牛顿第三定律？</h6>
-                                        <small>3分钟前</small>
-                                    </div>
-                                    <p class="mb-1">请解释一下作用力与反作用力的概念，谢谢老师。</p>
-                                    <small class="text-success">已回答</small>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1">请问下周考试范围是什么？</h6>
-                                        <small>昨天</small>
-                                    </div>
-                                    <p class="mb-1">想提前了解一下考试范围，方便复习。</p>
-                                    <small class="text-danger">待回答</small>
-                                </a>
+        <!-- 右侧栏 - 课程信息和通知 -->
+        <div class="col-md-4">
+            <!-- 当前课程 -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <i class="fas fa-book"></i> 当前课程
+                </div>
+                <div class="card-body">
+                    <div class="current-courses">
+                        <div class="course-item">
+                            <div class="course-name">物理学</div>
+                            <div class="course-meta">
+                                <span class="badge badge-success">进行中</span>
                             </div>
                         </div>
-                        
-                        <div class="mb-4">
-                            <h5>活跃投票</h5>
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class="card-title">你最喜欢的学习方式是？</h6>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input" type="radio" name="pollOption" id="pollOption1">
-                                        <label class="form-check-label" for="pollOption1">
-                                            课堂讲解
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="pollOption" id="pollOption2">
-                                        <label class="form-check-label" for="pollOption2">
-                                            小组讨论
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="pollOption" id="pollOption3">
-                                        <label class="form-check-label" for="pollOption3">
-                                            实验操作
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="pollOption" id="pollOption4">
-                                        <label class="form-check-label" for="pollOption4">
-                                            自主学习
-                                        </label>
-                                    </div>
-                                    <button class="btn btn-primary btn-sm mt-3">提交投票</button>
-                                </div>
+                        <div class="course-item">
+                            <div class="course-name">数学</div>
+                            <div class="course-meta">
+                                <span class="badge badge-secondary">今天</span>
+                            </div>
+                        </div>
+                        <div class="course-item">
+                            <div class="course-name">化学</div>
+                            <div class="course-meta">
+                                <span class="badge badge-secondary">明天</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-header bg-success text-white">
-                        <h4 class="mb-0">课程信息</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5>当前课程</h5>
-                        <ul class="list-group mb-3">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                物理学
-                                <span class="badge bg-primary rounded-pill">进行中</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                数学
-                                <span class="badge bg-secondary rounded-pill">今天</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                化学
-                                <span class="badge bg-secondary rounded-pill">明天</span>
-                            </li>
-                        </ul>
-                        
-                        <h5>最近通知</h5>
-                        <div class="alert alert-warning">
-                            下周三物理课将进行小测验，请做好准备。
+            <!-- 最近通知 -->
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <i class="fas fa-bell"></i> 最近通知
+                </div>
+                <div class="card-body">
+                    <div class="recent-notifications">
+                        <div class="notification-item">
+                            <div class="notification-text">下周三物理课将进行小测验，请做好准备。</div>
+                            <div class="notification-meta">
+                                <span class="time-ago">刚刚</span>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-text">化学实验报告截止日期延长至下周五。</div>
+                            <div class="notification-meta">
+                                <span class="time-ago">2小时前</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="card">
-                    <div class="card-header bg-info text-white">
-                        <h4 class="mb-0">快速操作</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-outline-primary">提交新问题</button>
-                            <button class="btn btn-outline-success">参与讨论</button>
-                            <button class="btn btn-outline-warning">查看作业</button>
-                            <button class="btn btn-outline-danger">提交反馈</button>
-                        </div>
+            </div>
+            
+            <!-- 快捷操作 -->
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <i class="fas fa-bolt"></i> 快速操作
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button id="submit-feedback-btn" class="btn btn-outline-primary">
+                            <i class="fas fa-comment-alt"></i> 提交反馈
+                        </button>
+                        <a href="/student/news" class="btn btn-outline-secondary">
+                            <i class="fas fa-newspaper"></i> 查看教育新闻
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.6.1/dist/socket.io.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 获取用户信息
-            const userInfo = JSON.parse(localStorage.getItem('currentUser') || '{}');
-            document.getElementById('userName').textContent = userInfo.name || '学生';
-            
-            // 退出登录
-            document.getElementById('logoutBtn').addEventListener('click', function() {
-                localStorage.removeItem('auth_token');
-                localStorage.removeItem('currentUser');
+<!-- 提问模态框 -->
+<div class="modal fade" id="ask-question-modal" tabindex="-1" aria-labelledby="askQuestionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="askQuestionModalLabel">提出问题</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="question-form" data-course-id="1">
+                    <div class="mb-3">
+                        <label for="question-text" class="form-label">您的问题</label>
+                        <textarea class="form-control" id="question-text" rows="3" required></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="button" id="submit-question" class="btn btn-primary">提交问题</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 反馈模态框 -->
+<div class="modal fade" id="feedback-modal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalLabel">提交反馈</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="feedback-form" data-course-id="1">
+                    <div class="mb-3">
+                        <label for="feedback-text" class="form-label">您的反馈</label>
+                        <textarea class="form-control" id="feedback-text" rows="3" required></textarea>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="anonymous-feedback">
+                        <label class="form-check-label" for="anonymous-feedback">
+                            匿名反馈
+                        </label>
+                    </div>
+                    <div class="d-grid">
+                        <button type="button" id="submit-feedback" class="btn btn-primary">提交反馈</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 角色验证 - 确保只有学生可以访问该页面
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            try {
+                const user = JSON.parse(userData);
+                if (user.role !== 'student') {
+                    console.error('非学生角色访问学生仪表盘');
+                    showMessage('您没有权限访问该页面，正在重定向...', 'error');
+                    setTimeout(() => {
+                        window.location.href = user.role === 'teacher' ? '/teacher/dashboard' : '/';
+                    }, 2000);
+                    return;
+                }
+                console.log('学生用户验证成功');
+            } catch (e) {
+                console.error('解析用户数据出错:', e);
+            }
+        } else {
+            console.error('未找到用户数据');
+            showMessage('请先登录', 'error');
+            setTimeout(() => {
                 window.location.href = '/';
+            }, 2000);
+            return;
+        }
+
+        // 检查初始化
+        console.log('学生仪表盘页面已加载');
+        
+        // 检查投票表单是否存在并注册事件
+        const voteForm = document.getElementById('vote-form');
+        if (voteForm) {
+            console.log('投票表单已找到');
+            voteForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('投票表单提交');
+                submitVote();
             });
+        } else {
+            console.warn('未找到投票表单');
+        }
+
+        // 绑定提问按钮事件
+        const askQuestionBtn = document.getElementById('ask-question-btn');
+        if (askQuestionBtn) {
+            askQuestionBtn.addEventListener('click', function() {
+                const askQuestionModal = new bootstrap.Modal(document.getElementById('ask-question-modal'));
+                askQuestionModal.show();
+            });
+        }
+
+        // 绑定反馈按钮事件
+        const feedbackBtn = document.getElementById('submit-feedback-btn');
+        if (feedbackBtn) {
+            feedbackBtn.addEventListener('click', function() {
+                const feedbackModal = new bootstrap.Modal(document.getElementById('feedback-modal'));
+                feedbackModal.show();
+            });
+        }
+
+        // 提交问题
+        const submitQuestionBtn = document.getElementById('submit-question');
+        if (submitQuestionBtn) {
+            submitQuestionBtn.addEventListener('click', function() {
+                const questionText = document.getElementById('question-text').value;
+                if (!questionText) {
+                    showMessage('请输入问题内容', 'error');
+                    return;
+                }
+                
+                showMessage('问题已提交', 'success');
+                bootstrap.Modal.getInstance(document.getElementById('ask-question-modal')).hide();
+                // 清空表单
+                document.getElementById('question-text').value = '';
+            });
+        }
+
+        // 提交反馈
+        const submitFeedbackBtn = document.getElementById('submit-feedback');
+        if (submitFeedbackBtn) {
+            submitFeedbackBtn.addEventListener('click', function() {
+                const feedbackText = document.getElementById('feedback-text').value;
+                if (!feedbackText) {
+                    showMessage('请输入反馈内容', 'error');
+                    return;
+                }
+                
+                showMessage('反馈已提交', 'success');
+                bootstrap.Modal.getInstance(document.getElementById('feedback-modal')).hide();
+                // 清空表单
+                document.getElementById('feedback-text').value = '';
+            });
+        }
+    });
+
+    // 提交投票函数
+    function submitVote() {
+        const selectedOption = document.querySelector('input[name="poll-option"]:checked');
+        if (!selectedOption) {
+            console.log('未选择选项');
+            showMessage('请选择一个选项', 'error');
+            return;
+        }
+        
+        const optionId = selectedOption.value;
+        const pollId = document.getElementById('vote-form').getAttribute('data-poll-id');
+        
+        console.log(`提交投票: 投票ID=${pollId}, 选项ID=${optionId}`);
+        
+        // 这里模拟API调用成功
+        showMessage('投票已提交', 'success');
+        
+        // 禁用投票表单，防止重复提交
+        document.querySelectorAll('input[name="poll-option"]').forEach(input => {
+            input.disabled = true;
         });
-    </script>
-</body>
-</html> 
+        document.getElementById('submit-vote').disabled = true;
+    }
+
+    // 显示消息函数
+    function showMessage(message, type = 'info') {
+        const messageContainer = document.getElementById('messageContainer');
+        if (!messageContainer) {
+            console.error('未找到消息容器');
+            return;
+        }
+        
+        const alertClass = type === 'error' ? 'danger' : type;
+        
+        const alertHtml = `
+            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        
+        messageContainer.innerHTML = alertHtml;
+        
+        // 5秒后自动关闭
+        setTimeout(() => {
+            const alert = messageContainer.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+            }
+        }, 5000);
+    }
+</script>
+{% endblock %} 

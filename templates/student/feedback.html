@@ -1,0 +1,492 @@
+{% extends 'base.html' %}
+
+{% block title %}课程反馈{% endblock %}
+
+{% block styles %}
+<style>
+    .page-header {
+        padding: 20px 0;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 20px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+        background-color: #f8f9fa;
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 500;
+    }
+    
+    .feedback-item {
+        padding: 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .feedback-item:last-child {
+        border-bottom: none;
+    }
+    
+    .feedback-text {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+    
+    .meta-info {
+        color: #6c757d;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+    
+    .badge {
+        padding: 5px 10px;
+        font-size: 0.75em;
+    }
+    
+    .response {
+        background-color: #f0fff0;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    
+    .rating-stars {
+        color: #ffc107;
+        font-size: 1.2em;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 50px 0;
+        color: #6c757d;
+    }
+    
+    .empty-state-icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+        color: #dee2e6;
+    }
+    
+    .filter-section {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>课程反馈</h1>
+        <p class="text-muted">提供对课程的反馈和建议，帮助教师改进教学质量</p>
+    </div>
+
+    <div id="messageContainer"></div>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-header">
+                    <i class="fas fa-filter"></i> 筛选选项
+                </div>
+                <div class="card-body">
+                    <form id="filterForm">
+                        <div class="mb-3">
+                            <label for="courseFilter" class="form-label">课程</label>
+                            <select class="form-select" id="courseFilter">
+                                <option value="all">所有课程</option>
+                                <option value="1">物理</option>
+                                <option value="2">数学</option>
+                                <option value="3">化学</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="statusFilter" class="form-label">状态</label>
+                            <select class="form-select" id="statusFilter">
+                                <option value="all">所有状态</option>
+                                <option value="pending">待处理</option>
+                                <option value="processed">已处理</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="typeFilter" class="form-label">反馈类型</label>
+                            <select class="form-select" id="typeFilter">
+                                <option value="all">所有类型</option>
+                                <option value="teaching">教学方法</option>
+                                <option value="content">课程内容</option>
+                                <option value="assignment">作业和考试</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-primary" id="applyFilters">应用筛选</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar"></i> 反馈统计
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>总反馈数:</span>
+                        <span>8</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>已处理:</span>
+                        <span>5</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>待处理:</span>
+                        <span>3</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>平均回复时间:</span>
+                        <span>2天</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>我的反馈历史</h3>
+                <button class="btn btn-primary" id="newFeedbackBtn">
+                    <i class="fas fa-plus"></i> 提交新反馈
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-body" id="feedbackList">
+                    <div class="feedback-item">
+                        <div class="feedback-text">课程进度有点快，希望能多一些练习时间。</div>
+                        <div class="meta-info">
+                            <span class="badge bg-success">已处理</span>
+                            <span class="course-info">数学课 | 教学方法 | 2023-05-07</span>
+                        </div>
+                        <div class="response">
+                            <div class="d-flex justify-content-between">
+                                <strong>教师回复:</strong>
+                                <span class="text-muted">2023-05-08</span>
+                            </div>
+                            <p class="mb-0">感谢您的反馈！我会在后续课程中适当放慢节奏，并增加一些课堂练习时间。下周一的课程我们将安排更多的实践环节，希望能够帮助您更好地掌握知识点。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-item">
+                        <div class="feedback-text">希望能提供更多的实践案例，帮助理解理论知识。</div>
+                        <div class="meta-info">
+                            <span class="badge bg-secondary">待处理</span>
+                            <span class="course-info">物理课 | 课程内容 | 2023-05-09</span>
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-item">
+                        <div class="feedback-text">课后作业量偏大，希望能适当减少或调整难度。</div>
+                        <div class="meta-info">
+                            <span class="badge bg-success">已处理</span>
+                            <span class="course-info">化学课 | 作业和考试 | 2023-05-06</span>
+                        </div>
+                        <div class="response">
+                            <div class="d-flex justify-content-between">
+                                <strong>教师回复:</strong>
+                                <span class="text-muted">2023-05-07</span>
+                            </div>
+                            <p class="mb-0">我理解您的顾虑。我会重新评估作业量和难度，确保它们与课程进度和学习目标相匹配。从下周开始，我们将调整作业布置，以更好地平衡学习负担。</p>
+                        </div>
+                        <div class="mt-3">
+                            <label>对回复的评价:</label>
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav aria-label="反馈分页" class="mt-3">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">下一页</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- 提交反馈模态框 -->
+<div class="modal fade" id="newFeedbackModal" tabindex="-1" aria-labelledby="newFeedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newFeedbackModalLabel">提交新反馈</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newFeedbackForm">
+                    <div class="mb-3">
+                        <label for="feedbackCourse" class="form-label">选择课程 <span class="text-danger">*</span></label>
+                        <select class="form-select" id="feedbackCourse" required>
+                            <option value="">请选择课程</option>
+                            <option value="1">物理</option>
+                            <option value="2">数学</option>
+                            <option value="3">化学</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="feedbackType" class="form-label">反馈类型 <span class="text-danger">*</span></label>
+                        <select class="form-select" id="feedbackType" required>
+                            <option value="">请选择反馈类型</option>
+                            <option value="teaching">教学方法</option>
+                            <option value="content">课程内容</option>
+                            <option value="assignment">作业和考试</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="feedbackTitle" class="form-label">标题 <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="feedbackTitle" placeholder="简要描述您的反馈" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="feedbackContent" class="form-label">详细内容 <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="feedbackContent" rows="5" placeholder="请详细描述您的反馈内容，包括具体问题和建议" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="feedbackPriority" class="form-label">优先级</label>
+                        <select class="form-select" id="feedbackPriority">
+                            <option value="normal">普通</option>
+                            <option value="high">重要</option>
+                            <option value="urgent">紧急</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="anonymousFeedback">
+                        <label class="form-check-label" for="anonymousFeedback">匿名提交</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submitFeedbackBtn">提交反馈</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 评价回复模态框 -->
+<div class="modal fade" id="rateResponseModal" tabindex="-1" aria-labelledby="rateResponseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rateResponseModalLabel">评价教师回复</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="rateResponseForm">
+                    <div class="mb-3">
+                        <label class="form-label">为教师回复打分</label>
+                        <div class="rating-stars-input text-center fs-3 mb-3">
+                            <i class="far fa-star" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" id="ratingValue" value="0">
+                    </div>
+                    <div class="mb-3">
+                        <label for="ratingComment" class="form-label">评价意见（可选）</label>
+                        <textarea class="form-control" id="ratingComment" rows="3" placeholder="分享您对教师回复的评价..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submitRatingBtn">提交评价</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化模态框
+        const newFeedbackModal = new bootstrap.Modal(document.getElementById('newFeedbackModal'));
+        const rateResponseModal = new bootstrap.Modal(document.getElementById('rateResponseModal'));
+        
+        // 提交新反馈按钮
+        document.getElementById('newFeedbackBtn').addEventListener('click', function() {
+            newFeedbackModal.show();
+        });
+        
+        // 提交反馈按钮事件
+        document.getElementById('submitFeedbackBtn').addEventListener('click', function() {
+            const course = document.getElementById('feedbackCourse').value;
+            const type = document.getElementById('feedbackType').value;
+            const title = document.getElementById('feedbackTitle').value;
+            const content = document.getElementById('feedbackContent').value;
+            
+            if (!course || !type || !title || !content) {
+                showMessage('请填写所有必填字段', 'error');
+                return;
+            }
+            
+            // 模拟提交成功
+            showMessage('反馈提交成功', 'success');
+            newFeedbackModal.hide();
+            
+            // 重置表单
+            document.getElementById('newFeedbackForm').reset();
+            
+            // 刷新反馈列表
+            // loadFeedbackList();
+        });
+        
+        // 应用筛选按钮事件
+        document.getElementById('applyFilters').addEventListener('click', function() {
+            const course = document.getElementById('courseFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            const type = document.getElementById('typeFilter').value;
+            
+            // 这里应该调用API获取筛选后的数据
+            console.log('应用筛选:', { course, status, type });
+            
+            // 模拟筛选成功
+            showMessage('筛选已应用', 'info');
+            
+            // 刷新反馈列表
+            // loadFeedbackList(course, status, type);
+        });
+        
+        // 评价星星点击事件
+        const ratingStars = document.querySelectorAll('.rating-stars-input i');
+        ratingStars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                document.getElementById('ratingValue').value = rating;
+                
+                // 更新星星显示
+                ratingStars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.remove('far');
+                        s.classList.add('fas');
+                    } else {
+                        s.classList.remove('fas');
+                        s.classList.add('far');
+                    }
+                });
+            });
+            
+            // 鼠标悬停效果
+            star.addEventListener('mouseover', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                
+                ratingStars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.remove('far');
+                        s.classList.add('fas');
+                    } else {
+                        s.classList.remove('fas');
+                        s.classList.add('far');
+                    }
+                });
+            });
+        });
+        
+        // 鼠标离开星星容器时恢复原始评分显示
+        document.querySelector('.rating-stars-input').addEventListener('mouseleave', function() {
+            const rating = parseInt(document.getElementById('ratingValue').value);
+            
+            ratingStars.forEach((s, index) => {
+                if (index < rating) {
+                    s.classList.remove('far');
+                    s.classList.add('fas');
+                } else {
+                    s.classList.remove('fas');
+                    s.classList.add('far');
+                }
+            });
+        });
+        
+        // 提交评价按钮事件
+        document.getElementById('submitRatingBtn').addEventListener('click', function() {
+            const rating = document.getElementById('ratingValue').value;
+            const comment = document.getElementById('ratingComment').value;
+            
+            if (rating === '0') {
+                showMessage('请为教师回复打分', 'error');
+                return;
+            }
+            
+            // 模拟提交成功
+            showMessage('评价提交成功', 'success');
+            rateResponseModal.hide();
+            
+            // 重置表单
+            document.getElementById('rateResponseForm').reset();
+            document.getElementById('ratingValue').value = '0';
+            ratingStars.forEach(s => {
+                s.classList.remove('fas');
+                s.classList.add('far');
+            });
+            
+            // 刷新反馈列表
+            // loadFeedbackList();
+        });
+        
+        // 初始加载反馈列表
+        // loadFeedbackList();
+    });
+    
+    // 显示消息函数
+    function showMessage(message, type) {
+        const messageContainer = document.getElementById('messageContainer');
+        const alertClass = type === 'error' ? 'danger' : type;
+        
+        const alertHtml = `
+            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        
+        messageContainer.innerHTML = alertHtml;
+        
+        // 5秒后自动关闭
+        setTimeout(() => {
+            const alert = messageContainer.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+            }
+        }, 5000);
+    }
+    
+    // 加载反馈列表函数
+    function loadFeedbackList(course = 'all', status = 'all', type = 'all') {
+        // 这里将通过API获取反馈数据
+        // 然后更新DOM元素
+    }
+</script>
+{% endblock %} 

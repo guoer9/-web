@@ -1,0 +1,336 @@
+2025-03-25 12:47:07,282 - __main__ - INFO - MongoDB连接成功
+2025-03-25 12:47:07,282 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 12:47:07,379 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 12:47:07,712 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 12:47:07,713 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 12:47:07,958 - __main__ - INFO - MongoDB连接成功
+2025-03-25 12:47:07,959 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 12:47:08,048 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 12:47:08,366 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 12:47:08,367 - werkzeug - WARNING -  * Debugger is active!
+2025-03-25 12:47:08,367 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-25 12:47:10,208 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-25 12:47:13,209 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 12:47:15,209 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-25 12:47:15,209 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-25 12:47:15,387 - src.services.news_service - INFO - 开始从今日头条抓取教育新闻
+2025-03-25 12:47:30,964 - src.services.news_service - INFO - 成功抓取0条新闻
+2025-03-25 12:47:30,966 - src.services.news_service - WARNING - 未抓取到任何新闻，取消更新
+2025-03-25 12:47:30,968 - src.services.news_service - ERROR - 定时更新新闻时出错: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-03-25 12:47:30,968 - src.services.news_service - INFO - 已启动新闻自动更新，间隔3600秒
+2025-03-25 12:51:38,362 - __main__ - INFO - MongoDB连接成功
+2025-03-25 12:51:38,362 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 12:51:38,447 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 12:51:38,777 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 12:51:38,777 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 12:52:18,616 - __main__ - INFO - MongoDB连接成功
+2025-03-25 12:52:18,616 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 12:52:18,699 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 12:52:19,033 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 12:52:19,033 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 12:52:19,283 - __main__ - INFO - MongoDB连接成功
+2025-03-25 12:52:19,283 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 12:52:19,367 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 12:52:19,685 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 12:52:19,685 - werkzeug - WARNING -  * Debugger is active!
+2025-03-25 12:52:19,685 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-25 12:52:21,709 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-25 12:52:21,773 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 12:52:24,710 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 12:52:25,114 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-25 12:52:26,710 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-25 12:52:26,710 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-25 12:52:26,716 - src.services.news_service - INFO - 开始从今日头条抓取教育新闻
+2025-03-25 12:52:40,713 - src.services.news_service - INFO - 成功抓取0条新闻
+2025-03-25 12:52:40,714 - src.services.news_service - WARNING - 未抓取到任何新闻，取消更新
+2025-03-25 12:52:40,714 - src.services.news_service - ERROR - 定时更新新闻时出错: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-03-25 12:52:40,714 - src.services.news_service - INFO - 已启动新闻自动更新，间隔3600秒
+2025-03-25 13:04:42,606 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:04:42,606 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:04:42,693 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:04:43,027 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:04:43,027 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 13:05:09,290 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:05:09,290 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:05:09,375 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:05:09,689 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:05:09,690 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 13:05:09,971 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:05:09,971 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:05:10,059 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:05:10,398 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:05:10,398 - werkzeug - WARNING -  * Debugger is active!
+2025-03-25 13:05:10,399 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-25 13:05:11,853 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-25 13:05:14,854 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:05:16,854 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-25 13:05:16,854 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-25 13:05:16,857 - src.services.news_service - INFO - 开始从今日头条抓取教育新闻
+2025-03-25 13:05:31,077 - src.services.news_service - INFO - 成功抓取0条新闻
+2025-03-25 13:05:31,078 - src.services.news_service - WARNING - 未抓取到任何新闻，取消更新
+2025-03-25 13:05:31,078 - src.services.news_service - ERROR - 定时更新新闻时出错: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-03-25 13:05:31,078 - src.services.news_service - INFO - 已启动新闻自动更新，间隔3600秒
+2025-03-25 13:07:47,775 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:07:47,775 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:07:47,860 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:07:48,194 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:07:48,194 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 13:07:57,055 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:07:57,056 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:07:57,141 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:07:57,473 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:07:57,473 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 13:07:57,732 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:07:57,732 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:07:57,820 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:07:58,166 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:07:58,166 - werkzeug - WARNING -  * Debugger is active!
+2025-03-25 13:07:58,166 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-25 13:08:01,199 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-25 13:08:03,647 - src.app - INFO - MongoDB连接成功
+2025-03-25 13:08:03,647 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:08:03,659 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:08:03,660 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:08:03,661 - src.models.user - WARNING - 验证失败: 用户 1 不存在
+2025-03-25 13:08:04,199 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:08:06,199 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-25 13:08:06,199 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-25 13:08:06,202 - src.services.news_service - INFO - 开始从今日头条抓取教育新闻
+2025-03-25 13:08:11,059 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:08:11,059 - src.models.user - INFO - 尝试创建用户: 1, 角色: student
+2025-03-25 13:08:11,306 - src.models.user - INFO - 用户创建成功: 1, ID: 67e23a3bb5e54b639102dc8b
+2025-03-25 13:08:13,042 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:08:13,042 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:08:13,225 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:08:13,231 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:08:21,932 - src.services.news_service - INFO - 成功抓取0条新闻
+2025-03-25 13:08:21,933 - src.services.news_service - WARNING - 未抓取到任何新闻，取消更新
+2025-03-25 13:08:21,933 - src.services.news_service - ERROR - 定时更新新闻时出错: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-03-25 13:08:21,933 - src.services.news_service - INFO - 已启动新闻自动更新，间隔3600秒
+2025-03-25 13:08:23,859 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:08:23,859 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:08:24,042 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:08:24,048 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:08:28,375 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:08:28,375 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:08:28,562 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:08:28,568 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:08:43,158 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:08:43,158 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:08:43,340 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:08:43,347 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:11:09,015 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:11:09,015 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:11:09,101 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:11:09,432 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:11:09,432 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 13:11:09,691 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:11:09,692 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:11:09,779 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:11:10,113 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:11:10,113 - werkzeug - WARNING -  * Debugger is active!
+2025-03-25 13:11:10,113 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-25 13:11:11,164 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-25 13:11:14,012 - src.app - INFO - MongoDB连接成功
+2025-03-25 13:11:14,012 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:11:14,024 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:11:14,025 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:11:14,165 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:11:14,208 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:11:14,215 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:11:16,165 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-25 13:11:16,165 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-25 13:11:16,169 - src.services.news_service - INFO - 开始从今日头条抓取教育新闻
+2025-03-25 13:11:31,181 - src.services.news_service - INFO - 成功抓取0条新闻
+2025-03-25 13:11:31,184 - src.services.news_service - WARNING - 未抓取到任何新闻，取消更新
+2025-03-25 13:11:31,185 - src.services.news_service - ERROR - 定时更新新闻时出错: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-03-25 13:11:31,185 - src.services.news_service - INFO - 已启动新闻自动更新，间隔3600秒
+2025-03-25 13:12:50,605 - werkzeug - INFO -  * Detected change in '/home/guoer/jhxt/-web/src/controllers/web_controller.py', reloading
+2025-03-25 13:12:51,229 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 13:12:51,495 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:12:51,495 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:12:51,582 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:12:51,913 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:12:51,914 - werkzeug - WARNING -  * Debugger is active!
+2025-03-25 13:12:51,914 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-25 13:26:24,679 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:26:24,679 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:26:24,787 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:26:25,097 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:26:25,097 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 13:26:25,335 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:26:25,335 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:26:25,420 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:26:25,757 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:26:25,757 - werkzeug - WARNING -  * Debugger is active!
+2025-03-25 13:26:25,757 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-25 13:26:27,546 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-25 13:26:30,327 - src.app - INFO - MongoDB连接成功
+2025-03-25 13:26:30,327 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:26:30,342 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:26:30,342 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:26:30,523 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:26:30,530 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:26:30,547 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:26:32,547 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-25 13:26:32,548 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-25 13:26:32,553 - src.services.news_service - INFO - 开始从今日头条抓取教育新闻
+2025-03-25 13:26:34,624 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:26:34,624 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:26:34,806 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:26:34,813 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:26:38,127 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:26:38,127 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:26:38,309 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:26:38,316 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:26:39,232 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-25 13:26:48,179 - src.services.news_service - INFO - 成功抓取0条新闻
+2025-03-25 13:26:48,181 - src.services.news_service - WARNING - 未抓取到任何新闻，取消更新
+2025-03-25 13:26:48,183 - src.services.news_service - ERROR - 定时更新新闻时出错: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-03-25 13:26:48,183 - src.services.news_service - INFO - 已启动新闻自动更新，间隔3600秒
+2025-03-25 13:26:49,773 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-25 13:27:00,858 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-25 13:27:06,982 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:27:06,982 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:27:07,167 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:27:07,174 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:27:10,511 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-25 13:27:30,007 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:27:30,007 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:27:30,187 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:27:30,194 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:27:33,841 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:27:33,841 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:27:34,033 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:27:34,039 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:27:59,212 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:27:59,212 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:27:59,298 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:27:59,622 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:27:59,623 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 13:27:59,884 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:27:59,884 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:27:59,970 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:28:00,299 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:28:00,300 - werkzeug - WARNING -  * Debugger is active!
+2025-03-25 13:28:00,300 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-25 13:28:03,456 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-25 13:28:06,381 - src.app - INFO - MongoDB连接成功
+2025-03-25 13:28:06,381 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:28:06,396 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:28:06,396 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:28:06,457 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:28:06,578 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:28:06,586 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:28:08,292 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-25 13:28:08,457 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-25 13:28:08,458 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-25 13:28:08,463 - src.services.news_service - INFO - 开始从今日头条抓取教育新闻
+2025-03-25 13:28:13,707 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:28:13,707 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:28:13,889 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:28:13,895 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:28:21,327 - src.controllers.web_controller - INFO - 访问教师反馈处理页面
+2025-03-25 13:28:23,760 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-25 13:28:24,005 - src.services.news_service - INFO - 成功抓取0条新闻
+2025-03-25 13:28:24,007 - src.services.news_service - WARNING - 未抓取到任何新闻，取消更新
+2025-03-25 13:28:24,009 - src.services.news_service - ERROR - 定时更新新闻时出错: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-03-25 13:28:24,009 - src.services.news_service - INFO - 已启动新闻自动更新，间隔3600秒
+2025-03-25 13:28:25,740 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-25 13:28:33,441 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:28:33,441 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:28:33,623 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:28:33,631 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:29:04,788 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-25 13:29:14,957 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-25 13:33:07,770 - app - INFO - MongoDB连接成功
+2025-03-25 13:33:07,770 - app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:33:07,855 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:37:00,927 - app - INFO - MongoDB连接成功
+2025-03-25 13:37:00,927 - app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:37:01,012 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:37:16,912 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:37:16,912 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:37:16,998 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:37:17,329 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:37:17,329 - werkzeug - INFO -  * Restarting with stat
+2025-03-25 13:37:17,577 - __main__ - INFO - MongoDB连接成功
+2025-03-25 13:37:17,577 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:37:17,662 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-25 13:37:17,990 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-25 13:37:17,991 - werkzeug - WARNING -  * Debugger is active!
+2025-03-25 13:37:17,991 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-25 13:37:22,253 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-25 13:37:25,254 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:37:25,315 - src.app - INFO - MongoDB连接成功
+2025-03-25 13:37:25,315 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-25 13:37:25,331 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:37:25,331 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:37:25,513 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:37:25,514 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:37:25,514 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:37:25,701 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:37:25,702 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:37:27,254 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-25 13:37:27,254 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-25 13:37:27,256 - src.services.news_service - INFO - 开始从今日头条抓取教育新闻
+2025-03-25 13:37:27,365 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-25 13:37:28,079 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:37:28,576 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-25 13:37:29,076 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-25 13:37:30,604 - src.controllers.web_controller - INFO - 访问学生资源页面
+2025-03-25 13:37:31,188 - src.controllers.web_controller - INFO - 访问学生资源页面
+2025-03-25 13:37:35,359 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:37:35,359 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:37:35,543 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:37:35,544 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-25 13:37:35,544 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-25 13:37:35,726 - src.models.user - INFO - 用户 1 验证成功
+2025-03-25 13:37:35,727 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:37:36,380 - src.controllers.web_controller - INFO - 访问学生个人资料页面
+2025-03-25 13:37:39,549 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-25 13:37:43,026 - src.services.news_service - INFO - 成功抓取0条新闻
+2025-03-25 13:37:43,029 - src.services.news_service - WARNING - 未抓取到任何新闻，取消更新
+2025-03-25 13:37:43,030 - src.services.news_service - ERROR - 定时更新新闻时出错: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-03-25 13:37:43,031 - src.services.news_service - INFO - 已启动新闻自动更新，间隔3600秒
+2025-03-25 13:38:00,128 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-25 13:38:02,096 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-25 13:38:03,499 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-25 13:38:04,012 - src.controllers.web_controller - INFO - 访问学生资源页面
+2025-03-25 13:38:04,692 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-25 13:38:06,609 - src.controllers.web_controller - INFO - 访问学生资源页面
+2025-03-25 13:38:12,445 - src.controllers.web_controller - INFO - 访问学生个人资料页面
+2025-03-25 13:38:15,600 - src.controllers.web_controller - INFO - 访问学生通知设置页面
+2025-03-25 13:38:57,197 - src.controllers.web_controller - INFO - 访问学生个人资料页面

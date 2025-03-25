@@ -1,0 +1,509 @@
+{% extends 'base.html' %}
+
+{% block title %}互动历史{% endblock %}
+
+{% block styles %}
+<style>
+    .page-header {
+        padding: 20px 0;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 20px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+        background-color: #f8f9fa;
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 500;
+    }
+    
+    .interaction-item {
+        padding: 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .interaction-item:last-child {
+        border-bottom: none;
+    }
+    
+    .question-text, .poll-text, .feedback-text {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+    
+    .answer {
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    
+    .poll-result {
+        background-color: #f0f8ff;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    
+    .feedback-response {
+        background-color: #f0fff0;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    
+    .badge {
+        padding: 5px 10px;
+        font-size: 0.75em;
+    }
+    
+    .meta-info {
+        color: #6c757d;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+    
+    .nav-tabs {
+        margin-bottom: 20px;
+    }
+    
+    .nav-tabs .nav-link {
+        font-weight: 500;
+    }
+    
+    .nav-tabs .nav-link.active {
+        font-weight: 600;
+    }
+    
+    .tab-pane {
+        padding: 20px 0;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 50px 0;
+        color: #6c757d;
+    }
+    
+    .empty-state-icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+        color: #dee2e6;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>互动历史</h1>
+        <p class="text-muted">查看您在课堂上的所有互动记录</p>
+    </div>
+
+    <div id="messageContainer"></div>
+    
+    <ul class="nav nav-tabs" id="interactionTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="questions-tab" data-bs-toggle="tab" data-bs-target="#questions" type="button" role="tab" aria-controls="questions" aria-selected="true">
+                <i class="fas fa-question-circle"></i> 问题记录
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="polls-tab" data-bs-toggle="tab" data-bs-target="#polls" type="button" role="tab" aria-controls="polls" aria-selected="false">
+                <i class="fas fa-poll"></i> 投票记录
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback" type="button" role="tab" aria-controls="feedback" aria-selected="false">
+                <i class="fas fa-comment-dots"></i> 反馈记录
+            </button>
+        </li>
+    </ul>
+    
+    <div class="tab-content" id="interactionTabsContent">
+        <!-- 问题记录选项卡 -->
+        <div class="tab-pane fade show active" id="questions" role="tabpanel" aria-labelledby="questions-tab">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            我的问题历史
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-inline">
+                                <select class="form-select form-select-sm me-2" id="questionSort">
+                                    <option value="newest">最新优先</option>
+                                    <option value="oldest">最早优先</option>
+                                </select>
+                                <select class="form-select form-select-sm me-2" id="questionFilter">
+                                    <option value="all">全部状态</option>
+                                    <option value="answered">已回答</option>
+                                    <option value="pending">待回答</option>
+                                </select>
+                                <button class="btn btn-sm btn-primary" id="askNewQuestion">
+                                    <i class="fas fa-plus"></i> 提出问题
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="questionsList">
+                        <div class="interaction-item">
+                            <div class="question-text">如何理解牛顿第三定律中作用力与反作用力的关系？</div>
+                            <div class="meta-info">
+                                <span class="badge bg-success">已回答</span>
+                                <span class="course-info">物理课 | 2023-05-10</span>
+                            </div>
+                            <div class="answer">
+                                <strong>教师回答:</strong> 牛顿第三定律指出，当两个物体相互作用时，它们之间的作用力和反作用力总是大小相等、方向相反。重要的是要注意这两个力是作用在不同物体上的。例如，当你站在地面上时，你对地面施加了一个向下的力（你的重量），而地面则对你施加了一个向上的等大反向力（支持力）。
+                            </div>
+                        </div>
+                        <div class="interaction-item">
+                            <div class="question-text">下周考试的范围是哪些章节？</div>
+                            <div class="meta-info">
+                                <span class="badge bg-secondary">待回答</span>
+                                <span class="course-info">数学课 | 2023-05-08</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 投票记录选项卡 -->
+        <div class="tab-pane fade" id="polls" role="tabpanel" aria-labelledby="polls-tab">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            我参与的投票
+                        </div>
+                        <div class="col-auto">
+                            <select class="form-select form-select-sm" id="pollSort">
+                                <option value="newest">最新优先</option>
+                                <option value="oldest">最早优先</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="pollsList">
+                        <div class="interaction-item">
+                            <div class="poll-text">你认为哪种学习方式最有效？</div>
+                            <div class="meta-info">
+                                <span class="badge bg-info">已结束</span>
+                                <span class="course-info">教育学 | 2023-05-09</span>
+                            </div>
+                            <div class="poll-result">
+                                <strong>你的选择:</strong> 小组讨论
+                                <hr>
+                                <strong>投票结果:</strong>
+                                <div class="mt-2">
+                                    <div class="mb-2">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>课堂讲解</span>
+                                            <span>40%</span>
+                                        </div>
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>小组讨论</span>
+                                            <span>25%</span>
+                                        </div>
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>实践操作</span>
+                                            <span>30%</span>
+                                        </div>
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>自主学习</span>
+                                            <span>5%</span>
+                                        </div>
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 5%;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="interaction-item">
+                            <div class="poll-text">期末项目你更倾向于哪种形式？</div>
+                            <div class="meta-info">
+                                <span class="badge bg-warning">进行中</span>
+                                <span class="course-info">计算机科学 | 2023-05-11</span>
+                            </div>
+                            <div class="poll-result">
+                                <strong>你的选择:</strong> 团队项目
+                                <hr>
+                                <strong>当前结果:</strong> <span class="text-muted">(投票进行中，结果暂不可见)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 反馈记录选项卡 -->
+        <div class="tab-pane fade" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            我提交的反馈
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-inline">
+                                <select class="form-select form-select-sm me-2" id="feedbackSort">
+                                    <option value="newest">最新优先</option>
+                                    <option value="oldest">最早优先</option>
+                                </select>
+                                <button class="btn btn-sm btn-primary" id="submitNewFeedback">
+                                    <i class="fas fa-plus"></i> 提交反馈
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="feedbackList">
+                        <div class="interaction-item">
+                            <div class="feedback-text">课程进度有点快，希望能多一些练习时间。</div>
+                            <div class="meta-info">
+                                <span class="badge bg-success">已处理</span>
+                                <span class="course-info">数学课 | 2023-05-07</span>
+                            </div>
+                            <div class="feedback-response">
+                                <strong>教师回复:</strong> 感谢您的反馈！我会在后续课程中适当放慢节奏，并增加一些课堂练习时间。
+                            </div>
+                        </div>
+                        <div class="interaction-item">
+                            <div class="feedback-text">希望能提供更多的实践案例，帮助理解理论知识。</div>
+                            <div class="meta-info">
+                                <span class="badge bg-secondary">待处理</span>
+                                <span class="course-info">物理课 | 2023-05-09</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 提问模态框 -->
+<div class="modal fade" id="askQuestionModal" tabindex="-1" aria-labelledby="askQuestionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="askQuestionModalLabel">提出问题</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="questionForm">
+                    <div class="mb-3">
+                        <label for="courseSelect" class="form-label">选择课程</label>
+                        <select class="form-select" id="courseSelect" required>
+                            <option value="">请选择课程</option>
+                            <option value="1">物理</option>
+                            <option value="2">数学</option>
+                            <option value="3">化学</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="questionContent" class="form-label">问题内容</label>
+                        <textarea class="form-control" id="questionContent" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="isAnonymous">
+                        <label class="form-check-label" for="isAnonymous">匿名提问</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submitQuestion">提交问题</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 提交反馈模态框 -->
+<div class="modal fade" id="submitFeedbackModal" tabindex="-1" aria-labelledby="submitFeedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="submitFeedbackModalLabel">提交反馈</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="feedbackForm">
+                    <div class="mb-3">
+                        <label for="feedbackCourseSelect" class="form-label">选择课程</label>
+                        <select class="form-select" id="feedbackCourseSelect" required>
+                            <option value="">请选择课程</option>
+                            <option value="1">物理</option>
+                            <option value="2">数学</option>
+                            <option value="3">化学</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="feedbackType" class="form-label">反馈类型</label>
+                        <select class="form-select" id="feedbackType" required>
+                            <option value="">请选择反馈类型</option>
+                            <option value="teaching">教学方法</option>
+                            <option value="content">课程内容</option>
+                            <option value="assignment">作业和考试</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="feedbackContent" class="form-label">反馈内容</label>
+                        <textarea class="form-control" id="feedbackContent" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="feedbackAnonymous">
+                        <label class="form-check-label" for="feedbackAnonymous">匿名反馈</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submitFeedbackBtn">提交反馈</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化模态框
+        const askQuestionModal = new bootstrap.Modal(document.getElementById('askQuestionModal'));
+        const submitFeedbackModal = new bootstrap.Modal(document.getElementById('submitFeedbackModal'));
+        
+        // 提问按钮事件
+        document.getElementById('askNewQuestion').addEventListener('click', function() {
+            askQuestionModal.show();
+        });
+        
+        // 提交问题按钮事件
+        document.getElementById('submitQuestion').addEventListener('click', function() {
+            // 这里会添加提交问题的逻辑
+            const courseId = document.getElementById('courseSelect').value;
+            const questionContent = document.getElementById('questionContent').value;
+            const isAnonymous = document.getElementById('isAnonymous').checked;
+            
+            if (!courseId || !questionContent) {
+                showMessage('请填写所有必填字段', 'error');
+                return;
+            }
+            
+            // 模拟提交成功
+            showMessage('问题提交成功', 'success');
+            askQuestionModal.hide();
+            
+            // 重置表单
+            document.getElementById('questionForm').reset();
+        });
+        
+        // 提交反馈按钮事件
+        document.getElementById('submitNewFeedback').addEventListener('click', function() {
+            submitFeedbackModal.show();
+        });
+        
+        // 提交反馈表单按钮事件
+        document.getElementById('submitFeedbackBtn').addEventListener('click', function() {
+            // 这里会添加提交反馈的逻辑
+            const courseId = document.getElementById('feedbackCourseSelect').value;
+            const feedbackType = document.getElementById('feedbackType').value;
+            const feedbackContent = document.getElementById('feedbackContent').value;
+            const isAnonymous = document.getElementById('feedbackAnonymous').checked;
+            
+            if (!courseId || !feedbackType || !feedbackContent) {
+                showMessage('请填写所有必填字段', 'error');
+                return;
+            }
+            
+            // 模拟提交成功
+            showMessage('反馈提交成功', 'success');
+            submitFeedbackModal.hide();
+            
+            // 重置表单
+            document.getElementById('feedbackForm').reset();
+        });
+        
+        // 排序和过滤器变化事件
+        document.getElementById('questionSort').addEventListener('change', function() {
+            // 这里会添加问题排序逻辑
+            console.log('问题排序方式：', this.value);
+        });
+        
+        document.getElementById('questionFilter').addEventListener('change', function() {
+            // 这里会添加问题过滤逻辑
+            console.log('问题过滤条件：', this.value);
+        });
+        
+        document.getElementById('pollSort').addEventListener('change', function() {
+            // 这里会添加投票排序逻辑
+            console.log('投票排序方式：', this.value);
+        });
+        
+        document.getElementById('feedbackSort').addEventListener('change', function() {
+            // 这里会添加反馈排序逻辑
+            console.log('反馈排序方式：', this.value);
+        });
+        
+        // 加载互动数据（这里将会通过API获取真实数据）
+        // loadInteractionData();
+    });
+    
+    // 显示消息函数
+    function showMessage(message, type) {
+        const messageContainer = document.getElementById('messageContainer');
+        const alertClass = type === 'error' ? 'danger' : type;
+        
+        const alertHtml = `
+            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        
+        messageContainer.innerHTML = alertHtml;
+        
+        // 5秒后自动关闭
+        setTimeout(() => {
+            const alert = messageContainer.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+            }
+        }, 5000);
+    }
+    
+    // 加载互动数据函数
+    function loadInteractionData() {
+        // 这里将通过API获取问题、投票和反馈数据
+        // 然后更新DOM元素
+    }
+</script>
+{% endblock %} 

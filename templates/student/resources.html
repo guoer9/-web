@@ -1,0 +1,509 @@
+{% extends 'base.html' %}
+
+{% block title %}教学资源{% endblock %}
+
+{% block styles %}
+<style>
+    .page-header {
+        padding: 20px 0;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 20px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .card-header {
+        background-color: #f8f9fa;
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 500;
+    }
+    
+    .resource-icon {
+        font-size: 24px;
+        margin-right: 10px;
+    }
+    
+    .resource-type-pdf {
+        color: #dc3545;
+    }
+    
+    .resource-type-doc {
+        color: #0d6efd;
+    }
+    
+    .resource-type-ppt {
+        color: #fd7e14;
+    }
+    
+    .resource-type-video {
+        color: #6f42c1;
+    }
+    
+    .resource-type-image {
+        color: #20c997;
+    }
+    
+    .resource-type-other {
+        color: #6c757d;
+    }
+    
+    .category-badge {
+        margin-right: 5px;
+    }
+    
+    .meta-info {
+        color: #6c757d;
+        font-size: 0.85em;
+    }
+    
+    .action-buttons .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .filter-section {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>教学资源</h1>
+        <p class="text-muted">查看和下载课程相关的学习资料</p>
+    </div>
+
+    <div id="messageContainer"></div>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-header">
+                    <i class="fas fa-filter"></i> 筛选资源
+                </div>
+                <div class="card-body">
+                    <form id="resourceFilterForm">
+                        <div class="mb-3">
+                            <label for="courseFilter" class="form-label">课程</label>
+                            <select class="form-select" id="courseFilter">
+                                <option value="all">所有课程</option>
+                                <option value="1">物理</option>
+                                <option value="2">数学</option>
+                                <option value="3">化学</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="typeFilter" class="form-label">资源类型</label>
+                            <select class="form-select" id="typeFilter">
+                                <option value="all">所有类型</option>
+                                <option value="pdf">PDF文档</option>
+                                <option value="doc">Word文档</option>
+                                <option value="ppt">演示文稿</option>
+                                <option value="video">视频资料</option>
+                                <option value="image">图片资料</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoryFilter" class="form-label">资源分类</label>
+                            <select class="form-select" id="categoryFilter">
+                                <option value="all">所有分类</option>
+                                <option value="lecture">课堂讲义</option>
+                                <option value="homework">作业资料</option>
+                                <option value="exam">考试资料</option>
+                                <option value="reference">参考资料</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="searchInput" class="form-label">搜索</label>
+                            <input type="text" class="form-control" id="searchInput" placeholder="输入关键词搜索">
+                        </div>
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-primary" id="applyFiltersBtn">应用筛选</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>资源列表</h3>
+                <div>
+                    <select class="form-select form-select-sm d-inline-block w-auto me-2" id="sortSelect">
+                        <option value="newest">最新上传</option>
+                        <option value="oldest">最早上传</option>
+                        <option value="name_asc">名称 A-Z</option>
+                        <option value="name_desc">名称 Z-A</option>
+                        <option value="downloads">下载次数</option>
+                    </select>
+                    <button class="btn btn-sm btn-primary" id="refreshResourcesBtn">
+                        <i class="fas fa-sync-alt"></i> 刷新
+                    </button>
+                </div>
+            </div>
+            
+            <div id="resourceList">
+                <!-- 资源卡片示例 -->
+                <div class="card resource-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title">
+                                    <i class="fas fa-file-pdf resource-icon resource-type-pdf"></i>
+                                    牛顿力学基础知识讲义
+                                </h5>
+                                <div class="mt-2">
+                                    <span class="badge bg-primary category-badge">课堂讲义</span>
+                                    <span class="badge bg-secondary category-badge">物理</span>
+                                </div>
+                                <p class="card-text mt-2">牛顿三大定律详细讲解，包含案例和习题。</p>
+                                <div class="meta-info">
+                                    <i class="fas fa-calendar-alt"></i> 上传日期: 2023-05-05
+                                    <span class="ms-3"><i class="fas fa-download"></i> 下载次数: 42</span>
+                                    <span class="ms-3"><i class="fas fa-file"></i> 大小: 2.4 MB</span>
+                                </div>
+                            </div>
+                            <div class="action-buttons align-self-center">
+                                <button class="btn btn-sm btn-primary mb-2 d-block w-100" data-resource-id="1" data-action="download">
+                                    <i class="fas fa-download"></i> 下载
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary d-block w-100" data-resource-id="1" data-action="preview">
+                                    <i class="fas fa-eye"></i> 预览
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card resource-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title">
+                                    <i class="fas fa-file-powerpoint resource-icon resource-type-ppt"></i>
+                                    化学元素周期表讲解
+                                </h5>
+                                <div class="mt-2">
+                                    <span class="badge bg-primary category-badge">课堂讲义</span>
+                                    <span class="badge bg-secondary category-badge">化学</span>
+                                </div>
+                                <p class="card-text mt-2">元素周期表的详细讲解，包含元素特性和应用案例。</p>
+                                <div class="meta-info">
+                                    <i class="fas fa-calendar-alt"></i> 上传日期: 2023-05-10
+                                    <span class="ms-3"><i class="fas fa-download"></i> 下载次数: 28</span>
+                                    <span class="ms-3"><i class="fas fa-file"></i> 大小: 5.7 MB</span>
+                                </div>
+                            </div>
+                            <div class="action-buttons align-self-center">
+                                <button class="btn btn-sm btn-primary mb-2 d-block w-100" data-resource-id="2" data-action="download">
+                                    <i class="fas fa-download"></i> 下载
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary d-block w-100" data-resource-id="2" data-action="preview">
+                                    <i class="fas fa-eye"></i> 预览
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card resource-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title">
+                                    <i class="fas fa-video resource-icon resource-type-video"></i>
+                                    函数微积分视频教程
+                                </h5>
+                                <div class="mt-2">
+                                    <span class="badge bg-primary category-badge">视频教程</span>
+                                    <span class="badge bg-secondary category-badge">数学</span>
+                                </div>
+                                <p class="card-text mt-2">函数微积分的基础知识视频讲解，包含详细的例题演示。</p>
+                                <div class="meta-info">
+                                    <i class="fas fa-calendar-alt"></i> 上传日期: 2023-05-12
+                                    <span class="ms-3"><i class="fas fa-download"></i> 下载次数: 36</span>
+                                    <span class="ms-3"><i class="fas fa-file"></i> 大小: 120 MB</span>
+                                    <span class="ms-3"><i class="fas fa-clock"></i> 时长: 45分钟</span>
+                                </div>
+                            </div>
+                            <div class="action-buttons align-self-center">
+                                <button class="btn btn-sm btn-primary mb-2 d-block w-100" data-resource-id="3" data-action="download">
+                                    <i class="fas fa-download"></i> 下载
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary mb-2 d-block w-100" data-resource-id="3" data-action="stream">
+                                    <i class="fas fa-play"></i> 播放
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav aria-label="资源分页" class="mt-3">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">下一页</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- 资源预览模态框 -->
+<div class="modal fade" id="resourcePreviewModal" tabindex="-1" aria-labelledby="resourcePreviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resourcePreviewModalLabel">资源预览</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="previewContent" class="text-center">
+                    <!-- 预览内容将在这里显示 -->
+                    <iframe id="previewFrame" style="width: 100%; height: 600px; border: none;"></iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="downloadFromPreviewBtn">下载资源</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化模态框
+        const previewModal = new bootstrap.Modal(document.getElementById('resourcePreviewModal'));
+        
+        // 绑定筛选按钮事件
+        document.getElementById('applyFiltersBtn').addEventListener('click', function() {
+            const course = document.getElementById('courseFilter').value;
+            const type = document.getElementById('typeFilter').value;
+            const category = document.getElementById('categoryFilter').value;
+            const search = document.getElementById('searchInput').value;
+            
+            // 这里应该调用API获取筛选后的数据
+            console.log('应用筛选:', { course, type, category, search });
+            
+            // 显示加载指示器
+            // showLoading();
+            
+            // 模拟筛选成功
+            showMessage('筛选已应用', 'info');
+            
+            // 刷新资源列表
+            // 模拟API调用
+            setTimeout(() => {
+                // hideLoading();
+                // updateResourceList(mockData);
+            }, 500);
+        });
+        
+        // 绑定排序选择变化事件
+        document.getElementById('sortSelect').addEventListener('change', function() {
+            const sortOption = this.value;
+            console.log('排序选项:', sortOption);
+            
+            // 模拟排序
+            showMessage(`已按照${this.options[this.selectedIndex].text}排序`, 'info');
+        });
+        
+        // 绑定刷新按钮事件
+        document.getElementById('refreshResourcesBtn').addEventListener('click', function() {
+            // 显示加载指示器
+            // showLoading();
+            
+            // 重置筛选选项
+            document.getElementById('resourceFilterForm').reset();
+            
+            // 刷新资源列表
+            // 模拟API调用
+            setTimeout(() => {
+                // hideLoading();
+                showMessage('资源列表已刷新', 'success');
+                // updateResourceList(mockData);
+            }, 500);
+        });
+        
+        // 绑定下载和预览按钮事件
+        const resourceList = document.getElementById('resourceList');
+        resourceList.addEventListener('click', function(e) {
+            if (e.target.matches('[data-action="download"], [data-action="download"] *')) {
+                // 获取最近的按钮元素
+                const btn = e.target.closest('[data-action="download"]');
+                const resourceId = btn.getAttribute('data-resource-id');
+                
+                downloadResource(resourceId);
+            } else if (e.target.matches('[data-action="preview"], [data-action="preview"] *')) {
+                // 获取最近的按钮元素
+                const btn = e.target.closest('[data-action="preview"]');
+                const resourceId = btn.getAttribute('data-resource-id');
+                
+                previewResource(resourceId);
+            } else if (e.target.matches('[data-action="stream"], [data-action="stream"] *')) {
+                // 获取最近的按钮元素
+                const btn = e.target.closest('[data-action="stream"]');
+                const resourceId = btn.getAttribute('data-resource-id');
+                
+                streamResource(resourceId);
+            }
+        });
+        
+        // 从预览中下载
+        document.getElementById('downloadFromPreviewBtn').addEventListener('click', function() {
+            const resourceId = this.getAttribute('data-resource-id');
+            downloadResource(resourceId);
+            previewModal.hide();
+        });
+        
+        // 搜索框回车事件
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('applyFiltersBtn').click();
+            }
+        });
+        
+        // 模拟加载资源列表
+        // loadResourceList();
+    });
+    
+    // 下载资源
+    function downloadResource(resourceId) {
+        console.log('下载资源:', resourceId);
+        
+        // 模拟下载操作
+        showMessage('正在准备下载...', 'info');
+        
+        // 模拟延迟
+        setTimeout(() => {
+            // 实际应用中，这里应该是一个真实的下载链接
+            const downloadUrl = `/api/resources/download/${resourceId}`;
+            
+            // 创建一个隐藏的链接并点击它来触发下载
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = downloadUrl;
+            a.download = `resource_${resourceId}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            showMessage('资源下载已开始', 'success');
+        }, 1000);
+    }
+    
+    // 预览资源
+    function previewResource(resourceId) {
+        console.log('预览资源:', resourceId);
+        
+        // 获取预览模态框和框架
+        const modal = document.getElementById('resourcePreviewModal');
+        const previewFrame = document.getElementById('previewFrame');
+        const modalTitle = document.getElementById('resourcePreviewModalLabel');
+        const downloadBtn = document.getElementById('downloadFromPreviewBtn');
+        
+        // 更新模态框信息
+        modalTitle.textContent = `资源预览 - 资源ID: ${resourceId}`;
+        downloadBtn.setAttribute('data-resource-id', resourceId);
+        
+        // 模拟加载预览
+        previewFrame.src = '';
+        
+        // 显示模态框
+        const previewModal = bootstrap.Modal.getInstance(modal) || new bootstrap.Modal(modal);
+        previewModal.show();
+        
+        // 模拟加载预览内容
+        setTimeout(() => {
+            // 在实际应用中，这里应该设置为真实的预览URL
+            previewFrame.src = 'https://mozilla.github.io/pdf.js/web/viewer.html';
+        }, 500);
+    }
+    
+    // 流式播放资源
+    function streamResource(resourceId) {
+        console.log('流式播放资源:', resourceId);
+        
+        // 获取预览模态框和框架
+        const modal = document.getElementById('resourcePreviewModal');
+        const previewFrame = document.getElementById('previewFrame');
+        const modalTitle = document.getElementById('resourcePreviewModalLabel');
+        const downloadBtn = document.getElementById('downloadFromPreviewBtn');
+        
+        // 更新模态框信息
+        modalTitle.textContent = `视频播放 - 资源ID: ${resourceId}`;
+        downloadBtn.setAttribute('data-resource-id', resourceId);
+        
+        // 模拟加载视频
+        previewFrame.src = '';
+        
+        // 显示模态框
+        const previewModal = bootstrap.Modal.getInstance(modal) || new bootstrap.Modal(modal);
+        previewModal.show();
+        
+        // 模拟加载视频内容
+        setTimeout(() => {
+            // 在实际应用中，这里应该设置为真实的视频URL
+            const videoHtml = `
+                <video controls style="width: 100%; max-height: 600px;">
+                    <source src="https://example.com/video.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+            `;
+            
+            // 由于安全限制，这里使用srcdoc来加载HTML内容
+            previewFrame.srcdoc = videoHtml;
+        }, 500);
+    }
+    
+    // 显示消息函数
+    function showMessage(message, type) {
+        const messageContainer = document.getElementById('messageContainer');
+        const alertClass = type === 'error' ? 'danger' : type;
+        
+        const alertHtml = `
+            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        
+        messageContainer.innerHTML = alertHtml;
+        
+        // 5秒后自动关闭
+        setTimeout(() => {
+            const alert = messageContainer.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+            }
+        }, 5000);
+    }
+</script>
+{% endblock %} 

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}页面未找到{% endblock %}
+
+{% block styles %}
+<style>
+    .error-container {
+        text-align: center;
+        padding: 100px 20px;
+    }
+    .error-code {
+        font-size: 120px;
+        color: #007bff;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .error-message {
+        font-size: 24px;
+        color: #343a40;
+        margin-bottom: 30px;
+    }
+    .error-description {
+        font-size: 18px;
+        color: #6c757d;
+        margin-bottom: 30px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .back-button {
+        padding: 10px 30px;
+        font-size: 16px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container error-container">
+    <div class="error-code">404</div>
+    <div class="error-message">页面未找到</div>
+    <div class="error-description">
+        您请求的页面不存在或已被移动。请检查URL是否正确，或者返回主页重新开始。
+    </div>
+    <div>
+        <a href="/" class="btn btn-primary back-button">返回首页</a>
+        <a href="javascript:history.back()" class="btn btn-outline-secondary back-button ml-3">返回上一页</a>
+    </div>
+</div>
+{% endblock %} 

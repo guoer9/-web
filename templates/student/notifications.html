@@ -1,0 +1,602 @@
+{% extends 'base.html' %}
+
+{% block title %}通知设置{% endblock %}
+
+{% block styles %}
+<style>
+    .page-header {
+        padding: 20px 0;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 20px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+        background-color: #f8f9fa;
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 500;
+    }
+    
+    .notification-item {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        transition: background-color 0.2s;
+    }
+    
+    .notification-item:last-child {
+        border-bottom: none;
+    }
+    
+    .notification-item:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .notification-unread {
+        background-color: rgba(13, 110, 253, 0.05);
+    }
+    
+    .notification-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+    }
+    
+    .notification-icon i {
+        font-size: 1.2rem;
+    }
+    
+    .notification-icon-course {
+        background-color: rgba(13, 110, 253, 0.1);
+        color: #0d6efd;
+    }
+    
+    .notification-icon-assignment {
+        background-color: rgba(25, 135, 84, 0.1);
+        color: #198754;
+    }
+    
+    .notification-icon-exam {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+    }
+    
+    .notification-icon-system {
+        background-color: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+    }
+    
+    .notification-meta {
+        color: #6c757d;
+        font-size: 0.85rem;
+    }
+    
+    .notification-title {
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+    
+    .tab-pane {
+        padding: 20px 0;
+    }
+    
+    .form-label {
+        font-weight: 500;
+    }
+    
+    .notification-badge {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+        font-weight: normal;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>通知设置</h1>
+        <p class="text-muted">管理您的通知偏好和查看历史通知</p>
+    </div>
+
+    <div id="messageContainer"></div>
+    
+    <div class="row">
+        <!-- 左侧通知设置 -->
+        <div class="col-md-4">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-header">
+                    <i class="fas fa-bell"></i> 通知偏好设置
+                </div>
+                <div class="card-body">
+                    <form id="notificationSettingsForm">
+                        <div class="mb-4">
+                            <h5>接收渠道</h5>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="webNotifications" checked>
+                                <label class="form-check-label" for="webNotifications">
+                                    网站内通知
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                <label class="form-check-label" for="emailNotifications">
+                                    电子邮件通知
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="smsNotifications">
+                                <label class="form-check-label" for="smsNotifications">
+                                    短信通知
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>通知类型</h5>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="courseNotifications" checked>
+                                <label class="form-check-label" for="courseNotifications">
+                                    课程通知
+                                </label>
+                                <div class="form-text">课程更新、课程公告等</div>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="assignmentNotifications" checked>
+                                <label class="form-check-label" for="assignmentNotifications">
+                                    作业通知
+                                </label>
+                                <div class="form-text">作业发布、截止日期提醒等</div>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="examNotifications" checked>
+                                <label class="form-check-label" for="examNotifications">
+                                    考试通知
+                                </label>
+                                <div class="form-text">考试安排、成绩发布等</div>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="systemNotifications" checked>
+                                <label class="form-check-label" for="systemNotifications">
+                                    系统通知
+                                </label>
+                                <div class="form-text">系统更新、维护信息等</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>通知频率</h5>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="notificationFrequency" id="realTime" value="realTime" checked>
+                                <label class="form-check-label" for="realTime">
+                                    实时通知
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="notificationFrequency" id="daily" value="daily">
+                                <label class="form-check-label" for="daily">
+                                    每日摘要
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="notificationFrequency" id="weekly" value="weekly">
+                                <label class="form-check-label" for="weekly">
+                                    每周摘要
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">保存设置</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧通知列表 -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="notificationsTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">
+                                全部通知 <span class="badge bg-primary rounded-pill">8</span>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="unread-tab" data-bs-toggle="tab" data-bs-target="#unread" type="button" role="tab" aria-controls="unread" aria-selected="false">
+                                未读通知 <span class="badge bg-danger rounded-pill">3</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body p-0">
+                    <div class="d-flex justify-content-between align-items-center p-3 bg-light">
+                        <div>
+                            <select class="form-select form-select-sm d-inline-block w-auto me-2" id="filterSelect">
+                                <option value="all">所有类型</option>
+                                <option value="course">课程通知</option>
+                                <option value="assignment">作业通知</option>
+                                <option value="exam">考试通知</option>
+                                <option value="system">系统通知</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary me-2" id="markAllReadBtn">
+                                标记所有为已读
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" id="clearAllBtn">
+                                清空通知
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="notificationsTabContent">
+                        <!-- 全部通知 -->
+                        <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                            <div class="notification-list">
+                                <!-- 通知项 1 -->
+                                <div class="notification-item notification-unread d-flex">
+                                    <div class="notification-icon notification-icon-assignment">
+                                        <i class="fas fa-clipboard-list"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="notification-title">数学作业已发布</h6>
+                                            <span class="notification-badge bg-primary">未读</span>
+                                        </div>
+                                        <p class="mb-1">老师已发布《函数微积分》作业，请在截止日期前完成。</p>
+                                        <div class="notification-meta">
+                                            <span><i class="fas fa-clock me-1"></i>30分钟前</span>
+                                            <span class="ms-3"><i class="fas fa-tag me-1"></i>作业通知</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 通知项 2 -->
+                                <div class="notification-item notification-unread d-flex">
+                                    <div class="notification-icon notification-icon-exam">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="notification-title">物理期中考试安排</h6>
+                                            <span class="notification-badge bg-primary">未读</span>
+                                        </div>
+                                        <p class="mb-1">物理期中考试将于5月20日下午2点在主教学楼301教室举行，请做好准备。</p>
+                                        <div class="notification-meta">
+                                            <span><i class="fas fa-clock me-1"></i>2小时前</span>
+                                            <span class="ms-3"><i class="fas fa-tag me-1"></i>考试通知</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 通知项 3 -->
+                                <div class="notification-item notification-unread d-flex">
+                                    <div class="notification-icon notification-icon-course">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="notification-title">课程调整通知</h6>
+                                            <span class="notification-badge bg-primary">未读</span>
+                                        </div>
+                                        <p class="mb-1">由于教室维修，本周五的化学课将调整到第三教学楼102教室。</p>
+                                        <div class="notification-meta">
+                                            <span><i class="fas fa-clock me-1"></i>昨天 15:30</span>
+                                            <span class="ms-3"><i class="fas fa-tag me-1"></i>课程通知</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 通知项 4 -->
+                                <div class="notification-item d-flex">
+                                    <div class="notification-icon notification-icon-assignment">
+                                        <i class="fas fa-clipboard-check"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="notification-title">作业评分已完成</h6>
+                                        </div>
+                                        <p class="mb-1">您的数学作业《三角函数》已评分完成，得分为92分。</p>
+                                        <div class="notification-meta">
+                                            <span><i class="fas fa-clock me-1"></i>2天前</span>
+                                            <span class="ms-3"><i class="fas fa-tag me-1"></i>作业通知</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 通知项 5 -->
+                                <div class="notification-item d-flex">
+                                    <div class="notification-icon notification-icon-system">
+                                        <i class="fas fa-cogs"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="notification-title">系统维护通知</h6>
+                                        </div>
+                                        <p class="mb-1">系统将于本周六凌晨2点至4点进行维护升级，期间可能无法访问。</p>
+                                        <div class="notification-meta">
+                                            <span><i class="fas fa-clock me-1"></i>3天前</span>
+                                            <span class="ms-3"><i class="fas fa-tag me-1"></i>系统通知</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 通知项 6 -->
+                                <div class="notification-item d-flex">
+                                    <div class="notification-icon notification-icon-course">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="notification-title">新课程资料已上传</h6>
+                                        </div>
+                                        <p class="mb-1">物理老师已上传《牛顿力学》课程补充资料，请及时查看。</p>
+                                        <div class="notification-meta">
+                                            <span><i class="fas fa-clock me-1"></i>上周</span>
+                                            <span class="ms-3"><i class="fas fa-tag me-1"></i>课程通知</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <nav aria-label="通知分页" class="mt-3 p-3">
+                                <ul class="pagination justify-content-center mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">下一页</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        
+                        <!-- 未读通知 -->
+                        <div class="tab-pane fade" id="unread" role="tabpanel" aria-labelledby="unread-tab">
+                            <div class="notification-list">
+                                <!-- 通知项 1 (未读) -->
+                                <div class="notification-item notification-unread d-flex">
+                                    <div class="notification-icon notification-icon-assignment">
+                                        <i class="fas fa-clipboard-list"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="notification-title">数学作业已发布</h6>
+                                            <span class="notification-badge bg-primary">未读</span>
+                                        </div>
+                                        <p class="mb-1">老师已发布《函数微积分》作业，请在截止日期前完成。</p>
+                                        <div class="notification-meta">
+                                            <span><i class="fas fa-clock me-1"></i>30分钟前</span>
+                                            <span class="ms-3"><i class="fas fa-tag me-1"></i>作业通知</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 通知项 2 (未读) -->
+                                <div class="notification-item notification-unread d-flex">
+                                    <div class="notification-icon notification-icon-exam">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="notification-title">物理期中考试安排</h6>
+                                            <span class="notification-badge bg-primary">未读</span>
+                                        </div>
+                                        <p class="mb-1">物理期中考试将于5月20日下午2点在主教学楼301教室举行，请做好准备。</p>
+                                        <div class="notification-meta">
+                                            <span><i class="fas fa-clock me-1"></i>2小时前</span>
+                                            <span class="ms-3"><i class="fas fa-tag me-1"></i>考试通知</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 通知项 3 (未读) -->
+                                <div class="notification-item notification-unread d-flex">
+                                    <div class="notification-icon notification-icon-course">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="notification-title">课程调整通知</h6>
+                                            <span class="notification-badge bg-primary">未读</span>
+                                        </div>
+                                        <p class="mb-1">由于教室维修，本周五的化学课将调整到第三教学楼102教室。</p>
+                                        <div class="notification-meta">
+                                            <span><i class="fas fa-clock me-1"></i>昨天 15:30</span>
+                                            <span class="ms-3"><i class="fas fa-tag me-1"></i>课程通知</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 通知设置表单提交
+        document.getElementById('notificationSettingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const formData = {
+                webNotifications: document.getElementById('webNotifications').checked,
+                emailNotifications: document.getElementById('emailNotifications').checked,
+                smsNotifications: document.getElementById('smsNotifications').checked,
+                courseNotifications: document.getElementById('courseNotifications').checked,
+                assignmentNotifications: document.getElementById('assignmentNotifications').checked,
+                examNotifications: document.getElementById('examNotifications').checked,
+                systemNotifications: document.getElementById('systemNotifications').checked,
+                notificationFrequency: document.querySelector('input[name="notificationFrequency"]:checked').value
+            };
+            
+            console.log('提交通知设置:', formData);
+            
+            // 模拟API请求
+            setTimeout(() => {
+                showMessage('通知设置已更新', 'success');
+            }, 500);
+        });
+        
+        // 筛选通知
+        document.getElementById('filterSelect').addEventListener('change', function() {
+            const filterValue = this.value;
+            console.log('筛选通知:', filterValue);
+            
+            // 显示所有通知项
+            const allItems = document.querySelectorAll('.notification-item');
+            allItems.forEach(item => {
+                item.style.display = 'flex';
+            });
+            
+            // 如果不是"全部"，则筛选
+            if (filterValue !== 'all') {
+                allItems.forEach(item => {
+                    const notificationType = item.querySelector('.notification-meta .fa-tag').nextSibling.textContent.trim();
+                    if (!notificationType.includes(getFilterName(filterValue))) {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+            
+            showMessage(`已筛选${getFilterName(filterValue)}通知`, 'info');
+        });
+        
+        // 标记所有为已读
+        document.getElementById('markAllReadBtn').addEventListener('click', function() {
+            const unreadItems = document.querySelectorAll('.notification-unread');
+            unreadItems.forEach(item => {
+                item.classList.remove('notification-unread');
+                const badge = item.querySelector('.notification-badge');
+                if (badge) {
+                    badge.remove();
+                }
+            });
+            
+            // 更新未读数量标签
+            document.querySelector('#unread-tab .badge').textContent = '0';
+            document.querySelector('#all-tab .badge').textContent = '8';
+            
+            // 清空未读通知页面
+            document.querySelector('#unread .notification-list').innerHTML = `
+                <div class="p-4 text-center text-muted">
+                    <i class="fas fa-check-circle fa-3x mb-3"></i>
+                    <p>您目前没有未读通知</p>
+                </div>
+            `;
+            
+            showMessage('已将所有通知标记为已读', 'success');
+        });
+        
+        // 清空所有通知
+        document.getElementById('clearAllBtn').addEventListener('click', function() {
+            if (confirm('确定要清空所有通知吗？此操作不可撤销。')) {
+                document.querySelector('#all .notification-list').innerHTML = `
+                    <div class="p-4 text-center text-muted">
+                        <i class="fas fa-bell-slash fa-3x mb-3"></i>
+                        <p>您目前没有任何通知</p>
+                    </div>
+                `;
+                
+                document.querySelector('#unread .notification-list').innerHTML = `
+                    <div class="p-4 text-center text-muted">
+                        <i class="fas fa-check-circle fa-3x mb-3"></i>
+                        <p>您目前没有未读通知</p>
+                    </div>
+                `;
+                
+                // 更新未读数量标签
+                document.querySelector('#unread-tab .badge').textContent = '0';
+                document.querySelector('#all-tab .badge').textContent = '0';
+                
+                showMessage('已清空所有通知', 'success');
+            }
+        });
+        
+        // 绑定通知项点击事件
+        const notificationItems = document.querySelectorAll('.notification-item');
+        notificationItems.forEach(item => {
+            item.addEventListener('click', function() {
+                if (this.classList.contains('notification-unread')) {
+                    this.classList.remove('notification-unread');
+                    const badge = this.querySelector('.notification-badge');
+                    if (badge) {
+                        badge.remove();
+                    }
+                    
+                    // 更新未读数量
+                    const unreadCount = document.querySelectorAll('.notification-unread').length;
+                    document.querySelector('#unread-tab .badge').textContent = unreadCount;
+                    
+                    // 检查是否需要从未读标签页中移除
+                    if (document.querySelector('#unread-tab').classList.contains('active')) {
+                        this.style.display = 'none';
+                        if (unreadCount === 0) {
+                            document.querySelector('#unread .notification-list').innerHTML = `
+                                <div class="p-4 text-center text-muted">
+                                    <i class="fas fa-check-circle fa-3x mb-3"></i>
+                                    <p>您目前没有未读通知</p>
+                                </div>
+                            `;
+                        }
+                    }
+                }
+            });
+        });
+    });
+    
+    // 获取筛选器名称
+    function getFilterName(filter) {
+        switch(filter) {
+            case 'course': return '课程';
+            case 'assignment': return '作业';
+            case 'exam': return '考试';
+            case 'system': return '系统';
+            default: return '所有';
+        }
+    }
+    
+    // 显示消息函数
+    function showMessage(message, type) {
+        const messageContainer = document.getElementById('messageContainer');
+        const alertClass = type === 'error' ? 'danger' : type;
+        
+        const alertHtml = `
+            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        
+        messageContainer.innerHTML = alertHtml;
+        
+        // 5秒后自动关闭
+        setTimeout(() => {
+            const alert = messageContainer.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+            }
+        }, 5000);
+    }
+</script>
+{% endblock %}

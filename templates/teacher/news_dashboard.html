@@ -1,0 +1,591 @@
+{% extends 'base.html' %}
+
+{% block title %}教育新闻中心{% endblock %}
+
+{% block styles %}
+<style>
+  .news-container {
+    padding: 20px;
+  }
+  
+  .news-summary {
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-left: 5px solid #4286f4;
+  }
+  
+  .news-item {
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .news-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .news-item .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #2c3e50;
+  }
+  
+  .news-item .summary {
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .news-item .meta {
+    font-size: 0.8em;
+    color: #777;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .category-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    margin-right: 5px;
+  }
+  
+  .category-教育政策 { background-color: #e6f3ff; color: #2979ff; }
+  .category-教学方法 { background-color: #e8f5e9; color: #43a047; }
+  .category-教育科技 { background-color: #ede7f6; color: #673ab7; }
+  .category-考试升学 { background-color: #fef9e7; color: #f39c12; }
+  .category-素质教育 { background-color: #e1f5fe; color: #0288d1; }
+  .category-其他 { background-color: #f5f5f5; color: #757575; }
+  
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .tab.active {
+    border-bottom: 3px solid #4286f4;
+    color: #4286f4;
+    font-weight: bold;
+  }
+  
+  .search-bar {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #eaeaea;
+    border-radius: 5px 0 0 5px;
+  }
+  
+  .search-bar button {
+    padding: 10px 20px;
+    background-color: #4286f4;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .load-more {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .load-more button {
+    padding: 8px 15px;
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid news-container">
+  <h1 class="page-title">教育新闻中心</h1>
+  
+  <div class="row">
+    <div class="col-lg-8">
+      <!-- 新闻摘要区域 -->
+      <div class="news-summary" id="news-summary">
+        <h3>今日教育新闻摘要</h3>
+        <div id="summary-content">
+          <p>加载中...</p>
+        </div>
+      </div>
+      
+      <!-- 新闻Tab导航 -->
+      <div class="tabs">
+        <div class="tab active" data-tab="recent">最新新闻</div>
+        <div class="tab" data-tab="policy">教育政策</div>
+        <div class="tab" data-tab="methods">教学方法</div>
+        <div class="tab" data-tab="tech">教育科技</div>
+        <div class="tab" data-tab="exam">考试升学</div>
+      </div>
+      
+      <!-- 搜索栏 -->
+      <div class="search-bar">
+        <input type="text" id="news-search" placeholder="搜索新闻...">
+        <button id="search-btn">搜索</button>
+      </div>
+      
+      <!-- 新闻列表 -->
+      <div id="news-list">
+        <div class="loading">加载新闻中...</div>
+      </div>
+      
+      <!-- 加载更多按钮 -->
+      <div class="load-more">
+        <button id="load-more-btn">加载更多</button>
+      </div>
+    </div>
+    
+    <div class="col-lg-4">
+      <!-- 分类统计 -->
+      <div class="card mb-4">
+        <div class="card-header">新闻分类统计</div>
+        <div class="card-body">
+          <div id="category-stats">加载中...</div>
+        </div>
+      </div>
+      
+      <!-- 推荐新闻 -->
+      <div class="card">
+        <div class="card-header">推荐阅读</div>
+        <div class="card-body">
+          <div id="recommended-news">加载中...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // 当前状态
+  const state = {
+    currentTab: 'recent',
+    currentPage: 1,
+    hasMore: true,
+    searchQuery: '',
+    loading: false
+  };
+  
+  // DOM加载完成
+  document.addEventListener('DOMContentLoaded', function() {
+    // 加载初始数据
+    loadNewsSummary();
+    loadNews('recent');
+    loadCategoryStats();
+    loadRecommendedNews();
+    
+    // 绑定事件
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        const tabName = this.getAttribute('data-tab');
+        changeTab(tabName);
+      });
+    });
+    
+    document.getElementById('search-btn').addEventListener('click', function() {
+      const query = document.getElementById('news-search').value.trim();
+      if (query) {
+        state.searchQuery = query;
+        state.currentPage = 1;
+        loadSearchResults(query);
+      }
+    });
+    
+    document.getElementById('news-search').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('search-btn').click();
+      }
+    });
+    
+    document.getElementById('load-more-btn').addEventListener('click', function() {
+      loadMore();
+    });
+  });
+  
+  // 切换Tab
+  function changeTab(tabName) {
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
+    
+    state.currentTab = tabName;
+    state.currentPage = 1;
+    state.searchQuery = '';
+    state.hasMore = true;
+    
+    document.getElementById('news-search').value = '';
+    
+    let category;
+    switch(tabName) {
+      case 'policy': category = '教育政策'; break;
+      case 'methods': category = '教学方法'; break;
+      case 'tech': category = '教育科技'; break;
+      case 'exam': category = '考试升学'; break;
+      default: category = null;
+    }
+    
+    if (category) {
+      loadNewsByCategory(category);
+    } else {
+      loadNews('recent');
+    }
+  }
+  
+  // 加载新闻摘要
+  function loadNewsSummary() {
+    fetch('/api/news/summary')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const summaryEl = document.getElementById('summary-content');
+          summaryEl.innerHTML = `<p>${data.data.summary}</p>`;
+        } else {
+          throw new Error(data.error || '获取新闻摘要失败');
+        }
+      })
+      .catch(error => {
+        console.error('获取新闻摘要出错:', error);
+        document.getElementById('summary-content').innerHTML = 
+          `<p>暂时无法获取今日新闻摘要。</p>`;
+      });
+  }
+  
+  // 加载最新新闻
+  function loadNews(type = 'recent') {
+    if (state.loading) return;
+    
+    state.loading = true;
+    showLoading();
+    
+    const params = new URLSearchParams({
+      limit: 10,
+      skip: (state.currentPage - 1) * 10
+    });
+    
+    if (type === 'recent') {
+      params.append('days', 7);
+    }
+    
+    fetch(`/api/news/recent?${params}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          renderNewsList(data.data);
+          state.hasMore = data.data.length === 10;
+        } else {
+          throw new Error(data.error || '获取新闻失败');
+        }
+      })
+      .catch(error => {
+        console.error('获取新闻出错:', error);
+        document.getElementById('news-list').innerHTML = 
+          `<div class="alert alert-danger">加载新闻时出错: ${error.message}</div>`;
+      })
+      .finally(() => {
+        state.loading = false;
+        updateLoadMoreButton();
+      });
+  }
+  
+  // 按分类加载新闻
+  function loadNewsByCategory(category) {
+    if (state.loading) return;
+    
+    state.loading = true;
+    showLoading();
+    
+    const params = new URLSearchParams({
+      limit: 10,
+      skip: (state.currentPage - 1) * 10
+    });
+    
+    fetch(`/api/news/category/${encodeURIComponent(category)}?${params}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          renderNewsList(data.data);
+          state.hasMore = data.data.length === 10;
+        } else {
+          throw new Error(data.error || '获取分类新闻失败');
+        }
+      })
+      .catch(error => {
+        console.error('获取分类新闻出错:', error);
+        document.getElementById('news-list').innerHTML = 
+          `<div class="alert alert-danger">加载分类新闻时出错: ${error.message}</div>`;
+      })
+      .finally(() => {
+        state.loading = false;
+        updateLoadMoreButton();
+      });
+  }
+  
+  // 搜索新闻
+  function loadSearchResults(query) {
+    if (state.loading) return;
+    
+    state.loading = true;
+    showLoading();
+    
+    const params = new URLSearchParams({
+      query: query,
+      limit: 10,
+      skip: (state.currentPage - 1) * 10
+    });
+    
+    fetch(`/api/news/search?${params}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          renderNewsList(data.data);
+          state.hasMore = data.data.length === 10;
+        } else {
+          throw new Error(data.error || '搜索新闻失败');
+        }
+      })
+      .catch(error => {
+        console.error('搜索新闻出错:', error);
+        document.getElementById('news-list').innerHTML = 
+          `<div class="alert alert-danger">搜索新闻时出错: ${error.message}</div>`;
+      })
+      .finally(() => {
+        state.loading = false;
+        updateLoadMoreButton();
+      });
+  }
+  
+  // 加载更多
+  function loadMore() {
+    if (state.loading || !state.hasMore) return;
+    
+    state.currentPage++;
+    
+    if (state.searchQuery) {
+      loadSearchResults(state.searchQuery);
+    } else if (state.currentTab === 'recent') {
+      loadNews('recent');
+    } else {
+      let category;
+      switch(state.currentTab) {
+        case 'policy': category = '教育政策'; break;
+        case 'methods': category = '教学方法'; break;
+        case 'tech': category = '教育科技'; break;
+        case 'exam': category = '考试升学'; break;
+      }
+      if (category) {
+        loadNewsByCategory(category);
+      }
+    }
+  }
+  
+  // 加载分类统计
+  function loadCategoryStats() {
+    fetch('/api/news/categories')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          renderCategoryStats(data.data);
+        } else {
+          throw new Error(data.error || '获取分类统计失败');
+        }
+      })
+      .catch(error => {
+        console.error('获取分类统计出错:', error);
+        document.getElementById('category-stats').innerHTML = 
+          `<p>暂时无法获取分类统计。</p>`;
+      });
+  }
+  
+  // 加载推荐新闻
+  function loadRecommendedNews() {
+    // 获取当前用户ID，如果没有则使用默认推荐
+    const userId = getCookie('user_id') || 'default';
+    
+    fetch(`/api/news/recommended/${userId}?limit=5`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          renderRecommendedNews(data.data);
+        } else {
+          throw new Error(data.error || '获取推荐新闻失败');
+        }
+      })
+      .catch(error => {
+        console.error('获取推荐新闻出错:', error);
+        document.getElementById('recommended-news').innerHTML = 
+          `<p>暂时无法获取推荐新闻。</p>`;
+      });
+  }
+  
+  // 渲染新闻列表
+  function renderNewsList(newsList) {
+    const newsListEl = document.getElementById('news-list');
+    
+    if (state.currentPage === 1) {
+      newsListEl.innerHTML = '';
+    }
+    
+    if (newsList.length === 0) {
+      if (state.currentPage === 1) {
+        newsListEl.innerHTML = '<div class="alert alert-info">没有找到相关新闻</div>';
+      }
+      state.hasMore = false;
+      return;
+    }
+    
+    const newsItems = newsList.map(news => {
+      return `
+        <div class="news-item">
+          <div class="title">
+            <a href="${news.url}" target="_blank">${news.title}</a>
+          </div>
+          <div class="summary">${news.summary}</div>
+          <div class="meta">
+            <div>
+              <span class="category-badge category-${news.category}">${news.category}</span>
+              <span class="source">${news.source}</span>
+            </div>
+            <div class="time">${formatDate(news.published_at)}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    
+    if (state.currentPage === 1) {
+      newsListEl.innerHTML = newsItems;
+    } else {
+      newsListEl.innerHTML += newsItems;
+    }
+  }
+  
+  // 渲染分类统计
+  function renderCategoryStats(categories) {
+    const statsEl = document.getElementById('category-stats');
+    
+    if (!categories || categories.length === 0) {
+      statsEl.innerHTML = '<p>暂无分类数据</p>';
+      return;
+    }
+    
+    // 这里简单展示分类列表，实际应用中可能需要获取各分类的数量
+    const categoriesHtml = categories.map(category => {
+      return `
+        <div class="mb-2">
+          <span class="category-badge category-${category}">${category}</span>
+        </div>
+      `;
+    }).join('');
+    
+    statsEl.innerHTML = categoriesHtml;
+  }
+  
+  // 渲染推荐新闻
+  function renderRecommendedNews(newsList) {
+    const recommendedEl = document.getElementById('recommended-news');
+    
+    if (!newsList || newsList.length === 0) {
+      recommendedEl.innerHTML = '<p>暂无推荐新闻</p>';
+      return;
+    }
+    
+    const newsHtml = newsList.map(news => {
+      return `
+        <div class="mb-3">
+          <a href="${news.url}" target="_blank" class="recommended-title">${news.title}</a>
+          <div class="small text-muted">${formatDate(news.published_at)}</div>
+        </div>
+      `;
+    }).join('');
+    
+    recommendedEl.innerHTML = newsHtml;
+  }
+  
+  // 显示加载状态
+  function showLoading() {
+    if (state.currentPage === 1) {
+      document.getElementById('news-list').innerHTML = '<div class="loading">加载新闻中...</div>';
+    }
+    document.getElementById('load-more-btn').disabled = true;
+    document.getElementById('load-more-btn').textContent = '加载中...';
+  }
+  
+  // 更新加载更多按钮状态
+  function updateLoadMoreButton() {
+    const btn = document.getElementById('load-more-btn');
+    
+    if (state.hasMore) {
+      btn.disabled = false;
+      btn.textContent = '加载更多';
+      btn.style.display = 'inline-block';
+    } else {
+      btn.style.display = 'none';
+    }
+  }
+  
+  // 格式化日期
+  function formatDate(dateStr) {
+    if (!dateStr) return '';
+    
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return dateStr;
+    
+    const now = new Date();
+    const diffMs = now - date;
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) {
+      const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+      if (diffHours === 0) {
+        const diffMinutes = Math.floor(diffMs / (1000 * 60));
+        return diffMinutes <= 1 ? '刚刚' : `${diffMinutes}分钟前`;
+      }
+      return `${diffHours}小时前`;
+    } else if (diffDays === 1) {
+      return '昨天';
+    } else if (diffDays < 7) {
+      return `${diffDays}天前`;
+    } else {
+      return `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    }
+  }
+  
+  // 获取Cookie
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+</script>
+{% endblock %} 
