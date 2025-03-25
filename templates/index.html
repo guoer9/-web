@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>师生互动系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">师生互动系统</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item guest-controls">
+                        <button class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">登录</button>
+                    </li>
+                    <li class="nav-item guest-controls">
+                        <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#registerModal">注册</button>
+                    </li>
+                    <li class="nav-item user-controls" style="display: none;">
+                        <span class="nav-link text-light">欢迎, <span id="userInfo"></span></span>
+                    </li>
+                    <li class="nav-item user-controls" style="display: none;">
+                        <button class="btn btn-outline-light" id="logoutBtn">退出</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div id="messageContainer"></div>
+        
+        <div class="jumbotron bg-light p-5 rounded">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1 class="display-4">欢迎使用师生互动系统</h1>
+                    <p class="lead">这是一个实时互动平台，旨在促进师生之间的交流与协作。</p>
+                    <hr class="my-4">
+                    <p>通过我们的平台，教师可以发布问题、创建投票、管理讨论，学生可以实时参与并获得反馈。</p>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">立即开始</button>
+                        <button class="btn btn-outline-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#aboutModal">了解更多</button>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-center justify-content-center">
+                    <img src="/static/img/hero-image.svg" alt="师生互动插图" class="img-fluid" 
+                         onerror="this.onerror=null; this.src='/static/img/placeholder.png'; this.alt='互动平台概念图';">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">实时问答</h5>
+                        <p class="card-text">学生可以提出问题，教师可以实时回答，所有参与者都能看到问答过程。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">即时投票</h5>
+                        <p class="card-text">教师可以创建投票，收集学生的反馈和看法，实时显示投票结果。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">互动讨论</h5>
+                        <p class="card-text">围绕特定主题进行讨论，促进思想交流和深度学习体验。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 登录模态框 -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">用户登录</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">用户名</label>
+                            <input type="text" class="form-control" id="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">密码</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <input type="hidden" id="loginRoleInput" value="student">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">登录</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <p class="text-center">还没有账号? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">立即注册</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">用户注册</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">姓名</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerUsername" class="form-label">用户名</label>
+                            <input type="text" class="form-control" id="registerUsername" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">密码</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">确认密码</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">角色</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="registerRole" id="studentRole" value="student" checked>
+                                <label class="form-check-label" for="studentRole">学生</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="registerRole" id="teacherRole" value="teacher">
+                                <label class="form-check-label" for="teacherRole">教师</label>
+                            </div>
+                        </div>
+                        <div class="mb-3 student-field">
+                            <label for="classId" class="form-label">班级ID</label>
+                            <input type="text" class="form-control" id="classId">
+                            <small class="form-text text-muted">如果您是学生，请输入您的班级ID</small>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">注册</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <p class="text-center">已有账号? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">立即登录</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 关于模态框 -->
+    <div class="modal fade" id="aboutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">关于师生互动系统</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>师生互动系统是一个专为教育环境设计的实时互动平台。</p>
+                    <p>我们的核心功能包括：</p>
+                    <ul>
+                        <li>实时问答：促进课堂参与</li>
+                        <li>即时投票：收集学生反馈</li>
+                        <li>互动讨论：深入探讨学习主题</li>
+                        <li>学习反馈：了解学生学习进度</li>
+                    </ul>
+                    <p>当前版本：0.1.0</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">© 2025 师生互动系统 | 版本 0.1.0</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html> 
+</html> 
+</html> 
