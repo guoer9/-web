@@ -1,0 +1,417 @@
+{% extends 'base.html' %}
+
+{% block title %}学生名单{% endblock %}
+
+{% block styles %}
+<style>
+    .students-container {
+        padding: 20px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+        background-color: #f8f9fa;
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 500;
+    }
+    
+    .student-item {
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .student-item:last-child {
+        border-bottom: none;
+    }
+    
+    .student-name {
+        font-weight: 500;
+    }
+    
+    .student-meta {
+        font-size: 0.85em;
+        color: #666;
+    }
+    
+    .search-bar {
+        margin-bottom: 20px;
+    }
+    
+    .class-selector {
+        margin-bottom: 20px;
+    }
+    
+    .badge {
+        padding: 4px 8px;
+        font-size: 0.75em;
+        font-weight: normal;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid students-container">
+    <h1 class="page-title">学生名单</h1>
+    
+    <div id="messageContainer"></div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0"><i class="fas fa-users"></i> 学生管理</h4>
+                        <button class="btn btn-light btn-sm" id="export-list-btn">
+                            <i class="fas fa-download"></i> 导出名单
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- 搜索和筛选 -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="search-bar">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="search-input" placeholder="搜索学生...">
+                                    <button class="btn btn-primary" id="search-btn">
+                                        <i class="fas fa-search"></i> 搜索
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="class-selector">
+                                <select class="form-select" id="class-select">
+                                    <option value="">所有班级</option>
+                                    <option value="class1">大一1班</option>
+                                    <option value="class2">大一2班</option>
+                                    <option value="class3">大二1班</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 学生统计 -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">总学生数</h5>
+                                    <h3 class="card-text">58</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">活跃学生</h5>
+                                    <h3 class="card-text">42</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">参与率</h5>
+                                    <h3 class="card-text">72%</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">平均分数</h5>
+                                    <h3 class="card-text">85</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 学生列表 -->
+                    <div class="student-list">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">姓名</th>
+                                    <th scope="col">学号</th>
+                                    <th scope="col">班级</th>
+                                    <th scope="col">参与度</th>
+                                    <th scope="col">成绩</th>
+                                    <th scope="col">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>张三</td>
+                                    <td>20230001</td>
+                                    <td>大一1班</td>
+                                    <td><span class="badge bg-success">高</span></td>
+                                    <td>92</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary view-student-btn" data-student-id="1">查看</button>
+                                        <button class="btn btn-sm btn-outline-secondary message-student-btn" data-student-id="1">消息</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>李四</td>
+                                    <td>20230002</td>
+                                    <td>大一1班</td>
+                                    <td><span class="badge bg-warning">中</span></td>
+                                    <td>85</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary view-student-btn" data-student-id="2">查看</button>
+                                        <button class="btn btn-sm btn-outline-secondary message-student-btn" data-student-id="2">消息</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>王五</td>
+                                    <td>20230003</td>
+                                    <td>大一2班</td>
+                                    <td><span class="badge bg-danger">低</span></td>
+                                    <td>78</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary view-student-btn" data-student-id="3">查看</button>
+                                        <button class="btn btn-sm btn-outline-secondary message-student-btn" data-student-id="3">消息</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <!-- 分页 -->
+                        <nav aria-label="学生列表分页">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">下一页</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 学生详情模态框 -->
+<div class="modal fade" id="student-detail-modal" tabindex="-1" aria-labelledby="studentDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="studentDetailModalLabel">学生详情</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="https://via.placeholder.com/150" class="rounded-circle mb-3" alt="学生头像">
+                        <h4 id="student-name">张三</h4>
+                        <p id="student-id">学号: 20230001</p>
+                        <p id="student-class">班级: 大一1班</p>
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="nav nav-tabs" id="studentTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="performance-tab" data-bs-toggle="tab" data-bs-target="#performance" type="button" role="tab" aria-controls="performance" aria-selected="true">学习表现</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="interactions-tab" data-bs-toggle="tab" data-bs-target="#interactions" type="button" role="tab" aria-controls="interactions" aria-selected="false">互动记录</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback" type="button" role="tab" aria-controls="feedback" aria-selected="false">反馈记录</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="studentTabContent">
+                            <div class="tab-pane fade show active" id="performance" role="tabpanel" aria-labelledby="performance-tab">
+                                <div class="mt-3">
+                                    <h5>成绩情况</h5>
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 92%" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">92分</div>
+                                    </div>
+                                    
+                                    <h5>学习参与度</h5>
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85%</div>
+                                    </div>
+                                    
+                                    <h5>出勤率</h5>
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">95%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="interactions" role="tabpanel" aria-labelledby="interactions-tab">
+                                <div class="mt-3">
+                                    <h5>互动历史</h5>
+                                    <div class="list-group">
+                                        <div class="list-group-item">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">提问: 如何理解牛顿三定律？</h6>
+                                                <small>3天前</small>
+                                            </div>
+                                            <p class="mb-1">这个问题得到了详细解答</p>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">参与投票: 哪种学习方式更有效？</h6>
+                                                <small>1周前</small>
+                                            </div>
+                                            <p class="mb-1">选择了"小组讨论"</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
+                                <div class="mt-3">
+                                    <h5>学生反馈</h5>
+                                    <div class="list-group">
+                                        <div class="list-group-item">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">课程反馈: 物理学</h6>
+                                                <small>2周前</small>
+                                            </div>
+                                            <p class="mb-1">课程内容很有趣，但希望能减少作业量</p>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">教学评价</h6>
+                                                <small>1个月前</small>
+                                            </div>
+                                            <p class="mb-1">教学方法生动有趣，讲解清晰</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">发送消息</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 角色验证 - 确保只有教师可以访问该页面
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            try {
+                const user = JSON.parse(userData);
+                if (user.role !== 'teacher') {
+                    console.error('非教师角色访问教师页面');
+                    showMessage('您没有权限访问该页面，正在重定向...', 'error');
+                    setTimeout(() => {
+                        window.location.href = user.role === 'student' ? '/student/dashboard' : '/';
+                    }, 2000);
+                    return;
+                }
+                console.log('教师用户验证成功');
+            } catch (e) {
+                console.error('解析用户数据出错:', e);
+            }
+        } else {
+            console.error('未找到用户数据');
+            showMessage('请先登录', 'error');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+            return;
+        }
+
+        console.log('学生名单页面已加载');
+        
+        // 查看学生详情按钮事件
+        document.querySelectorAll('.view-student-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const studentId = this.getAttribute('data-student-id');
+                console.log('查看学生详情:', studentId);
+                // 显示学生详情模态框
+                const detailModal = new bootstrap.Modal(document.getElementById('student-detail-modal'));
+                detailModal.show();
+            });
+        });
+        
+        // 发送消息按钮事件
+        document.querySelectorAll('.message-student-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const studentId = this.getAttribute('data-student-id');
+                console.log('发送消息给学生:', studentId);
+                // 这里可以添加发送消息的逻辑
+                showMessage('消息功能尚未实现', 'info');
+            });
+        });
+        
+        // 搜索按钮事件
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const searchTerm = document.getElementById('search-input').value;
+            console.log('搜索学生:', searchTerm);
+            // 这里可以添加搜索逻辑
+            showMessage(`搜索 "${searchTerm}" 的结果为3名学生`, 'info');
+        });
+        
+        // 班级选择事件
+        document.getElementById('class-select').addEventListener('change', function() {
+            const selectedClass = this.value;
+            console.log('选择班级:', selectedClass);
+            // 这里可以添加按班级筛选的逻辑
+            showMessage(`显示 ${selectedClass || '所有班级'} 的学生`, 'info');
+        });
+        
+        // 导出名单按钮事件
+        document.getElementById('export-list-btn').addEventListener('click', function() {
+            console.log('导出学生名单');
+            // 这里可以添加导出逻辑
+            showMessage('学生名单导出功能尚未实现', 'info');
+        });
+    });
+    
+    // 显示消息函数
+    function showMessage(message, type = 'info') {
+        const messageContainer = document.getElementById('messageContainer');
+        if (!messageContainer) {
+            console.error('未找到消息容器');
+            return;
+        }
+        
+        const alertClass = type === 'error' ? 'danger' : type;
+        
+        const alertHtml = `
+            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        
+        messageContainer.innerHTML = alertHtml;
+        
+        // 5秒后自动关闭
+        setTimeout(() => {
+            const alert = messageContainer.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+            }
+        }, 5000);
+    }
+</script>
+{% endblock %} 

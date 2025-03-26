@@ -5,24 +5,29 @@
 {% block styles %}
 <style>
     .dashboard-container {
-        padding: 20px;
+        padding: 20px 5px;
     }
     
     .card {
         margin-bottom: 20px;
         border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        overflow: hidden;
     }
     
     .card-header {
-        background-color: #f8f9fa;
-        border-radius: 10px 10px 0 0 !important;
-        font-weight: 500;
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .card-header h4 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
     }
     
     .question-item, .notification-item {
-        padding: 10px;
-        border-bottom: 1px solid #f0f0f0;
+        padding: 15px;
+        border-bottom: 1px solid #f5f5f5;
     }
     
     .question-item:last-child, .notification-item:last-child {
@@ -30,43 +35,51 @@
     }
     
     .question-text, .notification-text {
-        margin-bottom: 5px;
+        margin-bottom: 8px;
     }
     
     .question-meta, .notification-meta {
+        display: flex;
+        justify-content: space-between;
         font-size: 0.85em;
         color: #666;
     }
     
     .badge {
-        padding: 4px 8px;
-        font-size: 0.75em;
-        font-weight: normal;
+        padding: 5px 10px;
+        font-weight: 500;
+        border-radius: 50px;
     }
     
     .time-ago {
-        float: right;
+        color: #7f8c8d;
     }
     
     .answer {
         background-color: #f9f9f9;
-        padding: 8px;
+        padding: 10px;
         border-radius: 5px;
-        margin-top: 5px;
+        margin-top: 10px;
     }
     
     .answer-label {
         font-weight: bold;
         font-size: 0.85em;
         color: #333;
+        margin-bottom: 5px;
     }
     
     .course-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px;
-        border-bottom: 1px solid #f0f0f0;
+        padding: 12px 15px;
+        border-bottom: 1px solid #f5f5f5;
+        transition: background-color 0.2s;
+    }
+    
+    .course-item:hover {
+        background-color: #f9f9f9;
     }
     
     .course-item:last-child {
@@ -89,10 +102,11 @@
         font-weight: normal;
         width: 100%;
         cursor: pointer;
-        padding: 10px;
+        padding: 10px 15px;
         border: 1px solid #ddd;
         border-radius: 5px;
         transition: all 0.2s;
+        display: block;
     }
     
     .option-label:hover {
@@ -103,6 +117,35 @@
         background-color: #e8f4ff;
         border-color: #b8daff;
     }
+    
+    .action-button {
+        background: linear-gradient(135deg, rgba(52, 152, 219, 0.8) 0%, rgba(52, 152, 219, 1) 100%);
+        color: white;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 20px;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+    
+    .action-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .action-button i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+    
+    .action-button.purple {
+        background: linear-gradient(135deg, rgba(155, 89, 182, 0.8) 0%, rgba(142, 68, 173, 1) 100%);
+    }
+    
+    .action-button.green {
+        background: linear-gradient(135deg, rgba(46, 204, 113, 0.8) 0%, rgba(39, 174, 96, 1) 100%);
+    }
 </style>
 {% endblock %}
 
@@ -110,14 +153,36 @@
 <div class="container-fluid dashboard-container">
     <h1 class="page-title">学生仪表盘</h1>
     
-    <div id="messageContainer"></div>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="action-button d-flex flex-column align-items-center">
+                <i class="fas fa-question-circle"></i>
+                <h5>提出问题</h5>
+                <p class="small mb-0">向老师提出你的疑问</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="action-button purple d-flex flex-column align-items-center">
+                <i class="fas fa-poll"></i>
+                <h5>参与投票</h5>
+                <p class="small mb-0">参与课堂投票活动</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="action-button green d-flex flex-column align-items-center">
+                <i class="fas fa-comment-alt"></i>
+                <h5>提交反馈</h5>
+                <p class="small mb-0">提交关于课程的反馈</p>
+            </div>
+        </div>
+    </div>
     
     <div class="row">
         <!-- 左侧栏 - 课堂互动 -->
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <i class="fas fa-comments"></i> 课堂互动
+                <div class="card-header bg-white">
+                    <h4><i class="fas fa-comments text-primary me-2"></i>课堂互动</h4>
                 </div>
                 <div class="card-body">
                     <!-- 最近问题 -->
@@ -126,35 +191,32 @@
                         <div class="question-item">
                             <div class="question-text">如何理解牛顿三定律？</div>
                             <div class="question-meta">
-                                <span class="badge badge-success">已回答</span>
+                                <span class="badge bg-success">已回答</span>
                                 <span class="time-ago">3分钟前</span>
                             </div>
                             <div class="answer mt-2">
                                 <div class="answer-label">回答:</div>
-                                <div class="answer-text">请解释一下作用力与反作用力的概念，谢谢老师。</div>
+                                <div class="answer-text">牛顿三定律是经典力学的基础，包括惯性定律、动量定律和作用力与反作用力定律。这些定律解释了物体运动的基本原理。</div>
                             </div>
                         </div>
+                        
                         <div class="question-item">
                             <div class="question-text">请问下周考试范围是什么？</div>
                             <div class="question-meta">
-                                <span class="badge badge-secondary">待回答</span>
+                                <span class="badge bg-secondary">待回答</span>
                                 <span class="time-ago">昨天</span>
                             </div>
-                            <button class="btn btn-sm btn-outline-primary answer-btn mt-2" data-question-id="2">
-                                补充问题
+                            <button class="btn btn-sm btn-outline-primary mt-2">
+                                <i class="fas fa-plus-circle me-1"></i>补充问题
                             </button>
                         </div>
                     </div>
                     
-                    <button id="ask-question-btn" class="btn btn-primary mt-4">
-                        <i class="fas fa-question-circle"></i> 提出问题
-                    </button>
-                    
                     <!-- 活跃投票 -->
                     <h5 class="mt-4 mb-3">活跃投票</h5>
                     <div class="active-poll">
-                        <div class="poll-question">
-                            <strong>你最喜欢的学习方式是？</strong>
+                        <div class="poll-question mb-3">
+                            <strong>你最喜欢的学习方式是什么？</strong>
                         </div>
                         <form id="vote-form" data-poll-id="1">
                             <div class="voting-options">
@@ -175,40 +237,37 @@
                                     <label for="option4" class="option-label">自主学习</label>
                                 </div>
                             </div>
-                            <button type="submit" id="submit-vote" class="btn btn-primary mt-3">
-                                <i class="fas fa-vote-yea"></i> 提交投票
-                            </button>
+                            <button type="submit" class="btn btn-primary w-100 mt-3" id="submit-vote">提交投票</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- 右侧栏 - 课程信息和通知 -->
         <div class="col-md-4">
             <!-- 当前课程 -->
-            <div class="card">
-                <div class="card-header bg-success text-white">
-                    <i class="fas fa-book"></i> 当前课程
+            <div class="card mb-4">
+                <div class="card-header bg-white">
+                    <h4><i class="fas fa-book text-primary me-2"></i>当前课程</h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0">
                     <div class="current-courses">
                         <div class="course-item">
                             <div class="course-name">物理学</div>
                             <div class="course-meta">
-                                <span class="badge badge-success">进行中</span>
+                                <span class="badge bg-success">进行中</span>
                             </div>
                         </div>
                         <div class="course-item">
                             <div class="course-name">数学</div>
                             <div class="course-meta">
-                                <span class="badge badge-secondary">今天</span>
+                                <span class="badge bg-secondary">今天</span>
                             </div>
                         </div>
                         <div class="course-item">
                             <div class="course-name">化学</div>
                             <div class="course-meta">
-                                <span class="badge badge-secondary">明天</span>
+                                <span class="badge bg-secondary">明天</span>
                             </div>
                         </div>
                     </div>
@@ -217,10 +276,10 @@
             
             <!-- 最近通知 -->
             <div class="card">
-                <div class="card-header bg-info text-white">
-                    <i class="fas fa-bell"></i> 最近通知
+                <div class="card-header bg-white">
+                    <h4><i class="fas fa-bell text-primary me-2"></i>最近通知</h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0">
                     <div class="recent-notifications">
                         <div class="notification-item">
                             <div class="notification-text">下周三物理课将进行小测验，请做好准备。</div>
@@ -234,23 +293,12 @@
                                 <span class="time-ago">2小时前</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 快捷操作 -->
-            <div class="card">
-                <div class="card-header bg-dark text-white">
-                    <i class="fas fa-bolt"></i> 快速操作
-                </div>
-                <div class="card-body">
-                    <div class="d-grid gap-2">
-                        <button id="submit-feedback-btn" class="btn btn-outline-primary">
-                            <i class="fas fa-comment-alt"></i> 提交反馈
-                        </button>
-                        <a href="/student/news" class="btn btn-outline-secondary">
-                            <i class="fas fa-newspaper"></i> 查看教育新闻
-                        </a>
+                        <div class="notification-item">
+                            <div class="notification-text">请所有同学在周五前完成数学作业。</div>
+                            <div class="notification-meta">
+                                <span class="time-ago">昨天</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -267,15 +315,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="question-form" data-course-id="1">
+                <form id="question-form">
                     <div class="mb-3">
-                        <label for="question-text" class="form-label">您的问题</label>
-                        <textarea class="form-control" id="question-text" rows="3" required></textarea>
-                    </div>
-                    <div class="d-grid">
-                        <button type="button" id="submit-question" class="btn btn-primary">提交问题</button>
+                        <label for="question-text" class="form-label">您的问题：</label>
+                        <textarea class="form-control" id="question-text" rows="4" required></textarea>
                     </div>
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submit-question">提交问题</button>
             </div>
         </div>
     </div>
@@ -290,21 +339,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="feedback-form" data-course-id="1">
+                <form id="feedback-form">
                     <div class="mb-3">
-                        <label for="feedback-text" class="form-label">您的反馈</label>
-                        <textarea class="form-control" id="feedback-text" rows="3" required></textarea>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="anonymous-feedback">
-                        <label class="form-check-label" for="anonymous-feedback">
-                            匿名反馈
-                        </label>
-                    </div>
-                    <div class="d-grid">
-                        <button type="button" id="submit-feedback" class="btn btn-primary">提交反馈</button>
+                        <label for="feedback-text" class="form-label">您的反馈：</label>
+                        <textarea class="form-control" id="feedback-text" rows="4" required></textarea>
                     </div>
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submit-feedback">提交反馈</button>
             </div>
         </div>
     </div>
@@ -314,152 +358,106 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // 角色验证 - 确保只有学生可以访问该页面
+        // 角色验证
         const userData = localStorage.getItem('userData');
         if (userData) {
             try {
                 const user = JSON.parse(userData);
                 if (user.role !== 'student') {
                     console.error('非学生角色访问学生仪表盘');
-                    showMessage('您没有权限访问该页面，正在重定向...', 'error');
                     setTimeout(() => {
                         window.location.href = user.role === 'teacher' ? '/teacher/dashboard' : '/';
                     }, 2000);
                     return;
                 }
-                console.log('学生用户验证成功');
             } catch (e) {
                 console.error('解析用户数据出错:', e);
             }
-        } else {
-            console.error('未找到用户数据');
-            showMessage('请先登录', 'error');
-            setTimeout(() => {
-                window.location.href = '/';
-            }, 2000);
-            return;
-        }
-
-        // 检查初始化
-        console.log('学生仪表盘页面已加载');
-        
-        // 检查投票表单是否存在并注册事件
-        const voteForm = document.getElementById('vote-form');
-        if (voteForm) {
-            console.log('投票表单已找到');
-            voteForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                console.log('投票表单提交');
-                submitVote();
-            });
-        } else {
-            console.warn('未找到投票表单');
-        }
-
-        // 绑定提问按钮事件
-        const askQuestionBtn = document.getElementById('ask-question-btn');
-        if (askQuestionBtn) {
-            askQuestionBtn.addEventListener('click', function() {
-                const askQuestionModal = new bootstrap.Modal(document.getElementById('ask-question-modal'));
-                askQuestionModal.show();
-            });
-        }
-
-        // 绑定反馈按钮事件
-        const feedbackBtn = document.getElementById('submit-feedback-btn');
-        if (feedbackBtn) {
-            feedbackBtn.addEventListener('click', function() {
-                const feedbackModal = new bootstrap.Modal(document.getElementById('feedback-modal'));
-                feedbackModal.show();
-            });
-        }
-
-        // 提交问题
-        const submitQuestionBtn = document.getElementById('submit-question');
-        if (submitQuestionBtn) {
-            submitQuestionBtn.addEventListener('click', function() {
-                const questionText = document.getElementById('question-text').value;
-                if (!questionText) {
-                    showMessage('请输入问题内容', 'error');
-                    return;
-                }
-                
-                showMessage('问题已提交', 'success');
-                bootstrap.Modal.getInstance(document.getElementById('ask-question-modal')).hide();
-                // 清空表单
-                document.getElementById('question-text').value = '';
-            });
-        }
-
-        // 提交反馈
-        const submitFeedbackBtn = document.getElementById('submit-feedback');
-        if (submitFeedbackBtn) {
-            submitFeedbackBtn.addEventListener('click', function() {
-                const feedbackText = document.getElementById('feedback-text').value;
-                if (!feedbackText) {
-                    showMessage('请输入反馈内容', 'error');
-                    return;
-                }
-                
-                showMessage('反馈已提交', 'success');
-                bootstrap.Modal.getInstance(document.getElementById('feedback-modal')).hide();
-                // 清空表单
-                document.getElementById('feedback-text').value = '';
-            });
-        }
-    });
-
-    // 提交投票函数
-    function submitVote() {
-        const selectedOption = document.querySelector('input[name="poll-option"]:checked');
-        if (!selectedOption) {
-            console.log('未选择选项');
-            showMessage('请选择一个选项', 'error');
-            return;
         }
         
-        const optionId = selectedOption.value;
-        const pollId = document.getElementById('vote-form').getAttribute('data-poll-id');
-        
-        console.log(`提交投票: 投票ID=${pollId}, 选项ID=${optionId}`);
-        
-        // 这里模拟API调用成功
-        showMessage('投票已提交', 'success');
-        
-        // 禁用投票表单，防止重复提交
-        document.querySelectorAll('input[name="poll-option"]').forEach(input => {
-            input.disabled = true;
+        // 提问按钮点击事件
+        document.querySelector('.action-button:first-child').addEventListener('click', function() {
+            const modal = new bootstrap.Modal(document.getElementById('ask-question-modal'));
+            modal.show();
         });
-        document.getElementById('submit-vote').disabled = true;
-    }
-
-    // 显示消息函数
-    function showMessage(message, type = 'info') {
-        const messageContainer = document.getElementById('messageContainer');
-        if (!messageContainer) {
-            console.error('未找到消息容器');
-            return;
-        }
         
-        const alertClass = type === 'error' ? 'danger' : type;
-        
-        const alertHtml = `
-            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        `;
-        
-        messageContainer.innerHTML = alertHtml;
-        
-        // 5秒后自动关闭
-        setTimeout(() => {
-            const alert = messageContainer.querySelector('.alert');
-            if (alert) {
-                alert.classList.remove('show');
-                setTimeout(() => alert.remove(), 150);
+        // 提交问题按钮点击事件
+        document.getElementById('submit-question').addEventListener('click', function() {
+            const questionText = document.getElementById('question-text').value.trim();
+            if (!questionText) {
+                alert('请输入问题内容');
+                return;
             }
-        }, 5000);
-    }
+            
+            // 提交问题的逻辑
+            console.log('提交问题:', questionText);
+            
+            // 关闭模态框并清空输入
+            bootstrap.Modal.getInstance(document.getElementById('ask-question-modal')).hide();
+            document.getElementById('question-text').value = '';
+            
+            // 显示成功消息
+            alert('问题提交成功！');
+        });
+        
+        // 提交反馈按钮点击事件
+        document.querySelector('.action-button.green').addEventListener('click', function() {
+            const modal = new bootstrap.Modal(document.getElementById('feedback-modal'));
+            modal.show();
+        });
+        
+        // 提交反馈的处理
+        document.getElementById('submit-feedback').addEventListener('click', function() {
+            const feedbackText = document.getElementById('feedback-text').value.trim();
+            if (!feedbackText) {
+                alert('请输入反馈内容');
+                return;
+            }
+            
+            // 提交反馈的逻辑
+            console.log('提交反馈:', feedbackText);
+            
+            // 关闭模态框并清空输入
+            bootstrap.Modal.getInstance(document.getElementById('feedback-modal')).hide();
+            document.getElementById('feedback-text').value = '';
+            
+            // 显示成功消息
+            alert('反馈提交成功！');
+        });
+        
+        // 参与投票按钮点击事件
+        document.querySelector('.action-button.purple').addEventListener('click', function() {
+            // 滚动到投票区域
+            document.querySelector('.active-poll').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // 投票表单提交事件
+        document.getElementById('vote-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const selectedOption = document.querySelector('input[name="poll-option"]:checked');
+            if (!selectedOption) {
+                alert('请选择一个选项');
+                return;
+            }
+            
+            // 提交投票的逻辑
+            console.log('提交投票, 选项:', selectedOption.value);
+            
+            // 禁用表单，防止重复提交
+            document.querySelectorAll('#vote-form input').forEach(input => input.disabled = true);
+            document.getElementById('submit-vote').disabled = true;
+            document.getElementById('submit-vote').textContent = '已提交';
+            
+            // 显示成功消息
+            alert('投票提交成功！');
+        });
+        
+        // 补充问题按钮点击事件
+        document.querySelector('.btn-outline-primary').addEventListener('click', function() {
+            const modal = new bootstrap.Modal(document.getElementById('ask-question-modal'));
+            modal.show();
+        });
+    });
 </script>
 {% endblock %} 

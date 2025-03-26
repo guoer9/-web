@@ -334,3 +334,814 @@ with app.app_context(). See the documentation for more information.
 2025-03-25 13:38:12,445 - src.controllers.web_controller - INFO - 访问学生个人资料页面
 2025-03-25 13:38:15,600 - src.controllers.web_controller - INFO - 访问学生通知设置页面
 2025-03-25 13:38:57,197 - src.controllers.web_controller - INFO - 访问学生个人资料页面
+2025-03-26 13:14:04,742 - __main__ - INFO - MongoDB连接成功
+2025-03-26 13:14:04,742 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 13:14:04,833 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 13:14:05,168 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 13:14:05,169 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 13:14:05,421 - __main__ - INFO - MongoDB连接成功
+2025-03-26 13:14:05,421 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 13:14:05,510 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 13:14:05,836 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 13:14:05,836 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 13:14:05,836 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 13:14:08,374 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 13:14:11,375 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 13:14:13,375 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 13:14:13,376 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 13:14:13,381 - src.services.news_service - INFO - 开始从今日头条抓取教育新闻
+2025-03-26 13:14:21,382 - src.app - INFO - MongoDB连接成功
+2025-03-26 13:14:21,382 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 13:14:21,397 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:14:21,397 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 13:14:21,577 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 13:14:21,578 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:14:21,579 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 13:14:21,761 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 13:14:21,762 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 13:14:27,992 - src.services.news_service - INFO - 成功抓取0条新闻
+2025-03-26 13:14:27,993 - src.services.news_service - WARNING - 未抓取到任何新闻，取消更新
+2025-03-26 13:14:27,995 - src.services.news_service - ERROR - 定时更新新闻时出错: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-03-26 13:14:27,995 - src.services.news_service - INFO - 已启动新闻自动更新，间隔3600秒
+2025-03-26 13:14:52,258 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:14:52,258 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:14:52,260 - src.models.user - WARNING - 验证失败: 用户 2 不存在
+2025-03-26 13:14:52,260 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:14:52,261 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:14:52,261 - src.models.user - WARNING - 验证失败: 用户 2 不存在
+2025-03-26 13:14:53,440 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:14:53,440 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:14:53,440 - src.models.user - WARNING - 验证失败: 用户 2 不存在
+2025-03-26 13:14:53,441 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:14:53,441 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:14:53,442 - src.models.user - WARNING - 验证失败: 用户 2 不存在
+2025-03-26 13:14:56,852 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:14:56,852 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:14:56,853 - src.models.user - WARNING - 验证失败: 用户 2 不存在
+2025-03-26 13:14:56,854 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:14:56,854 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:14:56,854 - src.models.user - WARNING - 验证失败: 用户 2 不存在
+2025-03-26 13:23:30,049 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:23:30,049 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:23:30,050 - src.models.user - WARNING - 验证失败: 用户 2 不存在
+2025-03-26 13:23:30,050 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:23:30,050 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:23:30,051 - src.models.user - WARNING - 验证失败: 用户 2 不存在
+2025-03-26 13:23:36,721 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:23:36,722 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 13:23:36,917 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 13:23:36,918 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:23:36,918 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 13:23:37,103 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 13:23:37,104 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 13:23:43,546 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 13:23:44,113 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 13:23:54,699 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:23:54,700 - src.models.user - INFO - 尝试创建用户: 2, 角色: teacher
+2025-03-26 13:23:54,884 - src.models.user - INFO - 用户创建成功: 2, ID: 67e38f6ac43a43e1f1460a65
+2025-03-26 13:23:58,196 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:23:58,196 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:23:58,376 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 13:23:58,377 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:23:58,377 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:23:58,556 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 13:23:58,557 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 13:23:59,920 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 13:24:01,762 - src.controllers.web_controller - INFO - 访问教师反馈处理页面
+2025-03-26 13:24:38,112 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:24:38,112 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:24:38,295 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 13:24:38,296 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:24:38,296 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 13:24:38,480 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 13:24:38,481 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 13:24:40,929 - src.controllers.web_controller - INFO - 访问教师个人资料页面
+2025-03-26 13:24:56,089 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:24:56,089 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 13:24:56,270 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 13:24:56,272 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:24:56,272 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 13:24:56,453 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 13:24:56,454 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 13:24:57,657 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 13:24:58,744 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 13:25:27,528 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-26 13:25:36,876 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 13:25:47,728 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:25:47,729 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 13:25:47,916 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 13:25:47,917 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:25:47,917 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 13:25:48,098 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 13:25:48,099 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 13:26:23,046 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:26:23,046 - src.models.user - INFO - 尝试创建用户: 3, 角色: student
+2025-03-26 13:26:23,230 - src.models.user - INFO - 用户创建成功: 3, ID: 67e38fffc43a43e1f1460a66
+2025-03-26 13:26:29,461 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:26:29,461 - src.models.user - INFO - 尝试验证用户: 3
+2025-03-26 13:26:29,641 - src.models.user - INFO - 用户 3 验证成功
+2025-03-26 13:26:29,643 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:26:29,643 - src.models.user - INFO - 尝试验证用户: 3
+2025-03-26 13:26:29,824 - src.models.user - INFO - 用户 3 验证成功
+2025-03-26 13:26:29,825 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 13:28:49,919 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 13:29:02,242 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:29:02,243 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 13:29:02,431 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 13:29:02,432 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 13:29:02,432 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 13:29:02,611 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 13:29:02,612 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 13:32:48,028 - werkzeug - INFO -  * Detected change in '/home/guoer/jhxt/-web/src/controllers/web_controller.py', reloading
+2025-03-26 13:32:48,556 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 13:32:48,816 - __main__ - INFO - MongoDB连接成功
+2025-03-26 13:32:48,816 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 13:32:48,903 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 13:32:49,232 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 13:32:49,233 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 13:32:49,233 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 13:36:38,992 - werkzeug - INFO -  * Detected change in '/home/guoer/jhxt/-web/src/utils/news_scraper.py', reloading
+2025-03-26 13:36:39,156 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 13:36:39,422 - __main__ - INFO - MongoDB连接成功
+2025-03-26 13:36:39,422 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 13:36:39,509 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 13:36:39,849 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 13:36:39,849 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 13:36:39,849 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 13:37:05,939 - werkzeug - INFO -  * Detected change in '/home/guoer/jhxt/-web/src/api/news_routes.py', reloading
+2025-03-26 13:37:06,066 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 13:37:06,328 - __main__ - INFO - MongoDB连接成功
+2025-03-26 13:37:06,328 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 13:37:06,414 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 13:37:06,757 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 13:37:06,758 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 13:37:06,758 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 13:55:58,867 - app - INFO - MongoDB连接成功
+2025-03-26 13:55:58,867 - app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 13:55:58,959 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 13:56:11,322 - __main__ - INFO - MongoDB连接成功
+2025-03-26 13:56:11,322 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 13:56:11,407 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 13:59:25,303 - __main__ - INFO - MongoDB连接成功
+2025-03-26 13:59:25,303 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 13:59:25,391 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 13:59:49,542 - app - INFO - MongoDB连接成功
+2025-03-26 13:59:49,542 - app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 13:59:49,629 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:00:42,252 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:00:42,252 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:00:42,337 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:07:30,324 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:07:30,324 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:07:30,411 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:07:30,678 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:07:30,678 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:08:02,234 - app - INFO - MongoDB连接成功
+2025-03-26 14:08:02,234 - app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:08:02,320 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:08:02,584 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:08:02,584 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:10:05,050 - app - INFO - MongoDB连接成功
+2025-03-26 14:10:05,050 - app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:10:05,141 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:10:05,415 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:10:05,415 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:10:24,298 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:10:24,298 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:10:24,386 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:10:24,654 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:10:24,654 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:16:41,639 - app - INFO - MongoDB连接成功
+2025-03-26 14:16:41,639 - app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:16:41,727 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:16:41,995 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:16:41,995 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:16:42,010 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.9.3.144:5000
+2025-03-26 14:16:42,010 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-26 14:16:42,010 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 14:17:16,167 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:17:16,167 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:17:16,253 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:17:16,527 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:17:16,528 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:17:16,541 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:17:16,542 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 14:17:51,663 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:17:51,663 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:17:51,761 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:17:52,017 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:17:52,018 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:17:52,032 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:17:52,032 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 14:17:52,295 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:17:52,295 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:17:52,384 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:17:52,648 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:17:52,648 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:17:52,662 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:17:52,663 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 14:17:52,663 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 14:17:53,926 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 14:17:56,658 - src.app - INFO - MongoDB连接成功
+2025-03-26 14:17:56,658 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:17:56,672 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:17:56,672 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 14:17:56,858 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 14:17:56,859 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:17:56,859 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 14:17:56,926 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:17:57,046 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 14:17:57,047 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 14:17:58,926 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 14:17:58,927 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 14:18:00,025 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 14:18:00,470 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 14:18:00,928 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 14:18:00,929 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 14:18:00,946 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-26 14:18:01,311 - src.controllers.web_controller - INFO - 访问学生资源页面
+2025-03-26 14:18:04,810 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:18:04,810 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:18:04,993 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:18:04,994 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:18:04,994 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:18:05,176 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:18:05,177 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:18:08,574 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:18:08,574 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:18:08,760 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:18:08,761 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:18:08,761 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:18:08,943 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:18:08,944 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:18:12,561 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:18:12,561 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:18:12,742 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:18:12,743 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:18:12,743 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:18:12,926 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:18:12,927 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:18:13,610 - src.controllers.web_controller - INFO - 访问教师反馈处理页面
+2025-03-26 14:18:15,527 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 14:18:19,319 - src.controllers.web_controller - INFO - 访问教师个人资料页面
+2025-03-26 14:18:20,803 - src.controllers.web_controller - INFO - 访问教师通知设置页面
+2025-03-26 14:23:43,519 - app - INFO - MongoDB连接成功
+2025-03-26 14:23:43,519 - app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:23:43,605 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:23:43,865 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:23:43,865 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:23:43,880 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.9.3.144:5000
+2025-03-26 14:23:43,880 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-26 14:23:43,881 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 14:24:02,384 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:24:02,384 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:24:02,477 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:24:02,734 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:24:02,735 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:24:02,749 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:24:02,749 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 14:24:03,007 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:24:03,008 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:24:03,094 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:24:03,380 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:24:03,380 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:24:03,394 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:24:03,394 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 14:24:03,394 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 14:24:04,696 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 14:24:07,696 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:24:08,553 - src.app - INFO - MongoDB连接成功
+2025-03-26 14:24:08,553 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:24:08,568 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:24:08,568 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:24:08,753 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:24:08,754 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:24:08,754 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:24:08,941 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:24:08,942 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:24:09,696 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 14:24:09,697 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 14:24:11,699 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 14:24:11,700 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 14:24:13,306 - src.controllers.web_controller - INFO - 访问教师测验管理页面
+2025-03-26 14:24:36,981 - src.controllers.web_controller - INFO - 访问教师课堂讨论页面
+2025-03-26 14:24:43,181 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:24:44,831 - src.controllers.web_controller - INFO - 访问教师查看学生名单页面
+2025-03-26 14:24:51,127 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:25:23,140 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 14:25:37,550 - src.controllers.web_controller - INFO - 访问教师反馈处理页面
+2025-03-26 14:26:07,758 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:26:07,758 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:26:07,940 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:26:07,941 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:26:07,941 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:26:08,128 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:26:08,129 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:26:13,381 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:26:13,382 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:26:13,576 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:26:13,578 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:26:13,578 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:26:13,759 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:26:13,760 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:26:34,085 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:26:34,085 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:26:34,266 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:26:34,267 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:26:34,267 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:26:34,450 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:26:34,452 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:26:46,101 - src.controllers.web_controller - INFO - 访问教师个人资料页面
+2025-03-26 14:26:47,735 - src.controllers.web_controller - INFO - 访问教师通知设置页面
+2025-03-26 14:33:57,844 - app - INFO - MongoDB连接成功
+2025-03-26 14:33:57,844 - app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:33:57,935 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:33:58,195 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:33:58,195 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:34:32,610 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:34:32,610 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:34:32,694 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:34:32,952 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:34:32,952 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:34:32,966 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:34:32,967 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 14:34:33,221 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:34:33,222 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:34:33,308 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:34:33,568 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:34:33,568 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:34:33,582 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:34:33,582 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 14:34:33,582 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 14:34:34,851 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 14:34:37,851 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:34:37,930 - src.app - INFO - MongoDB连接成功
+2025-03-26 14:34:37,930 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:34:37,944 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:34:37,944 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 14:34:38,129 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 14:34:38,130 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:34:38,131 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 14:34:38,313 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 14:34:38,314 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 14:34:39,518 - src.controllers.web_controller - INFO - 访问学生资源页面
+2025-03-26 14:34:39,851 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 14:34:39,852 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 14:34:41,854 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 14:34:41,856 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 14:34:45,236 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:34:45,236 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:34:45,420 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:34:45,421 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:34:45,421 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:34:45,599 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:34:45,600 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:34:49,551 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:34:49,551 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:34:49,731 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:34:49,733 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:34:49,733 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:34:49,915 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:34:49,916 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:34:53,418 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:34:53,418 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:34:53,600 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:34:53,601 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:34:53,601 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:34:53,787 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:34:53,788 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:34:54,434 - src.controllers.web_controller - INFO - 访问教师反馈处理页面
+2025-03-26 14:34:56,097 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 14:35:12,291 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:35:12,291 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:35:12,379 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:35:12,629 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:35:12,629 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:35:12,643 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:35:12,643 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 14:35:12,899 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:35:12,899 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:35:12,988 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:35:13,245 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:35:13,245 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:35:13,259 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:35:13,259 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 14:35:13,259 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 14:35:14,424 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 14:35:17,425 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:35:19,425 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 14:35:19,426 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 14:35:20,857 - src.app - INFO - MongoDB连接成功
+2025-03-26 14:35:20,857 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:35:20,871 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:35:20,871 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:35:21,051 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:35:21,052 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:35:21,052 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:35:21,232 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:35:21,233 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:35:21,428 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 14:35:21,428 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 14:35:22,730 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 14:35:23,496 - src.controllers.web_controller - INFO - 访问教师反馈处理页面
+2025-03-26 14:35:26,518 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:35:26,518 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:35:26,699 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:35:26,700 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:35:26,700 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:35:26,884 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:35:26,885 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:39:09,436 - werkzeug - INFO -  * Detected change in '/home/guoer/jhxt/-web/src/controllers/web_controller.py', reloading
+2025-03-26 14:39:09,751 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 14:39:09,997 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:39:09,997 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:39:10,097 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:39:10,353 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:39:10,353 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:39:10,367 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:39:10,368 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 14:39:10,368 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 14:40:29,502 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:40:29,502 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:40:29,586 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:40:29,837 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:40:29,837 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:40:29,851 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:40:29,851 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 14:40:30,106 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:40:30,106 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:40:30,193 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:40:30,451 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:40:30,451 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:40:30,465 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:40:30,465 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 14:40:30,465 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 14:40:32,176 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 14:40:35,177 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:40:35,225 - src.app - INFO - MongoDB连接成功
+2025-03-26 14:40:35,225 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:40:35,239 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:40:35,239 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:40:35,423 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:40:35,424 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:40:35,424 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:40:35,605 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:40:37,177 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 14:40:37,177 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 14:40:38,535 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:40:38,535 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:40:38,714 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:40:38,716 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:40:38,716 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:40:38,899 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:40:39,179 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 14:40:39,180 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 14:40:41,652 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:40:41,652 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 14:40:41,849 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 14:40:41,850 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:40:41,850 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 14:40:42,035 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 14:40:42,036 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 14:40:43,386 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 14:40:44,108 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 14:40:44,536 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-26 14:40:44,894 - src.controllers.web_controller - INFO - 访问学生资源页面
+2025-03-26 14:40:47,835 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:40:47,835 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 14:40:48,014 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 14:40:48,015 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:40:48,015 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 14:40:48,199 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 14:40:48,200 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 14:40:48,892 - src.controllers.web_controller - INFO - 访问学生个人资料页面
+2025-03-26 14:40:49,445 - src.controllers.web_controller - INFO - 访问学生通知设置页面
+2025-03-26 14:41:00,042 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 14:41:13,988 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:41:13,988 - src.models.user - INFO - 尝试验证用户: 4
+2025-03-26 14:41:13,989 - src.models.user - WARNING - 验证失败: 用户 4 不存在
+2025-03-26 14:41:13,989 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:41:13,990 - src.models.user - INFO - 尝试验证用户: 4
+2025-03-26 14:41:13,990 - src.models.user - WARNING - 验证失败: 用户 4 不存在
+2025-03-26 14:41:15,932 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:41:15,933 - src.models.user - INFO - 尝试验证用户: 4
+2025-03-26 14:41:15,935 - src.models.user - WARNING - 验证失败: 用户 4 不存在
+2025-03-26 14:41:15,939 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:41:15,939 - src.models.user - INFO - 尝试验证用户: 4
+2025-03-26 14:41:15,941 - src.models.user - WARNING - 验证失败: 用户 4 不存在
+2025-03-26 14:41:19,086 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:41:19,086 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:41:19,267 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:41:19,268 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:41:19,268 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:41:19,454 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:41:23,885 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:41:23,885 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:41:24,064 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:41:24,065 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:41:24,066 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:41:24,245 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:43:28,073 - app - INFO - MongoDB连接成功
+2025-03-26 14:43:28,074 - app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:43:28,157 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:43:28,410 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:43:28,410 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:43:28,425 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.9.3.144:5000
+2025-03-26 14:43:28,425 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-26 14:43:28,425 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 14:46:16,086 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:46:16,086 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:46:16,171 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:46:16,432 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:46:16,432 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:46:16,447 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:46:16,447 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 14:46:16,706 - __main__ - INFO - MongoDB连接成功
+2025-03-26 14:46:16,706 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:46:16,791 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 14:46:17,059 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 14:46:17,059 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 14:46:17,073 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 14:46:17,073 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 14:46:17,074 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 14:46:19,002 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 14:46:22,002 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:46:22,253 - src.app - INFO - MongoDB连接成功
+2025-03-26 14:46:22,253 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 14:46:22,267 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:46:22,267 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 14:46:22,448 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 14:46:22,449 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'user_id': '67e23a3bb5e54b639102dc8b', 'role': 'student', 'username': '1'}>
+2025-03-26 14:46:22,450 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:46:22,450 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 14:46:22,634 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 14:46:22,634 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'user_id': '67e23a3bb5e54b639102dc8b', 'role': 'student', 'username': '1'}>
+2025-03-26 14:46:22,635 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 14:46:24,002 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 14:46:24,002 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 14:46:24,135 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 14:46:24,636 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 14:46:25,003 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-26 14:46:25,386 - src.controllers.web_controller - INFO - 访问学生资源页面
+2025-03-26 14:46:25,757 - src.controllers.web_controller - INFO - 访问学生新闻页面
+2025-03-26 14:46:25,795 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 14:46:25,796 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 14:46:25,997 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 14:46:26,004 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 14:46:26,004 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 14:46:27,358 - src.services.news_scraper - INFO - 获取新闻详情: url=https://example.com/news/1
+2025-03-26 14:46:27,859 - src.api.news_routes - INFO - 获取新闻详情成功: url=https://example.com/news/1
+2025-03-26 14:46:36,815 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:46:36,815 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:46:37,010 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:46:37,010 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:37,011 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:46:37,011 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:46:37,193 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:46:37,194 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:37,195 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:37,195 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:37,195 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:46:38,302 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:38,302 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:38,302 - src.controllers.web_controller - INFO - 访问教师新闻页面
+2025-03-26 14:46:38,322 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 14:46:38,324 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 14:46:38,524 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 14:46:38,884 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:38,884 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:38,884 - src.controllers.web_controller - INFO - 访问教师资源管理页面
+2025-03-26 14:46:39,280 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:39,280 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:39,280 - src.controllers.web_controller - INFO - 访问教师分析页面
+2025-03-26 14:46:39,603 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:39,603 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:39,603 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 14:46:39,927 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:39,927 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:39,927 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 14:46:40,318 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:40,319 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:40,319 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 14:46:40,718 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:40,718 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:40,718 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 14:46:41,081 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:41,081 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:41,081 - src.controllers.web_controller - INFO - 访问教师分析页面
+2025-03-26 14:46:46,460 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:46,460 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:46,460 - src.controllers.web_controller - INFO - 访问教师资源管理页面
+2025-03-26 14:46:47,474 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:47,474 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:47,474 - src.controllers.web_controller - INFO - 访问教师新闻页面
+2025-03-26 14:46:47,502 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 14:46:47,503 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 14:46:47,704 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 14:46:47,885 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:47,885 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:47,885 - src.controllers.web_controller - INFO - 访问教师分析页面
+2025-03-26 14:46:48,413 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:48,413 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:48,414 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 14:46:48,990 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:48,990 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:48,990 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 14:46:49,926 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:49,926 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:49,926 - src.controllers.web_controller - INFO - 访问教师个人资料页面
+2025-03-26 14:46:50,469 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:50,469 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:50,469 - src.controllers.web_controller - INFO - 访问教师通知设置页面
+2025-03-26 14:46:50,917 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:50,917 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:50,918 - src.controllers.web_controller - INFO - 访问教师个人资料页面
+2025-03-26 14:46:53,825 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:46:53,826 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:46:53,826 - src.controllers.web_controller - INFO - 访问教师通知设置页面
+2025-03-26 14:50:27,038 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:50:27,038 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:50:27,220 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:50:27,220 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:50:27,222 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 14:50:27,222 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 14:50:27,402 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 14:50:27,402 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:50:27,404 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:50:27,404 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:50:27,404 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:50:28,799 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:50:28,799 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:50:28,799 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 14:50:29,565 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:50:29,566 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:50:29,566 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 14:50:29,997 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:50:29,997 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:50:29,998 - src.controllers.web_controller - INFO - 访问教师分析页面
+2025-03-26 14:50:30,525 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:50:30,525 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:50:30,525 - src.controllers.web_controller - INFO - 访问教师新闻页面
+2025-03-26 14:50:30,543 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 14:50:30,545 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 14:50:30,745 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 14:50:35,205 - src.services.news_scraper - INFO - 获取新闻列表: source=china_edu, limit=10, page=1
+2025-03-26 14:50:35,406 - src.api.news_routes - INFO - 获取新闻列表成功: source=china_edu, page=1, limit=10, count=3
+2025-03-26 14:50:35,843 - src.services.news_scraper - INFO - 获取新闻列表: source=people_edu, limit=10, page=1
+2025-03-26 14:50:36,043 - src.api.news_routes - INFO - 获取新闻列表成功: source=people_edu, page=1, limit=10, count=3
+2025-03-26 14:50:36,330 - src.services.news_scraper - INFO - 获取新闻列表: source=xinhua_edu, limit=10, page=1
+2025-03-26 14:50:36,530 - src.api.news_routes - INFO - 获取新闻列表成功: source=xinhua_edu, page=1, limit=10, count=3
+2025-03-26 14:50:37,220 - src.services.news_scraper - INFO - 获取新闻列表: source=local_edu, limit=10, page=1
+2025-03-26 14:50:37,421 - src.api.news_routes - INFO - 获取新闻列表成功: source=local_edu, page=1, limit=10, count=2
+2025-03-26 14:50:39,353 - src.services.news_scraper - INFO - 获取新闻详情: url=https://example.com/news/14
+2025-03-26 14:50:39,854 - src.api.news_routes - INFO - 获取新闻详情成功: url=https://example.com/news/14
+2025-03-26 14:50:46,091 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 14:50:46,292 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 14:51:46,085 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:51:46,085 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:51:46,085 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 14:51:50,412 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:51:50,413 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:51:50,413 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 14:51:50,801 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:51:50,801 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:51:50,801 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 14:53:05,144 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:53:05,144 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:53:05,144 - src.controllers.web_controller - INFO - 访问教师个人资料页面
+2025-03-26 14:53:06,201 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:53:06,201 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:53:06,201 - src.controllers.web_controller - INFO - 访问教师通知设置页面
+2025-03-26 14:53:07,269 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 14:53:07,269 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 14:53:07,269 - src.controllers.web_controller - INFO - 访问教师新闻页面
+2025-03-26 14:53:07,286 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 14:53:07,287 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 14:53:07,487 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 15:03:22,277 - __main__ - INFO - MongoDB连接成功
+2025-03-26 15:03:22,278 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:03:22,369 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 15:03:22,625 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 15:03:22,625 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 15:03:22,639 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 15:03:22,639 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 15:03:22,887 - __main__ - INFO - MongoDB连接成功
+2025-03-26 15:03:22,888 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:03:22,992 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 15:03:23,246 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 15:03:23,247 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 15:03:23,260 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 15:03:23,261 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 15:03:23,261 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 15:03:25,015 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 15:03:28,016 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:03:28,487 - src.app - INFO - MongoDB连接成功
+2025-03-26 15:03:28,487 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:03:28,500 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:03:28,500 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 15:03:28,683 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 15:03:28,683 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:28,685 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:03:28,685 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 15:03:28,872 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 15:03:28,872 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:28,873 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:28,873 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:28,873 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:03:30,016 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 15:03:30,016 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 15:03:31,201 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:31,201 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:31,201 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 15:03:31,984 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:31,984 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:31,984 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 15:03:32,018 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 15:03:32,018 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 15:03:32,431 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:32,431 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:32,431 - src.controllers.web_controller - INFO - 访问教师分析页面
+2025-03-26 15:03:32,936 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:32,937 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:32,937 - src.controllers.web_controller - INFO - 访问教师资源管理页面
+2025-03-26 15:03:33,359 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:33,359 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:33,359 - src.controllers.web_controller - INFO - 访问教师新闻页面
+2025-03-26 15:03:33,391 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 15:03:33,392 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 15:03:33,592 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 15:03:33,832 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:33,832 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:33,832 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:03:34,990 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:34,990 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:34,990 - src.controllers.web_controller - INFO - 访问教师讨论管理页面
+2025-03-26 15:03:36,267 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:36,267 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:36,267 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:03:52,127 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:52,127 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:52,128 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 15:03:53,143 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:53,143 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:53,143 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 15:03:53,549 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:53,549 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:53,549 - src.controllers.web_controller - INFO - 访问教师分析页面
+2025-03-26 15:03:56,518 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:56,519 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:56,519 - src.controllers.web_controller - INFO - 访问教师资源管理页面
+2025-03-26 15:03:57,042 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:03:57,042 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:03:57,042 - src.controllers.web_controller - INFO - 访问教师新闻页面
+2025-03-26 15:03:57,062 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 15:03:57,063 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 15:03:57,263 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 15:03:58,368 - src.services.news_scraper - INFO - 获取新闻详情: url=https://example.com/news/1
+2025-03-26 15:03:58,869 - src.api.news_routes - INFO - 获取新闻详情成功: url=https://example.com/news/1
+2025-03-26 15:04:22,283 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:04:22,283 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:04:22,283 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:04:23,519 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:04:23,519 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:04:23,519 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 15:04:24,351 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:04:24,351 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:04:24,351 - src.controllers.web_controller - INFO - 访问教师资源管理页面
+2025-03-26 15:04:29,560 - src.api.auth_routes - INFO - 用户登出: ID=67e38f6ac43a43e1f1460a65, 用户名=2, 角色=teacher
+2025-03-26 15:04:35,565 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:04:35,565 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:04:35,746 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:04:35,746 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'user_id': '67e23a3bb5e54b639102dc8b', 'role': 'student', 'username': '1'}>
+2025-03-26 15:04:35,747 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:04:35,748 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:04:35,928 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:04:35,928 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'user_id': '67e23a3bb5e54b639102dc8b', 'role': 'student', 'username': '1'}>
+2025-03-26 15:04:35,929 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 15:04:37,749 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 15:04:38,169 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 15:04:39,271 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 15:04:40,713 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 15:04:42,219 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 15:04:45,082 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 15:04:48,018 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-26 15:04:58,615 - src.controllers.web_controller - INFO - 访问学生资源页面
+2025-03-26 15:05:00,592 - src.controllers.web_controller - INFO - 访问学生新闻页面
+2025-03-26 15:05:00,613 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 15:05:00,614 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 15:05:00,814 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 15:05:06,882 - src.controllers.web_controller - INFO - 访问学生个人资料页面
+2025-03-26 15:05:08,466 - src.controllers.web_controller - INFO - 访问学生通知设置页面

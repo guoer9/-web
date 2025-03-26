@@ -5,29 +5,76 @@
 {% block styles %}
 <style>
     .dashboard-container {
-        padding: 20px;
+        padding: 20px 5px;
     }
     
     .card {
         margin-bottom: 20px;
         border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        overflow: hidden;
     }
     
     .card-header {
-        background-color: #f8f9fa;
-        border-radius: 10px 10px 0 0 !important;
-        font-weight: 500;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .card-header h4 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
     }
     
     .list-group-item {
         border: none;
-        border-bottom: 1px solid #f0f0f0;
-        padding: 10px 0;
+        border-bottom: 1px solid #f5f5f5;
+        padding: 12px 20px;
     }
     
-    .list-group-item:last-child {
-        border-bottom: none;
+    .recent-question {
+        padding: 15px;
+        border-bottom: 1px solid #f5f5f5;
+    }
+    
+    .question-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    
+    .question-author {
+        font-weight: 500;
+        color: #3498db;
+    }
+    
+    .question-time {
+        color: #7f8c8d;
+        font-size: 0.85rem;
+    }
+    
+    .quick-action-card {
+        background: linear-gradient(135deg, rgba(52, 152, 219, 0.8) 0%, rgba(52, 152, 219, 1) 100%);
+        color: white;
+        border-radius: 10px;
+        padding: 20px;
+        height: 100%;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+    
+    .quick-action-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .quick-action-card.purple {
+        background: linear-gradient(135deg, rgba(155, 89, 182, 0.8) 0%, rgba(142, 68, 173, 1) 100%);
+    }
+    
+    .quick-action-card.green {
+        background: linear-gradient(135deg, rgba(46, 204, 113, 0.8) 0%, rgba(39, 174, 96, 1) 100%);
+    }
+    
+    .quick-action-card.orange {
+        background: linear-gradient(135deg, rgba(230, 126, 34, 0.8) 0%, rgba(211, 84, 0, 1) 100%);
     }
 </style>
 {% endblock %}
@@ -36,78 +83,130 @@
 <div class="container-fluid dashboard-container">
     <h1 class="page-title">教师仪表盘</h1>
     
-    <div id="messageContainer"></div>
+    <!-- 快速操作区 -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-4">
+            <div class="quick-action-card d-flex flex-column align-items-center text-center">
+                <i class="fas fa-plus-circle fa-2x mb-3"></i>
+                <h5>创建新讨论</h5>
+                <p class="small mb-0">发起一个新的课堂话题讨论</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="quick-action-card purple d-flex flex-column align-items-center text-center">
+                <i class="fas fa-poll fa-2x mb-3"></i>
+                <h5>发布投票</h5>
+                <p class="small mb-0">创建一个新的课堂投票</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="quick-action-card green d-flex flex-column align-items-center text-center">
+                <i class="fas fa-file-alt fa-2x mb-3"></i>
+                <h5>安排小测验</h5>
+                <p class="small mb-0">创建一个新的课堂测验</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="quick-action-card orange d-flex flex-column align-items-center text-center">
+                <i class="fas fa-users fa-2x mb-3"></i>
+                <h5>查看学生名单</h5>
+                <p class="small mb-0">管理班级学生信息</p>
+            </div>
+        </div>
+    </div>
     
     <div class="row">
+        <!-- 左侧栏 - 最近问题 -->
         <div class="col-md-8">
             <div class="card mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">互动管理</h4>
+                <div class="card-header bg-white">
+                    <h4><i class="fas fa-question-circle text-primary me-2"></i>最近问题</h4>
                 </div>
-                <div class="card-body">
-                    <div class="mb-4">
-                        <h5>待回答问题</h5>
-                        <div class="list-group">
-                            <div class="list-group-item">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">请问下周考试范围是什么？</h6>
-                                    <small>昨天</small>
-                                </div>
-                                <p class="mb-1">想提前了解一下考试范围，方便复习。</p>
-                                <small>提问学生：张三</small>
-                                <div class="mt-2">
-                                    <button class="btn btn-sm btn-primary answer-question-btn" data-question-id="1">回答</button>
-                                    <button class="btn btn-sm btn-secondary ms-2 defer-question-btn" data-question-id="1">稍后回答</button>
-                                </div>
-                            </div>
-                            <div class="list-group-item">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">能否再讲解一遍今天的微积分公式推导？</h6>
-                                    <small>3小时前</small>
-                                </div>
-                                <p class="mb-1">课堂上没有完全理解，希望能再讲解一下。</p>
-                                <small>提问学生：李四</small>
-                                <div class="mt-2">
-                                    <button class="btn btn-sm btn-primary answer-question-btn" data-question-id="2">回答</button>
-                                    <button class="btn btn-sm btn-secondary ms-2 defer-question-btn" data-question-id="2">稍后回答</button>
-                                </div>
-                            </div>
+                <div class="card-body p-0">
+                    <div class="recent-question">
+                        <div class="question-header">
+                            <span class="question-author">张三</span>
+                            <span class="question-time">昨天</span>
+                        </div>
+                        <div class="question-content">
+                            <p>老师下周考试的范围是什么？是否包含选择题？</p>
+                        </div>
+                        <div class="question-actions">
+                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-reply me-1"></i>回复</button>
+                            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-share me-1"></i>分享给全班</button>
                         </div>
                     </div>
                     
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="mb-0">创建新投票</h5>
-                            <button class="btn btn-success btn-sm" id="publish-poll-btn">发布投票</button>
+                    <div class="recent-question">
+                        <div class="question-header">
+                            <span class="question-author">李四</span>
+                            <span class="question-time">2小时前</span>
                         </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="pollTitle" class="form-label">投票标题</label>
-                                    <input type="text" class="form-control" id="pollTitle" placeholder="输入投票问题">
-                                </div>
-                                <div id="pollOptions">
-                                    <div class="mb-2 d-flex">
-                                        <input type="text" class="form-control me-2" placeholder="选项1">
-                                        <button class="btn btn-outline-danger btn-sm option-delete-btn">删除</button>
-                                    </div>
-                                    <div class="mb-2 d-flex">
-                                        <input type="text" class="form-control me-2" placeholder="选项2">
-                                        <button class="btn btn-outline-danger btn-sm option-delete-btn">删除</button>
-                                    </div>
-                                </div>
-                                <button class="btn btn-outline-primary btn-sm mt-2" id="add-option-btn">添加选项</button>
-                            </div>
+                        <div class="question-content">
+                            <p>老师您讲解一下牛顿第三定律是什么？</p>
+                        </div>
+                        <div class="question-actions">
+                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-reply me-1"></i>回复</button>
+                            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-share me-1"></i>分享给全班</button>
                         </div>
                     </div>
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-outline-primary btn-sm">查看所有问题</button>
+                </div>
+            </div>
+            
+            <!-- 当前投票 -->
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h4><i class="fas fa-poll text-primary me-2"></i>当前投票</h4>
+                </div>
+                <div class="card-body">
+                    <h5>你最喜欢的学习方式是什么？</h5>
+                    <p class="text-muted mb-3">创建于：今天 10:30 | 已有19名学生参与</p>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>课堂讲解</span>
+                            <span>45%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>小组讨论</span>
+                            <span>25%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>实验操作</span>
+                            <span>20%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <button class="btn btn-outline-success btn-sm">导出结果</button>
+                    <button class="btn btn-outline-danger btn-sm">结束投票</button>
                 </div>
             </div>
         </div>
         
+        <!-- 右侧栏 - 课程统计 -->
         <div class="col-md-4">
             <div class="card mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">课程统计</h4>
+                <div class="card-header bg-white">
+                    <h4><i class="fas fa-chart-line text-primary me-2"></i>课程统计</h4>
                 </div>
                 <div class="card-body">
                     <h5>课程参与度</h5>
@@ -141,84 +240,6 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h4 class="mb-0">快速操作</h4>
-                </div>
-                <div class="card-body">
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-outline-primary" id="create-discussion-btn">创建新讨论</button>
-                        <button class="btn btn-outline-success" id="publish-notice-btn">发布课堂通知</button>
-                        <button class="btn btn-outline-warning" id="schedule-quiz-btn">安排小测验</button>
-                        <a href="/teacher/students" class="btn btn-outline-danger">查看学生名单</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 回答问题模态框 -->
-<div class="modal fade" id="answer-question-modal" tabindex="-1" aria-labelledby="answerQuestionModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="answerQuestionModalLabel">回答问题</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="original-question mb-3">
-                    <label class="form-label">学生问题:</label>
-                    <p id="question-text" class="p-2 bg-light rounded">请问下周考试范围是什么？</p>
-                </div>
-                <div class="mb-3">
-                    <label for="answer-text" class="form-label">您的回答:</label>
-                    <textarea class="form-control" id="answer-text" rows="4" required></textarea>
-                </div>
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" id="public-answer">
-                    <label class="form-check-label" for="public-answer">
-                        公开回答（所有学生可见）
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" id="submit-answer-btn">提交回答</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 发布通知模态框 -->
-<div class="modal fade" id="publish-notice-modal" tabindex="-1" aria-labelledby="publishNoticeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="publishNoticeModalLabel">发布课堂通知</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="notice-title" class="form-label">通知标题:</label>
-                    <input type="text" class="form-control" id="notice-title" required>
-                </div>
-                <div class="mb-3">
-                    <label for="notice-content" class="form-label">通知内容:</label>
-                    <textarea class="form-control" id="notice-content" rows="4" required></textarea>
-                </div>
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" id="urgent-notice">
-                    <label class="form-check-label" for="urgent-notice">
-                        紧急通知
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" id="submit-notice-btn">发布通知</button>
-            </div>
         </div>
     </div>
 </div>
@@ -234,162 +255,38 @@
                 const user = JSON.parse(userData);
                 if (user.role !== 'teacher') {
                     console.error('非教师角色访问教师仪表盘');
-                    showMessage('您没有权限访问该页面，正在重定向...', 'error');
                     setTimeout(() => {
                         window.location.href = user.role === 'student' ? '/student/dashboard' : '/';
                     }, 2000);
                     return;
                 }
-                console.log('教师用户验证成功');
             } catch (e) {
                 console.error('解析用户数据出错:', e);
             }
-        } else {
-            console.error('未找到用户数据');
-            showMessage('请先登录', 'error');
-            setTimeout(() => {
-                window.location.href = '/';
-            }, 2000);
-            return;
         }
-
-        console.log('教师仪表盘页面已加载');
         
-        // 回答问题按钮事件
-        document.querySelectorAll('.answer-question-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const questionId = this.getAttribute('data-question-id');
-                document.getElementById('question-text').textContent = this.closest('.list-group-item').querySelector('.mb-1').textContent;
-                const answerModal = new bootstrap.Modal(document.getElementById('answer-question-modal'));
-                answerModal.show();
-            });
-        });
-        
-        // 提交回答按钮事件
-        document.getElementById('submit-answer-btn').addEventListener('click', function() {
-            const answerText = document.getElementById('answer-text').value;
-            const isPublic = document.getElementById('public-answer').checked;
-            
-            if (!answerText) {
-                showMessage('请输入回答内容', 'error');
-                return;
-            }
-            
-            showMessage('回答已提交', 'success');
-            bootstrap.Modal.getInstance(document.getElementById('answer-question-modal')).hide();
-            
-            // 清空表单
-            document.getElementById('answer-text').value = '';
-            document.getElementById('public-answer').checked = false;
-        });
-        
-        // 发布通知按钮事件
-        document.getElementById('publish-notice-btn').addEventListener('click', function() {
-            const noticeModal = new bootstrap.Modal(document.getElementById('publish-notice-modal'));
-            noticeModal.show();
-        });
-        
-        // 提交通知按钮事件
-        document.getElementById('submit-notice-btn').addEventListener('click', function() {
-            const noticeTitle = document.getElementById('notice-title').value;
-            const noticeContent = document.getElementById('notice-content').value;
-            const isUrgent = document.getElementById('urgent-notice').checked;
-            
-            if (!noticeTitle || !noticeContent) {
-                showMessage('请填写完整的通知信息', 'error');
-                return;
-            }
-            
-            showMessage('通知已发布', 'success');
-            bootstrap.Modal.getInstance(document.getElementById('publish-notice-modal')).hide();
-            
-            // 清空表单
-            document.getElementById('notice-title').value = '';
-            document.getElementById('notice-content').value = '';
-            document.getElementById('urgent-notice').checked = false;
-        });
-        
-        // 添加投票选项按钮事件
-        document.getElementById('add-option-btn').addEventListener('click', function() {
-            const optionIndex = document.querySelectorAll('#pollOptions > div').length + 1;
-            const optionDiv = document.createElement('div');
-            optionDiv.className = 'mb-2 d-flex';
-            optionDiv.innerHTML = `
-                <input type="text" class="form-control me-2" placeholder="选项${optionIndex}">
-                <button class="btn btn-outline-danger btn-sm option-delete-btn">删除</button>
-            `;
-            document.getElementById('pollOptions').appendChild(optionDiv);
-            
-            // 给新添加的删除按钮绑定事件
-            optionDiv.querySelector('.option-delete-btn').addEventListener('click', function() {
-                this.closest('div').remove();
-            });
-        });
-        
-        // 删除投票选项按钮事件
-        document.querySelectorAll('.option-delete-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.closest('div').remove();
-            });
-        });
-        
-        // 发布投票按钮事件
-        document.getElementById('publish-poll-btn').addEventListener('click', function() {
-            const pollTitle = document.getElementById('pollTitle').value;
-            const options = Array.from(document.querySelectorAll('#pollOptions input')).map(input => input.value);
-            
-            if (!pollTitle) {
-                showMessage('请输入投票标题', 'error');
-                return;
-            }
-            
-            if (options.length < 2) {
-                showMessage('至少需要添加两个选项', 'error');
-                return;
-            }
-            
-            if (options.some(option => !option)) {
-                showMessage('请填写所有选项', 'error');
-                return;
-            }
-            
-            showMessage('投票已发布', 'success');
-            
-            // 清空表单
-            document.getElementById('pollTitle').value = '';
-            document.querySelectorAll('#pollOptions input').forEach(input => {
-                input.value = '';
+        // 绑定快速操作卡片点击事件
+        document.querySelectorAll('.quick-action-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const action = this.querySelector('h5').textContent;
+                console.log('快速操作:', action);
+                
+                switch(action) {
+                    case '创建新讨论':
+                        window.location.href = '/teacher/discussions';
+                        break;
+                    case '发布投票':
+                        window.location.href = '/teacher/interactions';
+                        break;
+                    case '安排小测验':
+                        window.location.href = '/teacher/quizzes';
+                        break;
+                    case '查看学生名单':
+                        window.location.href = '/teacher/students';
+                        break;
+                }
             });
         });
     });
-    
-    // 显示消息函数
-    function showMessage(message, type = 'info') {
-        const messageContainer = document.getElementById('messageContainer');
-        if (!messageContainer) {
-            console.error('未找到消息容器');
-            return;
-        }
-        
-        const alertClass = type === 'error' ? 'danger' : type;
-        
-        const alertHtml = `
-            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        `;
-        
-        messageContainer.innerHTML = alertHtml;
-        
-        // 5秒后自动关闭
-        setTimeout(() => {
-            const alert = messageContainer.querySelector('.alert');
-            if (alert) {
-                alert.classList.remove('show');
-                setTimeout(() => alert.remove(), 150);
-            }
-        }, 5000);
-    }
 </script>
 {% endblock %} 

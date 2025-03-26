@@ -65,42 +65,14 @@
         color: #007bff;
         font-weight: 500;
     }
-    
-    .btn-publish {
-        background-color: #28a745;
-        color: white;
-    }
-    
-    .news-admin-tools {
-        margin-bottom: 20px;
-        padding: 15px;
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        border: 1px solid #eaeaea;
-    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid news-container">
-    <h1 class="page-title">教育新闻管理</h1>
+    <h1 class="page-title">教育新闻</h1>
     
     <div id="messageContainer"></div>
-    
-    <!-- 教师特有的新闻管理工具 -->
-    <div class="news-admin-tools">
-        <div class="row">
-            <div class="col-md-8">
-                <h4><i class="fas fa-tools"></i> 新闻管理工具</h4>
-                <p class="text-muted">作为教师，您可以推荐新闻给学生，添加评论和见解，帮助学生更好地理解教育资讯。</p>
-            </div>
-            <div class="col-md-4 text-end">
-                <button class="btn btn-publish" data-bs-toggle="modal" data-bs-target="#publish-news-modal">
-                    <i class="fas fa-plus-circle"></i> 发布班级通知
-                </button>
-            </div>
-        </div>
-    </div>
     
     <div class="row">
         <div class="col-md-9">
@@ -158,42 +130,27 @@
                 </div>
             </div>
             
-            <!-- 班级通知管理 -->
+            <!-- 最新公告 -->
             <div class="card">
-                <div class="card-header bg-success text-white">
-                    <h4 class="mb-0"><i class="fas fa-bullhorn"></i> 班级通知管理</h4>
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="fas fa-bullhorn"></i> 最新公告</h4>
                 </div>
                 <div class="card-body">
-                    <div id="class-announcements">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">期末考试安排</h5>
-                                    <small>3天前</small>
-                                </div>
-                                <p class="mb-1">期末考试将于下周开始，请做好准备。</p>
-                                <div class="text-end mt-2">
-                                    <button class="btn btn-sm btn-outline-primary">编辑</button>
-                                    <button class="btn btn-sm btn-outline-danger">删除</button>
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">校园活动通知</h5>
-                                    <small>1周前</small>
-                                </div>
-                                <p class="mb-1">本周末将举行校园文化节，欢迎参加。</p>
-                                <div class="text-end mt-2">
-                                    <button class="btn btn-sm btn-outline-primary">编辑</button>
-                                    <button class="btn btn-sm btn-outline-danger">删除</button>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="text-center mt-3">
-                            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#publish-news-modal">
-                                <i class="fas fa-plus"></i> 添加通知
-                            </button>
-                        </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">期末考试安排</h5>
+                                <small>3天前</small>
+                            </div>
+                            <p class="mb-1">期末考试将于下周开始，请做好准备。</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">校园活动通知</h5>
+                                <small>1周前</small>
+                            </div>
+                            <p class="mb-1">本周末将举行校园文化节，欢迎参加。</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -223,59 +180,10 @@
                         <p class="mt-3">正在加载新闻内容...</p>
                     </div>
                 </div>
-                <!-- 教师注释区域 -->
-                <div class="mt-4">
-                    <h5>教师注释</h5>
-                    <textarea id="teacher-notes" class="form-control" rows="3" placeholder="添加您对这篇新闻的见解和建议..."></textarea>
-                    <div class="form-check mt-2">
-                        <input class="form-check-input" type="checkbox" id="recommend-to-students">
-                        <label class="form-check-label" for="recommend-to-students">
-                            推荐给学生阅读
-                        </label>
-                    </div>
-                    <button id="save-notes-btn" class="btn btn-primary mt-2">保存注释</button>
-                </div>
             </div>
             <div class="modal-footer">
                 <a href="#" id="news-original-link" class="btn btn-primary" target="_blank">查看原文</a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 发布通知模态框 -->
-<div class="modal fade" id="publish-news-modal" tabindex="-1" aria-labelledby="publishNewsModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="publishNewsModalLabel">发布班级通知</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="publish-news-form">
-                    <div class="mb-3">
-                        <label for="news-title" class="form-label">通知标题</label>
-                        <input type="text" class="form-control" id="news-title" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="news-content" class="form-label">通知内容</label>
-                        <textarea class="form-control" id="news-content" rows="5" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="news-type" class="form-label">通知类型</label>
-                        <select class="form-select" id="news-type">
-                            <option value="notice">普通通知</option>
-                            <option value="exam">考试相关</option>
-                            <option value="activity">活动通知</option>
-                            <option value="important">重要通知</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-success" id="submit-news-btn">发布</button>
             </div>
         </div>
     </div>
@@ -291,20 +199,20 @@
     let newsPerPage = 10;
     
     document.addEventListener('DOMContentLoaded', function() {
-        // 角色验证 - 确保只有教师可以访问该页面
+        // 角色验证 - 确保只有学生可以访问该页面
         const userData = localStorage.getItem('userData');
         if (userData) {
             try {
                 const user = JSON.parse(userData);
-                if (user.role !== 'teacher') {
-                    console.error('非教师角色访问教师新闻页面');
+                if (user.role !== 'student' && user.role !== 'teacher') {
+                    console.error('非学生或教师角色访问新闻页面');
                     showMessage('您没有权限访问该页面，正在重定向...', 'error');
                     setTimeout(() => {
                         window.location.href = '/';
                     }, 2000);
                     return;
                 }
-                console.log('教师验证成功');
+                console.log('用户验证成功');
             } catch (e) {
                 console.error('解析用户数据出错:', e);
             }
@@ -317,7 +225,7 @@
             return;
         }
 
-        console.log('教师新闻页面已加载');
+        console.log('新闻页面已加载');
         
         // 加载新闻源
         loadNewsSources();
@@ -335,25 +243,6 @@
             
             // 此处可添加搜索逻辑
             showMessage(`搜索 "${searchTerm}" 的功能尚未实现`, 'info');
-        });
-        
-        // 发布通知按钮事件
-        document.getElementById('submit-news-btn').addEventListener('click', function() {
-            const title = document.getElementById('news-title').value;
-            const content = document.getElementById('news-content').value;
-            const type = document.getElementById('news-type').value;
-            
-            if (!title || !content) {
-                showMessage('标题和内容不能为空', 'error');
-                return;
-            }
-            
-            // 这里可以添加发布通知的API调用
-            showMessage('通知发布功能尚未实现', 'info');
-            
-            // 关闭模态框
-            const modal = bootstrap.Modal.getInstance(document.getElementById('publish-news-modal'));
-            modal.hide();
         });
     });
     
@@ -445,18 +334,6 @@
                     newsListContainer.innerHTML = '';
                     
                     newsList.forEach(news => {
-                        // 为教师添加额外的操作按钮
-                        const teacherActions = `
-                            <div class="mt-2">
-                                <button class="btn btn-sm btn-outline-primary recommend-btn" data-url="${news.url}">
-                                    <i class="fas fa-thumbs-up"></i> 推荐给学生
-                                </button>
-                                <button class="btn btn-sm btn-outline-secondary notes-btn" data-url="${news.url}">
-                                    <i class="fas fa-sticky-note"></i> 添加注释
-                                </button>
-                            </div>
-                        `;
-                        
                         const newsHtml = `
                             <div class="news-item">
                                 <h5 class="news-title">
@@ -469,7 +346,6 @@
                                     <span>${news.date}</span>
                                 </div>
                                 ${news.summary ? `<div class="news-summary">${news.summary}</div>` : ''}
-                                ${teacherActions}
                             </div>
                         `;
                         newsListContainer.innerHTML += newsHtml;
@@ -481,29 +357,6 @@
                             e.preventDefault();
                             showNewsDetail(this.getAttribute('data-url'), this.getAttribute('data-title'), 
                                         this.getAttribute('data-source'), this.getAttribute('data-date'));
-                        });
-                    });
-                    
-                    // 绑定推荐按钮事件
-                    document.querySelectorAll('.recommend-btn').forEach(btn => {
-                        btn.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            const url = this.getAttribute('data-url');
-                            recommendNewsToStudents(url);
-                        });
-                    });
-                    
-                    // 绑定添加注释按钮事件
-                    document.querySelectorAll('.notes-btn').forEach(btn => {
-                        btn.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            const url = this.getAttribute('data-url');
-                            const newsItem = this.closest('.news-item');
-                            const title = newsItem.querySelector('.news-title a').textContent.trim();
-                            const source = newsItem.querySelector('.badge').textContent.trim();
-                            const date = newsItem.querySelector('.news-meta span:last-child').textContent.trim();
-                            
-                            showNewsDetail(url, title, source, date);
                         });
                     });
                     
@@ -544,10 +397,6 @@
         document.getElementById('news-detail-date').textContent = date;
         document.getElementById('news-original-link').href = url;
         
-        // 清空教师注释区域
-        document.getElementById('teacher-notes').value = '';
-        document.getElementById('recommend-to-students').checked = false;
-        
         // 显示加载中
         document.getElementById('news-detail-content').innerHTML = `
             <div class="text-center py-4">
@@ -574,9 +423,6 @@
                             这是新闻摘要，查看完整内容请点击下方"查看原文"按钮。
                         </div>
                     `;
-                    
-                    // 尝试获取教师之前的注释
-                    fetchTeacherNotes(url);
                 } else {
                     document.getElementById('news-detail-content').innerHTML = `
                         <div class="alert alert-warning">
@@ -595,47 +441,6 @@
                     </div>
                 `;
             });
-            
-        // 绑定保存注释按钮事件
-        document.getElementById('save-notes-btn').onclick = function() {
-            const notes = document.getElementById('teacher-notes').value;
-            const recommend = document.getElementById('recommend-to-students').checked;
-            saveTeacherNotes(url, notes, recommend);
-        };
-    }
-    
-    // 获取教师注释
-    function fetchTeacherNotes(newsUrl) {
-        // 这里可以添加获取教师注释的API调用
-        console.log('获取教师注释:', newsUrl);
-        // 模拟API调用
-        setTimeout(() => {
-            // 假设有一些预设的注释
-            if (Math.random() > 0.7) {
-                document.getElementById('teacher-notes').value = '这篇文章对理解当前教育改革非常有帮助，建议学生阅读。';
-                document.getElementById('recommend-to-students').checked = true;
-            }
-        }, 500);
-    }
-    
-    // 保存教师注释
-    function saveTeacherNotes(newsUrl, notes, recommend) {
-        // 这里可以添加保存教师注释的API调用
-        console.log('保存教师注释:', newsUrl, notes, recommend);
-        // 模拟API调用
-        setTimeout(() => {
-            showMessage('注释已保存', 'success');
-        }, 500);
-    }
-    
-    // 推荐新闻给学生
-    function recommendNewsToStudents(newsUrl) {
-        // 这里可以添加推荐新闻给学生的API调用
-        console.log('推荐新闻给学生:', newsUrl);
-        // 模拟API调用
-        setTimeout(() => {
-            showMessage('已成功推荐给学生', 'success');
-        }, 500);
     }
     
     // 更新分页控件

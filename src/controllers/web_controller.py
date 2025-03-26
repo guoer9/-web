@@ -23,8 +23,14 @@ def login_required(f):
 def teacher_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'role' not in session or session['role'] != 'teacher':
+        logger.info(f"访问需要教师权限的路由，会话内容: {session}")
+        if 'role' not in session:
+            logger.warning("会话中不存在'role'键")
             return redirect(url_for('web.index'))
+        if session['role'] != 'teacher':
+            logger.warning(f"用户角色不是教师，而是: {session['role']}")
+            return redirect(url_for('web.index'))
+        logger.info("教师权限验证通过")
         return f(*args, **kwargs)
     return decorated_function
 
@@ -59,13 +65,14 @@ def student_dashboard():
     return render_template('student/dashboard.html')
 
 @web_bp.route('/teacher/dashboard')
+@teacher_required
 def teacher_dashboard():
     """显示教师仪表板"""
     logger.info("访问教师仪表板")
     return render_template('teacher/dashboard.html')
 
 @web_bp.route('/teacher/news')
-@login_required
+@teacher_required
 def teacher_news():
     """显示教师新闻页面"""
     logger.info("访问教师新闻页面")
@@ -100,6 +107,7 @@ def teacher_analytics():
 
 # 新增路由 - 互动管理
 @web_bp.route('/teacher/interactions')
+@teacher_required
 def teacher_interactions():
     """显示教师互动管理页面"""
     logger.info("访问教师互动管理页面")
@@ -113,9 +121,10 @@ def student_interactions():
 
 # 新增路由 - 反馈处理
 @web_bp.route('/teacher/feedback')
+@teacher_required
 def teacher_feedback():
-    """显示教师反馈处理页面"""
-    logger.info("访问教师反馈处理页面")
+    """显示教师反馈管理页面"""
+    logger.info("访问教师反馈管理页面")
     return render_template('teacher/feedback.html')
 
 @web_bp.route('/student/feedback')
@@ -133,6 +142,7 @@ def student_analytics():
 
 # 新增路由 - 个人资料
 @web_bp.route('/teacher/profile')
+@teacher_required
 def teacher_profile():
     """显示教师个人资料页面"""
     logger.info("访问教师个人资料页面")
@@ -146,6 +156,7 @@ def student_profile():
 
 # 新增路由 - 通知设置
 @web_bp.route('/teacher/notifications')
+@teacher_required
 def teacher_notifications():
     """显示教师通知设置页面"""
     logger.info("访问教师通知设置页面")
@@ -156,6 +167,42 @@ def student_notifications():
     """显示学生通知设置页面"""
     logger.info("访问学生通知设置页面")
     return render_template('student/notifications.html')
+
+# 新增路由 - 学生名单
+@web_bp.route('/teacher/students')
+@teacher_required
+def teacher_students():
+    """显示教师查看学生名单页面"""
+    logger.info("访问教师查看学生名单页面")
+    return render_template('teacher/students.html')
+
+# 新增路由 - 课堂讨论
+@web_bp.route('/teacher/discussions')
+@teacher_required
+def teacher_discussions():
+    """显示教师讨论管理页面"""
+    logger.info("访问教师讨论管理页面")
+    return render_template('teacher/discussions.html')
+
+@web_bp.route('/student/discussions')
+def student_discussions():
+    """显示学生课堂讨论页面"""
+    logger.info("访问学生课堂讨论页面")
+    return render_template('student/discussions.html')
+
+# 测验管理路由
+@web_bp.route('/teacher/quizzes')
+@teacher_required
+def teacher_quizzes():
+    """显示教师测验管理页面"""
+    logger.info("访问教师测验管理页面")
+    return render_template('teacher/quizzes.html')
+
+@web_bp.route('/student/quizzes')
+def student_quizzes():
+    """显示学生测验页面"""
+    logger.info("访问学生测验页面")
+    return render_template('student/quizzes.html')
 
 # 错误处理页面
 @web_bp.errorhandler(404)

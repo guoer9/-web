@@ -1,0 +1,538 @@
+{% extends 'base.html' %}
+
+{% block title %}课堂讨论管理{% endblock %}
+
+{% block styles %}
+<style>
+    .discussions-container {
+        padding: 20px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+        background-color: #f8f9fa;
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 500;
+    }
+    
+    .discussion-item {
+        padding: 15px;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background-color 0.2s;
+    }
+    
+    .discussion-item:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .discussion-item:last-child {
+        border-bottom: none;
+    }
+    
+    .discussion-title {
+        font-weight: 500;
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+    
+    .discussion-meta {
+        font-size: 0.85em;
+        color: #666;
+        margin-bottom: 10px;
+    }
+    
+    .badge {
+        padding: 4px 8px;
+        font-size: 0.75em;
+        font-weight: normal;
+    }
+    
+    .discussion-stats {
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+        color: #666;
+        font-size: 0.9em;
+    }
+    
+    .stats-item {
+        display: flex;
+        align-items: center;
+    }
+    
+    .stats-item i {
+        margin-right: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid discussions-container">
+    <h1 class="page-title">课堂讨论管理</h1>
+    
+    <div id="messageContainer"></div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0"><i class="fas fa-comments"></i> 讨论列表</h4>
+                        <div>
+                            <button class="btn btn-light btn-sm" id="create-discussion-btn">
+                                <i class="fas fa-plus"></i> 创建讨论
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- 讨论筛选和搜索 -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="search-input" placeholder="搜索讨论...">
+                                <button class="btn btn-primary" id="search-btn">
+                                    <i class="fas fa-search"></i> 搜索
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-end">
+                                <select class="form-select w-50" id="status-filter">
+                                    <option value="all">所有状态</option>
+                                    <option value="active">进行中</option>
+                                    <option value="scheduled">计划中</option>
+                                    <option value="completed">已结束</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 讨论列表 -->
+                    <div class="discussion-list">
+                        <div class="discussion-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="discussion-title">微积分极限概念理解</div>
+                                    <div class="discussion-meta">
+                                        <span class="badge bg-success">进行中</span>
+                                        <span>课程: 高等数学</span> | 
+                                        <span>创建于: 2023-10-15</span>
+                                    </div>
+                                    <p>这个讨论围绕微积分中极限概念的理解和应用展开，学生可以分享自己的困惑和见解。</p>
+                                    <div class="discussion-stats">
+                                        <div class="stats-item">
+                                            <i class="fas fa-user"></i> 28名参与者
+                                        </div>
+                                        <div class="stats-item">
+                                            <i class="fas fa-comment"></i> 56条回复
+                                        </div>
+                                        <div class="stats-item">
+                                            <i class="fas fa-eye"></i> 112次查看
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-primary btn-sm view-discussion-btn" data-discussion-id="1">
+                                            <i class="fas fa-eye"></i> 查看
+                                        </button>
+                                        <button class="btn btn-outline-secondary btn-sm edit-discussion-btn" data-discussion-id="1">
+                                            <i class="fas fa-edit"></i> 编辑
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="discussion-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="discussion-title">物理学中的能量守恒问题</div>
+                                    <div class="discussion-meta">
+                                        <span class="badge bg-warning">计划中</span>
+                                        <span>课程: 大学物理</span> | 
+                                        <span>计划开始: 2023-10-20</span>
+                                    </div>
+                                    <p>这个讨论将探讨能量守恒原理在不同物理系统中的应用，以及学生在解题过程中遇到的常见问题。</p>
+                                    <div class="discussion-stats">
+                                        <div class="stats-item">
+                                            <i class="fas fa-user"></i> 15名预约
+                                        </div>
+                                        <div class="stats-item">
+                                            <i class="fas fa-comment"></i> 0条回复
+                                        </div>
+                                        <div class="stats-item">
+                                            <i class="fas fa-eye"></i> 45次查看
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-primary btn-sm view-discussion-btn" data-discussion-id="2">
+                                            <i class="fas fa-eye"></i> 查看
+                                        </button>
+                                        <button class="btn btn-outline-secondary btn-sm edit-discussion-btn" data-discussion-id="2">
+                                            <i class="fas fa-edit"></i> 编辑
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="discussion-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="discussion-title">数据结构与算法效率分析</div>
+                                    <div class="discussion-meta">
+                                        <span class="badge bg-secondary">已结束</span>
+                                        <span>课程: 计算机科学导论</span> | 
+                                        <span>结束于: 2023-10-10</span>
+                                    </div>
+                                    <p>这个讨论涵盖了常见数据结构的时间复杂度分析，以及如何选择适合特定问题的算法和数据结构。</p>
+                                    <div class="discussion-stats">
+                                        <div class="stats-item">
+                                            <i class="fas fa-user"></i> 35名参与者
+                                        </div>
+                                        <div class="stats-item">
+                                            <i class="fas fa-comment"></i> 78条回复
+                                        </div>
+                                        <div class="stats-item">
+                                            <i class="fas fa-eye"></i> 156次查看
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-primary btn-sm view-discussion-btn" data-discussion-id="3">
+                                            <i class="fas fa-eye"></i> 查看
+                                        </button>
+                                        <button class="btn btn-outline-secondary btn-sm report-discussion-btn" data-discussion-id="3">
+                                            <i class="fas fa-chart-bar"></i> 报告
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 分页 -->
+                    <nav aria-label="讨论列表分页" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">下一页</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <!-- 讨论统计 -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-chart-pie"></i> 讨论统计</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-3">
+                            <h5>讨论总数</h5>
+                            <h3>15</h3>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <h5>进行中</h5>
+                            <h3>4</h3>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <h5>计划中</h5>
+                            <h3>3</h3>
+                        </div>
+                    </div>
+                    
+                    <h5 class="mt-4 mb-3">参与度统计</h5>
+                    <div class="progress mb-3">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">平均参与率: 65%</div>
+                    </div>
+                    
+                    <div class="alert alert-info mt-4">
+                        <i class="fas fa-lightbulb"></i> 提示: 互动性讨论的参与率通常比纯理论讨论高出约20%。
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 热门讨论话题 -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="fas fa-fire"></i> 热门话题</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            微积分应用
+                            <span class="badge bg-primary rounded-pill">142次讨论</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            物理实验设计
+                            <span class="badge bg-primary rounded-pill">98次讨论</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            编程算法
+                            <span class="badge bg-primary rounded-pill">87次讨论</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            文献阅读方法
+                            <span class="badge bg-primary rounded-pill">65次讨论</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            学术写作技巧
+                            <span class="badge bg-primary rounded-pill">51次讨论</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 创建讨论模态框 -->
+<div class="modal fade" id="create-discussion-modal" tabindex="-1" aria-labelledby="createDiscussionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createDiscussionModalLabel">创建讨论</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="discussion-form">
+                    <div class="mb-3">
+                        <label for="discussion-title" class="form-label">讨论标题</label>
+                        <input type="text" class="form-control" id="discussion-title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="discussion-course" class="form-label">所属课程</label>
+                        <select class="form-select" id="discussion-course" required>
+                            <option value="">选择课程</option>
+                            <option value="math">高等数学</option>
+                            <option value="physics">大学物理</option>
+                            <option value="cs">计算机科学</option>
+                            <option value="english">大学英语</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="discussion-description" class="form-label">讨论描述</label>
+                        <textarea class="form-control" id="discussion-description" rows="4" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="discussion-status" class="form-label">状态</label>
+                                <select class="form-select" id="discussion-status" required>
+                                    <option value="active">立即开始</option>
+                                    <option value="scheduled">计划开始</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3" id="schedule-date-container" style="display: none;">
+                                <label for="schedule-date" class="form-label">计划日期</label>
+                                <input type="date" class="form-control" id="schedule-date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">讨论选项</label>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="allow-anonymous">
+                            <label class="form-check-label" for="allow-anonymous">
+                                允许匿名参与
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="moderated-discussion">
+                            <label class="form-check-label" for="moderated-discussion">
+                                审核模式（教师需要审核学生发言）
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="notify-students">
+                            <label class="form-check-label" for="notify-students">
+                                通知所有学生
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="save-discussion-btn">创建讨论</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 角色验证 - 确保只有教师可以访问该页面
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            try {
+                const user = JSON.parse(userData);
+                if (user.role !== 'teacher') {
+                    console.error('非教师角色访问教师页面');
+                    showMessage('您没有权限访问该页面，正在重定向...', 'error');
+                    setTimeout(() => {
+                        window.location.href = user.role === 'student' ? '/student/dashboard' : '/';
+                    }, 2000);
+                    return;
+                }
+                console.log('教师用户验证成功');
+            } catch (e) {
+                console.error('解析用户数据出错:', e);
+            }
+        } else {
+            console.error('未找到用户数据');
+            showMessage('请先登录', 'error');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+            return;
+        }
+
+        console.log('课堂讨论页面已加载');
+        
+        // 创建讨论按钮事件
+        document.getElementById('create-discussion-btn').addEventListener('click', function() {
+            console.log('打开创建讨论模态框');
+            const modal = new bootstrap.Modal(document.getElementById('create-discussion-modal'));
+            modal.show();
+        });
+        
+        // 状态变化显示/隐藏日期选择器
+        document.getElementById('discussion-status').addEventListener('change', function() {
+            const scheduleContainer = document.getElementById('schedule-date-container');
+            if (this.value === 'scheduled') {
+                scheduleContainer.style.display = 'block';
+            } else {
+                scheduleContainer.style.display = 'none';
+            }
+        });
+        
+        // 保存讨论按钮事件
+        document.getElementById('save-discussion-btn').addEventListener('click', function() {
+            const title = document.getElementById('discussion-title').value;
+            const course = document.getElementById('discussion-course').value;
+            const description = document.getElementById('discussion-description').value;
+            const status = document.getElementById('discussion-status').value;
+            
+            if (!title || !course || !description) {
+                showMessage('请填写所有必填字段', 'error');
+                return;
+            }
+            
+            // 这里可以添加创建讨论的API调用
+            console.log('创建讨论:', { title, course, description, status });
+            
+            showMessage('讨论创建成功', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('create-discussion-modal')).hide();
+            
+            // 清空表单
+            document.getElementById('discussion-title').value = '';
+            document.getElementById('discussion-description').value = '';
+        });
+        
+        // 查看讨论按钮事件
+        document.querySelectorAll('.view-discussion-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const discussionId = this.getAttribute('data-discussion-id');
+                console.log('查看讨论:', discussionId);
+                // 这里可以添加查看讨论的逻辑，例如跳转到讨论详情页
+                showMessage('讨论详情功能尚未实现', 'info');
+            });
+        });
+        
+        // 编辑讨论按钮事件
+        document.querySelectorAll('.edit-discussion-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const discussionId = this.getAttribute('data-discussion-id');
+                console.log('编辑讨论:', discussionId);
+                // 这里可以添加编辑讨论的逻辑
+                showMessage('讨论编辑功能尚未实现', 'info');
+            });
+        });
+        
+        // 生成报告按钮事件
+        document.querySelectorAll('.report-discussion-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const discussionId = this.getAttribute('data-discussion-id');
+                console.log('生成讨论报告:', discussionId);
+                // 这里可以添加生成报告的逻辑
+                showMessage('讨论报告功能尚未实现', 'info');
+            });
+        });
+        
+        // 搜索按钮事件
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const searchTerm = document.getElementById('search-input').value;
+            if (!searchTerm) {
+                showMessage('请输入搜索关键词', 'error');
+                return;
+            }
+            
+            console.log('搜索讨论:', searchTerm);
+            // 这里可以添加搜索逻辑
+            showMessage(`搜索 "${searchTerm}" 的结果为3个讨论`, 'info');
+        });
+        
+        // 状态筛选事件
+        document.getElementById('status-filter').addEventListener('change', function() {
+            const status = this.value;
+            console.log('筛选状态:', status);
+            // 这里可以添加筛选逻辑
+            showMessage(`显示 ${status === 'all' ? '所有' : status} 讨论`, 'info');
+        });
+    });
+    
+    // 显示消息函数
+    function showMessage(message, type = 'info') {
+        const messageContainer = document.getElementById('messageContainer');
+        if (!messageContainer) {
+            console.error('未找到消息容器');
+            return;
+        }
+        
+        const alertClass = type === 'error' ? 'danger' : type;
+        
+        const alertHtml = `
+            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        
+        messageContainer.innerHTML = alertHtml;
+        
+        // 5秒后自动关闭
+        setTimeout(() => {
+            const alert = messageContainer.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+            }
+        }, 5000);
+    }
+</script>
+{% endblock %} 

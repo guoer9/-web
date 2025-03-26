@@ -10,6 +10,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- 自定义CSS -->
     <style>
+        :root {
+            --sidebar-width: 200px;
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --light-bg: #f8f9fa;
+            --border-color: #e9ecef;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7f9;
+        }
+        
         .sidebar {
             position: fixed;
             top: 0;
@@ -17,8 +30,10 @@
             left: 0;
             z-index: 100;
             padding: 48px 0 0;
-            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: var(--secondary-color);
+            width: var(--sidebar-width);
+            transition: all 0.3s;
         }
         
         .sidebar-sticky {
@@ -31,48 +46,146 @@
         }
         
         .navbar {
-            padding: .75rem 1rem;
+            padding: .5rem 1rem;
             border-width: 0;
             border-radius: 0;
+            background-color: var(--primary-color) !important;
         }
         
         .navbar-brand {
             padding-top: .75rem;
             padding-bottom: .75rem;
-            font-size: 1rem;
-            background-color: rgba(0, 0, 0, .25);
-            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
         }
         
         .navbar .navbar-toggler {
             top: .25rem;
             right: 1rem;
+            border: none;
         }
         
         .nav-link {
             font-weight: 500;
-            color: #333;
+            color: rgba(255, 255, 255, 0.8) !important;
+            padding: 8px 15px;
+            margin: 2px 0;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .nav-link:hover {
+            color: #fff !important;
+            background-color: rgba(255, 255, 255, 0.1);
         }
         
         .nav-link.active {
-            color: #007bff;
+            color: #fff !important;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            margin-right: 8px;
         }
         
         .main-content {
             padding-top: 56px;
             min-height: 100vh;
+            padding-left: 15px;
+            padding-right: 15px;
+            transition: all 0.3s;
         }
         
         .page-title {
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            font-weight: 600;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .badge {
+            font-weight: 500;
+            padding: 5px 8px;
+        }
+        
+        .sidebar-heading {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 10px 15px;
+            margin-top: 20px;
         }
         
         @media (min-width: 768px) {
             .main-content {
-                margin-left: 240px;
+                margin-left: var(--sidebar-width);
             }
+        }
+        
+        @media (max-width: 767.98px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 10px;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .navbar-brand {
+                padding-left: 15px;
+            }
+        }
+        
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        
+        /* 美化消息容器 */
+        #messageContainer {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 1050;
+            max-width: 350px;
         }
     </style>
     {% block styles %}{% endblock %}
@@ -100,7 +213,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- 侧边栏 -->
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
                 <div class="sidebar-sticky pt-3">
                     <!-- 学生导航菜单 -->
                     <div id="studentNav" style="display: none;">
@@ -208,6 +321,7 @@
             
             <!-- 主内容区 -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
+                <div id="messageContainer"></div>
                 {% block content %}{% endblock %}
             </main>
         </div>
@@ -220,38 +334,50 @@
         document.addEventListener('DOMContentLoaded', function() {
             // 从localStorage获取用户信息
             const userData = localStorage.getItem('userData');
+            console.log('从localStorage中读取的userData:', userData);
+            
             if (userData) {
                 try {
                     const user = JSON.parse(userData);
+                    console.log('解析后的用户数据:', user);
                     
                     // 显示用户名
                     document.getElementById('username').textContent = user.username || '用户';
+                    console.log('设置用户名:', user.username);
                     
                     // 根据角色显示对应导航
                     if (user.role === 'student') {
+                        console.log('用户角色是学生，显示学生导航菜单');
                         document.getElementById('studentNav').style.display = 'block';
                         document.getElementById('profileLink').href = '/student/profile';
                         document.getElementById('notificationsLink').href = '/student/notifications';
                     } else if (user.role === 'teacher') {
+                        console.log('用户角色是教师，显示教师导航菜单');
                         document.getElementById('teacherNav').style.display = 'block';
                         document.getElementById('profileLink').href = '/teacher/profile';
                         document.getElementById('notificationsLink').href = '/teacher/notifications';
+                    } else {
+                        console.error('未知用户角色:', user.role);
                     }
                     
                     // 设置当前活动页面
                     const path = window.location.pathname;
+                    console.log('当前页面路径:', path);
                     document.querySelectorAll('.nav-link').forEach(link => {
                         if (path === link.getAttribute('href')) {
                             link.classList.add('active');
+                            console.log('设置活动链接:', link.getAttribute('href'));
                         }
                     });
                 } catch (e) {
                     console.error('解析用户数据出错:', e);
+                    console.error('原始userData:', userData);
                     // 显示错误时默认显示学生导航
                     document.getElementById('studentNav').style.display = 'block';
                 }
             } else {
                 // 没有用户数据，显示登录页面
+                console.error('未找到userData，重定向到主页');
                 window.location.href = '/';
             }
             
@@ -259,9 +385,11 @@
             document.getElementById('logoutLink').addEventListener('click', function(e) {
                 e.preventDefault();
                 if (confirm('确定要退出登录吗？')) {
+                    console.log('用户确认退出登录');
                     // 清除本地存储的用户信息
                     localStorage.removeItem('userData');
                     localStorage.removeItem('token');
+                    console.log('已清除localStorage中的userData和token');
                     
                     // 调用登出API
                     fetch('/api/auth/logout', {
@@ -272,6 +400,7 @@
                     })
                     .then(response => response.json())
                     .then(data => {
+                        console.log('登出API响应:', data);
                         window.location.href = '/';
                     })
                     .catch(error => {

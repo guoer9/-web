@@ -266,10 +266,10 @@ function redirectToDashboard(role) {
 function login() {
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
-    var role = document.querySelector('input[name="role"]:checked').value;
-
+    var role = document.querySelector('input[name="role"]:checked') ? document.querySelector('input[name="role"]:checked').value : 'student';
+    
     if (!username || !password) {
-        showAlert('请输入用户名和密码', 'danger');
+        showMessage('请输入用户名和密码', 'error');
         return;
     }
 
@@ -283,39 +283,54 @@ function login() {
         },
         body: JSON.stringify({
             username: username,
-            password: password,
-            role: role
+            password: password
         })
     })
     .then(response => {
+        console.log('登录响应状态:', response.status);
         if (!response.ok) {
-            throw new Error('登录失败');
+            throw new Error('登录失败，状态码: ' + response.status);
         }
         return response.json();
     })
     .then(data => {
-        console.log('登录响应:', data);
+        console.log('登录响应完整数据:', data);
         
         // 存储用户信息和认证令牌
         localStorage.setItem('token', data.token);
+        console.log('令牌已保存到localStorage');
         
-        // 格式化并保存用户数据，确保角色信息正确
+        // 格式化并保存用户数据，使用后端返回的角色
         const userData = {
             id: data.user.id,
             username: data.user.username,
-            role: data.user.role, // 使用后端返回的角色字段
+            role: data.user.role,
             name: data.user.name || data.user.username
         };
         
-        localStorage.setItem('userData', JSON.stringify(userData));
-        console.log('用户数据已保存到localStorage:', userData);
+        console.log('准备保存到localStorage的用户数据:', userData);
+        const userDataString = JSON.stringify(userData);
+        console.log('JSON字符串化的用户数据:', userDataString);
+        
+        localStorage.setItem('userData', userDataString);
+        console.log('用户数据已保存到localStorage');
+        
+        // 获取保存后的数据，进行验证
+        const savedData = localStorage.getItem('userData');
+        console.log('验证：从localStorage中读取的userData:', savedData);
+        try {
+            const parsedData = JSON.parse(savedData);
+            console.log('验证：解析后的用户数据:', parsedData);
+        } catch(e) {
+            console.error('验证：解析用户数据出错:', e);
+        }
         
         // 根据用户角色重定向到相应页面
         if (userData.role === 'teacher') {
-            console.log('重定向到教师仪表盘');
+            console.log('用户是教师，重定向到教师仪表盘');
             window.location.href = '/teacher/dashboard';
         } else if (userData.role === 'student') {
-            console.log('重定向到学生仪表盘');
+            console.log('用户是学生，重定向到学生仪表盘');
             window.location.href = '/student/dashboard';
         } else {
             console.log('未知角色，重定向到首页');
@@ -324,7 +339,7 @@ function login() {
     })
     .catch(error => {
         console.error('登录错误:', error);
-        showAlert('登录失败，请检查用户名和密码', 'danger');
+        showMessage('登录失败，请检查用户名和密码', 'error');
     });
 }
 

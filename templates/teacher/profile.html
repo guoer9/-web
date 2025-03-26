@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}个人资料{% endblock %}
+
+{% block styles %}
+<style>
+    .profile-container {
+        padding: 20px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+        background-color: #f8f9fa;
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 500;
+    }
+    
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 20px;
+        display: block;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid profile-container">
+    <h1 class="page-title">个人资料</h1>
+    
+    <div id="messageContainer"></div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">基本信息</h4>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://via.placeholder.com/150" alt="头像" class="profile-avatar">
+                    <h5 id="teacherName">教师姓名</h5>
+                    <p class="text-muted">教师</p>
+                    <p id="teacherEmail">email@example.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">编辑资料</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-center">个人资料功能正在开发中...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 角色验证 - 确保只有教师可以访问该页面
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            try {
+                const user = JSON.parse(userData);
+                if (user.role !== 'teacher') {
+                    console.error('非教师角色访问教师个人资料页面');
+                    showMessage('您没有权限访问该页面，正在重定向...', 'error');
+                    setTimeout(() => {
+                        window.location.href = user.role === 'student' ? '/student/dashboard' : '/';
+                    }, 2000);
+                    return;
+                }
+                console.log('教师用户验证成功');
+                
+                // 显示用户信息
+                document.getElementById('teacherName').textContent = user.username || '教师姓名';
+                document.getElementById('teacherEmail').textContent = user.email || 'email@example.com';
+            } catch (e) {
+                console.error('解析用户数据出错:', e);
+            }
+        } else {
+            console.error('未找到用户数据');
+            showMessage('请先登录', 'error');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+            return;
+        }
+    });
+    
+    // 显示消息函数
+    function showMessage(message, type = 'info') {
+        const messageContainer = document.getElementById('messageContainer');
+        if (!messageContainer) {
+            console.error('未找到消息容器');
+            return;
+        }
+        
+        const alertClass = type === 'error' ? 'danger' : type;
+        
+        const alertHtml = `
+            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        
+        messageContainer.innerHTML = alertHtml;
+        
+        // 5秒后自动关闭
+        setTimeout(() => {
+            const alert = messageContainer.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+            }
+        }, 5000);
+    }
+</script>
+{% endblock %} 

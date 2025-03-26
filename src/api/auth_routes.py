@@ -3,8 +3,12 @@ from src.models.user import User
 from functools import wraps
 import jwt
 from datetime import datetime, timedelta
+import logging
 
 auth_bp = Blueprint('auth', __name__)
+
+# 设置日志
+logger = logging.getLogger(__name__)
 
 # 从应用上下文获取mongo连接
 def get_user_model():
@@ -88,6 +92,13 @@ def login():
     if not user:
         return jsonify({'message': '用户名或密码错误'}), 401
     
+    # 设置session
+    session['user_id'] = str(user['_id'])
+    session['role'] = user['role']
+    session['username'] = user['username']
+    
+    logger.info(f"用户 {user['username']} 登录成功，角色: {user['role']}，会话: {session}")
+    
     # 生成JWT令牌
     token = jwt.encode({
         'user_id': str(user['_id']),
@@ -133,4 +144,18 @@ def get_users(current_user):
     for user in users:
         user['_id'] = str(user['_id'])
     
-    return jsonify(users), 200 
+    return jsonify(users), 200
+
+@auth_bp.route('/logout', methods=['POST'])
+def logout():
+    # 清除会话
+    user_id = session.get('user_id', '未知')
+    username = session.get('username', '未知')
+    role = session.get('role', '未知')
+    logger.info(f"用户登出: ID={user_id}, 用户名={username}, 角色={role}")
+    
+    session.pop('user_id', None)
+    session.pop('role', None)
+    session.pop('username', None)
+    
+    return jsonify({'message': '登出成功'}), 200 
