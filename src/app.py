@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""
+旧版本应用入口点，保留以兼容现有代码
+"""
 from flask import Flask, jsonify, request, abort
 from flask_pymongo import PyMongo
 from flask_cors import CORS
@@ -10,15 +14,16 @@ import requests
 import traceback
 import threading
 
-# 设置日志
+# 配置日志记录
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.StreamHandler(),
-        logging.FileHandler('app.log')
+        logging.FileHandler('app.log'),
+        logging.StreamHandler()
     ]
 )
+
 logger = logging.getLogger(__name__)
 
 # 添加当前目录到系统路径
@@ -27,13 +32,15 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # 加载环境变量
 load_dotenv()
 
-# 创建Flask应用
+# 创建Flask应用实例
 app = Flask(__name__, 
             static_folder="../static",
             template_folder="../templates")
 
-# 应用配置
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev_secret_key")
+# 配置
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
+app.config['MONGO_URI'] = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/jhxt')
+app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', app.config['SECRET_KEY'])
 app.config["ADMIN_TOKEN"] = os.getenv("ADMIN_TOKEN", "admin_secret_token")
 app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads")
 
@@ -49,19 +56,16 @@ os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-# 连接MongoDB
+# 初始化MongoDB
+mongo = PyMongo(app)
+
+# 测试连接
 try:
-    app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/teacher_student_interaction")
-    mongo = PyMongo(app)
-    # 测试MongoDB连接
-    mongo.db.command('ping')
-    app.mongo_client = mongo.db.client  # 添加客户端引用
-    logger.info("MongoDB连接成功")
+    with app.app_context():
+        mongo.db.command('ping')
+    logger.info("MongoDB连接成功初始化")
 except Exception as e:
-    error_msg = f"MongoDB连接失败: {str(e)}\n{traceback.format_exc()}"
-    logger.error(error_msg)
-    # 系统依赖MongoDB，连接失败直接中止启动
-    raise RuntimeError("MongoDB连接失败，系统无法启动。请检查配置并确保MongoDB服务运行正常。") from e
+    logger.error(f"MongoDB连接失败: {str(e)}")
 
 # 测试大模型API连接
 def test_ai_api():

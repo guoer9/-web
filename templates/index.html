@@ -5,10 +5,228 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>师生互动系统</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #1abc9c;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7f9;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: var(--secondary-color) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: white;
+            min-height: calc(100vh - 156px);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            padding: 3rem 0;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            max-width: 80%;
+        }
+
+        .login-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .auth-tab {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #999;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--primary-color);
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .btn-auth:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .role-selector {
+            display: flex;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .role-option {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: #f8f9fa;
+            color: #666;
+        }
+
+        .role-option.active {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+        }
+
+        .bg-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .shape-1 {
+            width: 500px;
+            height: 500px;
+            right: -250px;
+            top: -150px;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            left: -100px;
+            bottom: -100px;
+        }
+
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            left: 30%;
+            top: 30%;
+        }
+
+        .footer {
+            background-color: var(--light-color);
+            padding: 1rem 0;
+            margin-top: auto;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        @media (max-width: 991.98px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .login-card {
+                margin-top: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="/">师生互动系统</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -17,185 +235,115 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item guest-controls">
-                        <button class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">登录</button>
-                    </li>
-                    <li class="nav-item guest-controls">
-                        <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#registerModal">注册</button>
-                    </li>
-                    <li class="nav-item user-controls" style="display: none;">
-                        <span class="nav-link text-light">欢迎, <span id="userInfo"></span></span>
-                    </li>
-                    <li class="nav-item user-controls" style="display: none;">
-                        <button class="btn btn-outline-light" id="logoutBtn">退出</button>
+                        <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#aboutModal">关于系统</button>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <div id="messageContainer"></div>
+    <section class="hero-section">
+        <div class="bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
         
-        <div class="jumbotron bg-light p-5 rounded">
-            <div class="row">
-                <div class="col-md-6">
-                    <h1 class="display-4">欢迎使用师生互动系统</h1>
-                    <p class="lead">这是一个实时互动平台，旨在促进师生之间的交流与协作。</p>
-                    <hr class="my-4">
-                    <p>通过我们的平台，教师可以发布问题、创建投票、管理讨论，学生可以实时参与并获得反馈。</p>
-                    <div class="d-grid gap-2 d-md-flex">
-                        <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">立即开始</button>
-                        <button class="btn btn-outline-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#aboutModal">了解更多</button>
-                    </div>
+        <div class="container hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">高效课堂互动平台</h1>
+                    <p class="hero-subtitle">连接师生，提升教学体验，激发学习潜能</p>
                 </div>
-                <div class="col-md-6 d-flex align-items-center justify-content-center">
-                    <img src="/static/img/hero-image.svg" alt="师生互动插图" class="img-fluid" 
-                         onerror="this.onerror=null; this.src='/static/img/placeholder.png'; this.alt='互动平台概念图';">
+                
+                <div class="col-lg-5 offset-lg-1">
+                    <div class="login-card">
+                        <div class="auth-tabs">
+                            <div class="auth-tab active" id="login-tab">登录</div>
+                            <div class="auth-tab" id="register-tab">注册</div>
+                        </div>
+                        
+                        <!-- 登录表单 -->
+                        <form id="loginForm" class="auth-form active">
+                            <input type="text" class="form-control" id="username" placeholder="用户名" required>
+                            <input type="password" class="form-control" id="password" placeholder="密码" required>
+                            
+                            <div class="role-selector">
+                                <div class="role-option active" data-role="student" id="student-login">
+                                    <i class="fas fa-user-graduate me-2"></i>学生
+                                </div>
+                                <div class="role-option" data-role="teacher" id="teacher-login">
+                                    <i class="fas fa-chalkboard-teacher me-2"></i>教师
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-auth">登录</button>
+                        </form>
+                        
+                        <!-- 注册表单 -->
+                        <form id="registerForm" class="auth-form">
+                            <input type="text" class="form-control" id="registerName" placeholder="姓名" required>
+                            <input type="text" class="form-control" id="registerUsername" placeholder="用户名" required>
+                            <input type="password" class="form-control" id="registerPassword" placeholder="密码" required>
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="确认密码" required>
+                            
+                            <div class="role-selector">
+                                <div class="role-option active" data-role="student" id="student-register">
+                                    <i class="fas fa-user-graduate me-2"></i>学生
+                                </div>
+                                <div class="role-option" data-role="teacher" id="teacher-register">
+                                    <i class="fas fa-chalkboard-teacher me-2"></i>教师
+                                </div>
+                            </div>
+                            
+                            <div class="student-field">
+                                <input type="text" class="form-control" id="classId" placeholder="班级ID（学生必填）">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-auth">注册</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="row mt-5">
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">实时问答</h5>
-                        <p class="card-text">学生可以提出问题，教师可以实时回答，所有参与者都能看到问答过程。</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">即时投票</h5>
-                        <p class="card-text">教师可以创建投票，收集学生的反馈和看法，实时显示投票结果。</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">互动讨论</h5>
-                        <p class="card-text">围绕特定主题进行讨论，促进思想交流和深度学习体验。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 登录模态框 -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">用户登录</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="loginForm">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">用户名</label>
-                            <input type="text" class="form-control" id="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">密码</label>
-                            <input type="password" class="form-control" id="password" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">角色</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="role" id="studentRoleLogin" value="student" checked>
-                                <label class="form-check-label" for="studentRoleLogin">学生</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="role" id="teacherRoleLogin" value="teacher">
-                                <label class="form-check-label" for="teacherRoleLogin">教师</label>
-                            </div>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">登录</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <p class="text-center">还没有账号? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">立即注册</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 注册模态框 -->
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">用户注册</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="registerForm">
-                        <div class="mb-3">
-                            <label for="registerName" class="form-label">姓名</label>
-                            <input type="text" class="form-control" id="registerName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerUsername" class="form-label">用户名</label>
-                            <input type="text" class="form-control" id="registerUsername" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerPassword" class="form-label">密码</label>
-                            <input type="password" class="form-control" id="registerPassword" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">确认密码</label>
-                            <input type="password" class="form-control" id="confirmPassword" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">角色</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="registerRole" id="studentRole" value="student" checked>
-                                <label class="form-check-label" for="studentRole">学生</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="registerRole" id="teacherRole" value="teacher">
-                                <label class="form-check-label" for="teacherRole">教师</label>
-                            </div>
-                        </div>
-                        <div class="mb-3 student-field">
-                            <label for="classId" class="form-label">班级ID</label>
-                            <input type="text" class="form-control" id="classId">
-                            <small class="form-text text-muted">如果您是学生，请输入您的班级ID</small>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">注册</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <p class="text-center">已有账号? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">立即登录</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
+    </section>
 
     <!-- 关于模态框 -->
     <div class="modal fade" id="aboutModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">关于师生互动系统</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>师生互动系统是一个专为教育环境设计的实时互动平台。</p>
-                    <p>我们的核心功能包括：</p>
-                    <ul>
-                        <li>实时问答：促进课堂参与</li>
-                        <li>即时投票：收集学生反馈</li>
-                        <li>互动讨论：深入探讨学习主题</li>
-                        <li>学习反馈：了解学生学习进度</li>
-                    </ul>
-                    <p>当前版本：0.1.0</p>
+                    <p>师生互动系统是专为现代教育环境设计的实时互动平台。</p>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-comments text-primary me-3 fs-4"></i>
+                                <div>实时问答交流</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-poll text-success me-3 fs-4"></i>
+                                <div>课堂互动投票</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-chart-line text-info me-3 fs-4"></i>
+                                <div>学习数据分析</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-file-alt text-warning me-3 fs-4"></i>
+                                <div>便捷资源共享</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
@@ -204,7 +352,7 @@
         </div>
     </div>
 
-    <footer class="bg-light py-4 mt-5">
+    <footer class="footer">
         <div class="container text-center">
             <p class="mb-0">© 2025 师生互动系统 | 版本 0.1.0</p>
         </div>
@@ -213,7 +361,76 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/static/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 切换登录/注册表单
+            const loginTab = document.getElementById('login-tab');
+            const registerTab = document.getElementById('register-tab');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            
+            loginTab.addEventListener('click', function() {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+            });
+            
+            registerTab.addEventListener('click', function() {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+            });
+            
+            // 角色选择器 - 登录表单
+            const studentLogin = document.getElementById('student-login');
+            const teacherLogin = document.getElementById('teacher-login');
+            
+            studentLogin.addEventListener('click', function() {
+                studentLogin.classList.add('active');
+                teacherLogin.classList.remove('active');
+                document.querySelector('input[name="role"]').value = 'student';
+            });
+            
+            teacherLogin.addEventListener('click', function() {
+                teacherLogin.classList.add('active');
+                studentLogin.classList.remove('active');
+                document.querySelector('input[name="role"]').value = 'teacher';
+            });
+            
+            // 角色选择器 - 注册表单
+            const studentRegister = document.getElementById('student-register');
+            const teacherRegister = document.getElementById('teacher-register');
+            const classIdField = document.querySelector('.student-field');
+            
+            studentRegister.addEventListener('click', function() {
+                studentRegister.classList.add('active');
+                teacherRegister.classList.remove('active');
+                document.querySelector('input[name="registerRole"]').value = 'student';
+                classIdField.style.display = 'block';
+            });
+            
+            teacherRegister.addEventListener('click', function() {
+                teacherRegister.classList.add('active');
+                studentRegister.classList.remove('active');
+                document.querySelector('input[name="registerRole"]').value = 'teacher';
+                classIdField.style.display = 'none';
+            });
+            
+            // 添加隐藏的角色输入字段
+            const roleInput = document.createElement('input');
+            roleInput.type = 'hidden';
+            roleInput.name = 'role';
+            roleInput.value = 'student';
+            loginForm.appendChild(roleInput);
+            
+            const registerRoleInput = document.createElement('input');
+            registerRoleInput.type = 'hidden';
+            registerRoleInput.name = 'registerRole';
+            registerRoleInput.value = 'student';
+            registerForm.appendChild(registerRoleInput);
+        });
+    </script>
 </body>
-</html> 
-</html> 
 </html> 

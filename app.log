@@ -1145,3 +1145,650 @@ with app.app_context(). See the documentation for more information.
 2025-03-26 15:05:00,814 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
 2025-03-26 15:05:06,882 - src.controllers.web_controller - INFO - 访问学生个人资料页面
 2025-03-26 15:05:08,466 - src.controllers.web_controller - INFO - 访问学生通知设置页面
+2025-03-26 15:31:23,150 - __main__ - INFO - MongoDB连接成功
+2025-03-26 15:31:23,150 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:31:23,241 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 15:31:23,505 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 15:31:23,505 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 15:31:23,519 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 15:31:23,520 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 15:31:23,785 - __main__ - INFO - MongoDB连接成功
+2025-03-26 15:31:23,785 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:31:23,870 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 15:31:24,137 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 15:31:24,137 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 15:31:24,151 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 15:31:24,151 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 15:31:24,151 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 15:31:25,544 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 15:31:28,545 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:31:30,545 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 15:31:30,545 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 15:31:32,546 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 15:31:32,547 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 15:41:38,177 - __main__ - INFO - MongoDB连接成功
+2025-03-26 15:41:38,177 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:41:38,269 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 15:41:38,525 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 15:41:38,525 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 15:41:38,539 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 15:41:38,539 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 15:41:38,792 - __main__ - INFO - MongoDB连接成功
+2025-03-26 15:41:38,792 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:41:38,881 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 15:41:39,140 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 15:41:39,140 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 15:41:39,154 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 15:41:39,155 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 15:41:39,155 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 15:41:40,204 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 15:41:43,204 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:41:45,204 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 15:41:45,204 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 15:41:47,206 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 15:41:47,207 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 15:41:48,531 - src.app - INFO - MongoDB连接成功
+2025-03-26 15:41:48,531 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:41:48,546 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:41:48,546 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:41:48,729 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:41:48,729 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 15:41:48,731 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:41:48,731 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:41:48,914 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:41:48,914 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 15:41:48,915 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 15:41:50,286 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 15:41:50,800 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 15:41:51,694 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 15:41:53,511 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 15:41:53,895 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 15:41:54,227 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-26 15:41:54,611 - src.controllers.web_controller - INFO - 访问学生资源页面
+2025-03-26 15:41:55,081 - src.controllers.web_controller - INFO - 访问学生新闻页面
+2025-03-26 15:41:55,102 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 15:41:55,103 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 15:41:55,303 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 15:44:29,309 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:44:29,309 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:44:29,493 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:44:29,493 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'user_id': '67e23a3bb5e54b639102dc8b', 'role': 'student', 'username': '1'}>
+2025-03-26 15:44:29,494 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:44:29,494 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:44:29,676 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:44:29,676 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'user_id': '67e23a3bb5e54b639102dc8b', 'role': 'student', 'username': '1'}>
+2025-03-26 15:44:29,677 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 15:44:29,699 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 15:44:42,548 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:44:42,548 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 15:44:42,734 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 15:44:42,734 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:44:42,735 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:44:42,735 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 15:44:42,918 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 15:44:42,918 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:44:42,919 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:44:42,919 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:44:42,919 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:44:42,939 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:44:42,939 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:44:42,940 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:44:47,993 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:44:47,993 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 15:44:48,175 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 15:44:48,175 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:44:48,176 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:44:48,176 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 15:44:48,357 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 15:44:48,357 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:44:48,358 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:44:48,358 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:44:48,358 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:44:48,375 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:44:48,375 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:44:48,375 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:45:35,205 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:45:35,205 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:45:35,387 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:45:35,387 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 15:45:35,388 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:45:35,388 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:45:35,575 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:45:35,575 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 15:45:35,576 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 15:45:35,592 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 15:45:38,795 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 15:46:14,468 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:46:14,468 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 15:46:14,649 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 15:46:14,649 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:14,651 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:46:14,651 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 15:46:14,832 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 15:46:14,832 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:14,833 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:14,834 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:46:14,834 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:46:14,853 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:14,853 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:46:14,853 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:46:16,902 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:16,902 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:46:16,902 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 15:46:33,655 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:33,655 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:46:33,655 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:46:37,492 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:37,492 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:46:37,492 - src.controllers.web_controller - INFO - 访问教师测验管理页面
+2025-03-26 15:46:39,829 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:39,830 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:46:39,830 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:46:40,693 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:40,693 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:46:40,693 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 15:46:43,044 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:43,044 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:46:43,044 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:46:43,806 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:43,806 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:46:43,806 - src.controllers.web_controller - INFO - 访问教师讨论管理页面
+2025-03-26 15:46:51,051 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:51,051 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:46:51,051 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:46:58,388 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:46:58,388 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:46:58,388 - src.controllers.web_controller - INFO - 访问教师查看学生名单页面
+2025-03-26 15:47:06,258 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:47:06,258 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:47:06,258 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:49:41,198 - __main__ - INFO - MongoDB连接成功
+2025-03-26 15:49:41,198 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:49:41,286 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 15:49:41,554 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 15:49:41,554 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 15:49:41,568 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 15:49:41,568 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 15:49:41,822 - __main__ - INFO - MongoDB连接成功
+2025-03-26 15:49:41,822 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:49:41,906 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 15:49:42,167 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 15:49:42,167 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 15:49:42,181 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 15:49:42,181 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 15:49:42,181 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 15:49:43,629 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 15:49:46,093 - src.app - INFO - MongoDB连接成功
+2025-03-26 15:49:46,093 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:49:46,108 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:49:46,108 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:49:46,291 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:49:46,291 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 15:49:46,293 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:49:46,293 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:49:46,476 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:49:46,477 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 15:49:46,478 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 15:49:46,630 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 15:49:48,629 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 15:49:48,630 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 15:49:50,631 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 15:49:50,632 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 15:49:58,282 - src.controllers.web_controller - INFO - 访问学生新闻页面
+2025-03-26 15:49:58,316 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 15:49:58,317 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 15:49:58,518 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 15:49:59,401 - src.controllers.web_controller - INFO - 访问学生个人资料页面
+2025-03-26 15:50:23,841 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 15:50:53,805 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:50:53,805 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 15:50:53,990 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 15:50:53,990 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:50:53,991 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:50:53,992 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 15:50:54,173 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 15:50:54,173 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:50:54,174 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:50:54,174 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:50:54,174 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:50:56,206 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:50:56,206 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:50:56,206 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 15:51:12,234 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:51:12,235 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:51:12,235 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 15:51:12,772 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:51:12,772 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:51:12,772 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 15:51:16,828 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 15:51:17,387 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:51:17,388 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:51:17,388 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:51:20,500 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 15:51:20,500 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 15:51:20,500 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 15:51:29,852 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:51:29,852 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:51:30,031 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:51:30,031 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 15:51:30,032 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 15:51:30,032 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 15:51:30,214 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 15:51:30,215 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 15:51:30,216 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 15:51:31,850 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 15:51:32,363 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 15:51:32,947 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 15:51:39,833 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 16:13:52,182 - __main__ - INFO - MongoDB连接成功
+2025-03-26 16:13:52,182 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:13:52,296 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 16:13:52,565 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 16:13:52,566 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 16:13:52,580 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 16:13:52,580 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 16:13:52,834 - __main__ - INFO - MongoDB连接成功
+2025-03-26 16:13:52,834 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:13:52,918 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 16:13:53,165 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 16:13:53,165 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 16:13:53,179 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 16:13:53,180 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 16:13:53,180 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 16:15:24,386 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 16:15:27,387 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:15:29,386 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 16:15:29,386 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 16:15:31,388 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 16:15:31,389 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 16:15:33,581 - src.app - INFO - MongoDB连接成功
+2025-03-26 16:15:33,581 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:15:33,597 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:15:33,597 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 16:15:34,839 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 16:15:34,839 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'user_id': '67e23a3bb5e54b639102dc8b', 'role': 'student', 'username': '1'}>
+2025-03-26 16:15:34,841 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:15:34,841 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 16:15:35,026 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 16:15:35,027 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'user_id': '67e23a3bb5e54b639102dc8b', 'role': 'student', 'username': '1'}>
+2025-03-26 16:15:35,028 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 16:15:59,576 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 16:16:10,329 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 16:16:15,664 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 16:16:16,118 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 16:16:21,597 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-26 16:16:22,345 - src.controllers.web_controller - INFO - 访问学生资源页面
+2025-03-26 16:16:22,787 - src.controllers.web_controller - INFO - 访问学生新闻页面
+2025-03-26 16:16:22,894 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 16:16:22,895 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 16:16:23,095 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 16:16:23,665 - src.controllers.web_controller - INFO - 访问学生个人资料页面
+2025-03-26 16:16:24,115 - src.controllers.web_controller - INFO - 访问学生通知设置页面
+2025-03-26 16:16:28,730 - src.controllers.web_controller - INFO - 访问学生通知设置页面
+2025-03-26 16:16:29,012 - src.controllers.web_controller - INFO - 访问学生个人资料页面
+2025-03-26 16:16:30,687 - src.controllers.web_controller - INFO - 访问学生新闻页面
+2025-03-26 16:16:30,702 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 16:16:30,703 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 16:16:30,903 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 16:16:41,687 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:16:41,687 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 16:16:41,868 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 16:16:41,868 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:16:41,870 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:16:41,870 - src.models.user - INFO - 尝试验证用户: 2
+2025-03-26 16:16:42,051 - src.models.user - INFO - 用户 2 验证成功
+2025-03-26 16:16:42,051 - src.api.auth_routes - INFO - 用户 2 登录成功，角色: teacher，会话: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:16:42,053 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:16:42,053 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:16:42,053 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:16:43,353 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:16:43,353 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:16:43,353 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:16:44,953 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:16:44,953 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:16:44,953 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 16:16:45,904 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:16:45,905 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:16:45,905 - src.controllers.web_controller - INFO - 访问教师分析页面
+2025-03-26 16:16:52,756 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:16:52,756 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:16:52,756 - src.controllers.web_controller - INFO - 访问教师资源管理页面
+2025-03-26 16:16:54,703 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 16:16:55,687 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:16:55,687 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:16:55,687 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 16:16:56,087 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:16:56,087 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:16:56,088 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:16:57,072 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:16:57,072 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:16:57,072 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:16:57,567 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:16:57,568 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:16:57,568 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:17:00,871 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:17:00,872 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:17:00,872 - src.controllers.web_controller - INFO - 访问教师讨论管理页面
+2025-03-26 16:17:15,617 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:17:15,617 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:17:15,617 - src.controllers.web_controller - INFO - 访问教师讨论管理页面
+2025-03-26 16:17:19,800 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:17:19,800 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:17:19,801 - src.controllers.web_controller - INFO - 访问教师分析页面
+2025-03-26 16:17:20,355 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:17:20,355 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:17:20,355 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 16:17:20,772 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:17:20,772 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:17:20,772 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:18:31,028 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:18:31,028 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:18:31,028 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:18:31,622 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:18:31,622 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:18:31,622 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:18:33,389 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:18:33,389 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:18:33,389 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:18:36,275 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:18:36,275 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:18:36,275 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:18:38,355 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:18:38,355 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:18:38,355 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:18:38,996 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:18:38,996 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:18:38,996 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:18:40,667 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:18:40,667 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:18:40,667 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:18:41,258 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:18:41,258 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:18:41,258 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:18:44,572 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:18:44,572 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:18:44,572 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 16:18:45,439 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:18:45,439 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:18:45,439 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:18:45,839 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:18:45,839 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:18:45,839 - src.controllers.web_controller - INFO - 访问教师分析页面
+2025-03-26 16:20:23,657 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:20:23,657 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:20:23,657 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:20:24,781 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:20:24,781 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:20:24,781 - src.controllers.web_controller - INFO - 访问教师讨论管理页面
+2025-03-26 16:20:53,607 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:20:53,607 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:20:53,608 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:20:57,263 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:20:57,263 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:20:57,263 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:20:58,294 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:20:58,295 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:20:58,295 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 16:20:58,825 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:20:58,825 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:20:58,825 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:20:59,274 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:20:59,274 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:20:59,274 - src.controllers.web_controller - INFO - 访问教师讨论管理页面
+2025-03-26 16:21:02,124 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:02,124 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:02,124 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:21:02,941 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:02,941 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:02,941 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:21:03,942 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:03,942 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:03,942 - src.controllers.web_controller - INFO - 访问教师分析页面
+2025-03-26 16:21:04,507 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:04,508 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:04,508 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 16:21:05,041 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:05,042 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:05,042 - src.controllers.web_controller - INFO - 访问教师资源管理页面
+2025-03-26 16:21:05,491 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:05,491 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:05,491 - src.controllers.web_controller - INFO - 访问教师新闻页面
+2025-03-26 16:21:05,538 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 16:21:05,539 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 16:21:05,739 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 16:21:06,459 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:06,459 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:06,459 - src.controllers.web_controller - INFO - 访问教师个人资料页面
+2025-03-26 16:21:06,909 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:06,909 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:06,909 - src.controllers.web_controller - INFO - 访问教师通知设置页面
+2025-03-26 16:21:07,591 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:07,591 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:07,591 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:21:08,910 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:08,910 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:08,910 - src.controllers.web_controller - INFO - 访问教师讨论管理页面
+2025-03-26 16:21:11,942 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:11,942 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:11,942 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:21:13,165 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:21:13,166 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:21:13,166 - src.controllers.web_controller - INFO - 访问教师讨论管理页面
+2025-03-26 16:23:46,513 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:23:46,514 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:23:46,514 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 16:23:48,225 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:23:48,225 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:23:48,225 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:23:50,144 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:23:50,144 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:23:50,144 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:23:50,874 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:23:50,874 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:23:50,874 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:23:51,337 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:23:51,337 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:23:51,337 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:23:52,985 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:23:52,985 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:23:52,985 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:24:24,861 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:24:24,861 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:24:24,861 - src.controllers.web_controller - INFO - 访问教师通知设置页面
+2025-03-26 16:24:25,466 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:24:25,466 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:24:25,466 - src.controllers.web_controller - INFO - 访问教师个人资料页面
+2025-03-26 16:24:27,602 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:24:27,602 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:24:27,602 - src.controllers.web_controller - INFO - 访问教师新闻页面
+2025-03-26 16:24:27,621 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 16:24:27,622 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 16:24:27,823 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 16:24:29,444 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:24:29,444 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:24:29,444 - src.controllers.web_controller - INFO - 访问教师资源管理页面
+2025-03-26 16:24:30,427 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:24:30,427 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:24:30,427 - src.controllers.web_controller - INFO - 访问教师分析页面
+2025-03-26 16:24:31,417 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:24:31,417 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:24:31,417 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 16:24:32,219 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:24:32,219 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:24:32,219 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:24:32,794 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:24:32,795 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:24:32,795 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:24:34,010 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:24:34,010 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:24:34,011 - src.controllers.web_controller - INFO - 访问教师查看学生名单页面
+2025-03-26 16:25:44,529 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:25:44,529 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:25:44,529 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:26:04,347 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:26:04,347 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:26:04,347 - src.controllers.web_controller - INFO - 访问教师互动管理页面
+2025-03-26 16:26:06,347 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:26:06,347 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:26:06,347 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:26:16,581 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:26:16,581 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:26:16,581 - src.controllers.web_controller - INFO - 访问教师个人资料页面
+2025-03-26 16:26:55,717 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:26:55,717 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:26:55,717 - src.controllers.web_controller - INFO - 访问教师通知设置页面
+2025-03-26 16:26:58,189 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:26:58,189 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:26:58,189 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:26:59,762 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:26:59,762 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:26:59,763 - src.controllers.web_controller - INFO - 访问教师反馈管理页面
+2025-03-26 16:27:00,288 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:27:00,288 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:27:00,288 - src.controllers.web_controller - INFO - 访问教师仪表板
+2025-03-26 16:28:02,686 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:28:02,686 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:28:02,686 - src.controllers.web_controller - INFO - 访问教师资源管理页面
+2025-03-26 16:28:03,406 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:28:03,406 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:28:03,406 - src.controllers.web_controller - INFO - 访问教师新闻页面
+2025-03-26 16:28:03,426 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 16:28:03,427 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 16:28:03,628 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 16:28:06,364 - src.services.news_scraper - INFO - 获取新闻详情: url=https://example.com/news/1
+2025-03-26 16:28:06,865 - src.api.news_routes - INFO - 获取新闻详情成功: url=https://example.com/news/1
+2025-03-26 16:28:13,819 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'teacher', 'user_id': '67e38f6ac43a43e1f1460a65', 'username': '2'}>
+2025-03-26 16:28:13,819 - src.controllers.web_controller - INFO - 教师权限验证通过
+2025-03-26 16:28:13,819 - src.controllers.web_controller - INFO - 访问教师新闻页面
+2025-03-26 16:28:13,832 - src.api.news_routes - INFO - 获取新闻源列表成功: count=5
+2025-03-26 16:28:13,833 - src.services.news_scraper - INFO - 获取新闻列表: source=edu, limit=10, page=1
+2025-03-26 16:28:14,034 - src.api.news_routes - INFO - 获取新闻列表成功: source=edu, page=1, limit=10, count=4
+2025-03-26 16:32:30,548 - werkzeug - INFO -  * Detected change in '/home/guoer/jhxt/-web/src/api/interaction_routes.py', reloading
+2025-03-26 16:32:31,145 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 16:32:31,417 - __main__ - INFO - MongoDB连接成功
+2025-03-26 16:32:31,417 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:32:31,514 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 16:32:31,804 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 16:32:31,804 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 16:32:31,819 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 16:32:31,819 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 16:32:31,820 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 16:32:40,863 - werkzeug - INFO -  * Detected change in '/home/guoer/jhxt/-web/src/api/interaction_routes.py', reloading
+2025-03-26 16:32:41,028 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 16:32:41,287 - __main__ - INFO - MongoDB连接成功
+2025-03-26 16:32:41,287 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:32:41,374 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 16:32:41,633 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 16:32:41,633 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 16:32:41,648 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 16:32:41,648 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 16:32:41,649 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 16:33:01,576 - __main__ - INFO - MongoDB连接成功
+2025-03-26 16:33:01,576 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:33:01,660 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 16:33:01,918 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 16:33:01,918 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 16:33:01,933 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 16:33:01,933 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 16:33:02,186 - __main__ - INFO - MongoDB连接成功
+2025-03-26 16:33:02,186 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:33:02,271 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 16:33:02,527 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 16:33:02,527 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 16:33:02,542 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 16:33:02,542 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 16:33:02,542 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 16:33:04,687 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 16:33:07,687 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:33:07,976 - src.app - INFO - MongoDB连接成功
+2025-03-26 16:33:07,976 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:33:07,992 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:33:07,992 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 16:33:08,175 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 16:33:08,176 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 16:33:08,177 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:33:08,177 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 16:33:08,363 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 16:33:08,363 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 16:33:08,364 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 16:33:09,511 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 16:33:09,687 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 16:33:09,688 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 16:33:10,258 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 16:33:11,690 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 16:33:11,690 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 16:33:12,451 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-26 16:33:13,318 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 16:33:14,094 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 16:33:21,573 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 16:33:25,719 - src.controllers.web_controller - INFO - 访问学生反馈页面
+2025-03-26 16:33:47,650 - src.controllers.web_controller - INFO - 访问学生数据分析页面
+2025-03-26 16:33:52,128 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 16:34:13,137 - __main__ - INFO - MongoDB连接成功
+2025-03-26 16:34:13,138 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:34:13,222 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 16:34:13,469 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 16:34:13,469 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 16:34:13,485 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 16:34:13,485 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 16:34:13,740 - __main__ - INFO - MongoDB连接成功
+2025-03-26 16:34:13,740 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:34:13,825 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 16:34:14,079 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 16:34:14,079 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 16:34:14,094 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 16:34:14,094 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 16:34:14,094 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 16:34:15,039 - __main__ - INFO - 应用已启动，等待第一个请求
+2025-03-26 16:34:17,372 - src.app - INFO - MongoDB连接成功
+2025-03-26 16:34:17,372 - src.app - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:34:17,386 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:34:17,386 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 16:34:17,573 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 16:34:17,573 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 16:34:17,574 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:34:17,574 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 16:34:17,763 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 16:34:17,763 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 16:34:17,764 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 16:34:18,040 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:34:19,467 - src.controllers.web_controller - INFO - 访问学生互动页面
+2025-03-26 16:34:20,040 - __main__ - INFO - 启动新闻自动更新服务
+2025-03-26 16:34:20,040 - src.services.news_service - INFO - 开始更新新闻数据
+2025-03-26 16:34:20,967 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 16:34:22,042 - src.services.news_service - INFO - 新闻数据更新完成
+2025-03-26 16:34:22,043 - src.services.news_service - INFO - 新闻更新服务已启动，更新间隔: 3600秒
+2025-03-26 16:34:32,876 - src.controllers.web_controller - INFO - 访问需要教师权限的路由，会话内容: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 16:34:32,877 - src.controllers.web_controller - WARNING - 用户角色不是教师，而是: student
+2025-03-26 16:34:35,379 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:34:35,379 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 16:34:35,561 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 16:34:35,561 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 16:34:35,562 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:34:35,562 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 16:34:35,744 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 16:34:35,744 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 16:34:35,745 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 16:34:47,351 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:34:47,351 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 16:34:47,533 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 16:34:47,533 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 16:34:47,534 - src.models.user - INFO - 用户模型初始化: 使用真实数据库模式
+2025-03-26 16:34:47,534 - src.models.user - INFO - 尝试验证用户: 1
+2025-03-26 16:34:47,718 - src.models.user - INFO - 用户 1 验证成功
+2025-03-26 16:34:47,718 - src.api.auth_routes - INFO - 用户 1 登录成功，角色: student，会话: <SecureCookieSession {'role': 'student', 'user_id': '67e23a3bb5e54b639102dc8b', 'username': '1'}>
+2025-03-26 16:34:47,719 - src.controllers.web_controller - INFO - 访问学生仪表板
+2025-03-26 16:43:04,979 - werkzeug - INFO -  * Detected change in '/home/guoer/jhxt/-web/src/models/interaction.py', reloading
+2025-03-26 16:43:05,563 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 16:43:05,821 - __main__ - INFO - MongoDB连接成功
+2025-03-26 16:43:05,821 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:43:05,910 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-03-26 16:43:06,170 - src.services.news_scraper - INFO - 新闻爬虫服务初始化完成
+2025-03-26 16:43:06,171 - src.services.news_service - INFO - 新闻服务初始化完成
+2025-03-26 16:43:06,185 - __main__ - INFO - 应用启动中，使用DEBUG模式: False
+2025-03-26 16:43:06,185 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 16:43:06,186 - werkzeug - INFO -  * Debugger PIN: 137-315-203
+2025-03-26 16:48:42,621 - __main__ - INFO - MongoDB连接成功
+2025-03-26 16:48:42,621 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用
+2025-03-26 16:54:50,331 - __main__ - INFO - MongoDB连接成功
+2025-03-26 16:54:50,331 - __main__ - WARNING - 未配置AI_API_KEY，大模型分析功能将不可用

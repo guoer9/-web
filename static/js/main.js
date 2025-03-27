@@ -3,103 +3,149 @@
  */
 
 // 全局变量
-const API_BASE_URL = '/api';
+const API_BASE_URL = '/api';  // 使用相对路径
 let currentUser = null;
 let socket = null;
 
-// DOM 元素加载完成后执行
+// 工具函数
+function showError(message) {
+    alert(message);
+}
+
+function showSuccess(message) {
+    alert(message);
+}
+
+// 用户认证相关函数
+async function login(username, password) {
+    try {
+        console.log('尝试登录，用户名:', username);
+        
+        const data = await API.auth.login(username, password);
+        
+        if (data.success) {
+            // 保存token和用户信息
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            console.log('令牌和用户信息已保存到localStorage');
+            
+            // 根据用户角色跳转到不同页面
+            if (data.user.role === 'teacher') {
+                console.log('教师登录成功，跳转到教师仪表板');
+                window.location.href = '/teacher/dashboard';
+            } else {
+                console.log('学生登录成功，跳转到学生仪表板');
+                window.location.href = '/student/dashboard';
+            }
+            
+            showSuccess(data.message);
+        } else {
+            console.error('登录失败:', data.message);
+            showError(data.message);
+        }
+    } catch (error) {
+        console.error('登录请求异常:', error);
+        showError('登录失败，请稍后重试');
+    }
+}
+
+async function register(userData) {
+    try {
+        console.log('尝试注册:', userData);
+        
+        const data = await API.auth.register(userData);
+        
+        if (data.success) {
+            showSuccess(data.message);
+            return true;
+        } else {
+            console.error('注册失败:', data.message);
+            showError(data.message);
+            return false;
+        }
+    } catch (error) {
+        console.error('注册请求异常:', error);
+        showError('注册失败，请稍后重试');
+        return false;
+    }
+}
+
+async function logout() {
+    try {
+        console.log('用户登出');
+        // 清除本地存储
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        currentUser = null;
+        
+        // 调用登出API
+        await API.auth.logout();
+        
+        // 跳转到登录页
+        window.location.href = '/login';
+    } catch (error) {
+        console.error('登出异常:', error);
+        // 即使API调用失败也清除本地状态并跳转
+        window.location.href = '/login';
+    }
+}
+
+// 页面加载完成后的初始化
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('页面加载完成');
-    
-    // 初始化基本UI元素
-    initUI();
-    
-    // 初始化工具提示和弹出框
-    initTooltips();
-    
-    // 检查登录状态
-    checkLoginStatus();
-    
-    // 根据当前页面初始化特定功能
-    initPageSpecificFunctions();
-    
-    // 初始化表单处理
-    initForms();
-    
-    // 初始化Ajax调用
-    initAjaxCalls();
-    
-    // 获取当前页面路径
-    const currentPath = window.location.pathname;
-    
-    // 根据当前页面路径初始化相应功能
-    if (currentPath.includes('/student/dashboard')) {
-        // 学生仪表盘页面
-        initInteractions();
-        loadDashboardData();
-    } else if (currentPath.includes('/teacher/dashboard')) {
-        // 教师仪表盘页面
-        initInteractions();
-        loadDashboardData();
-    } else if (currentPath.includes('/news')) {
-        // 新闻页面
-        loadNewsData();
-    } else if (currentPath.includes('/resources')) {
-        // 资源页面
-        initResourcesPage();
-    } else if (currentPath === '/' || currentPath.includes('/login')) {
-        // 主页或登录页
-        initLoginPage();
-    }
-    
-    // 处理注销
-    var logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-            console.log('用户注销');
-            logout();
-        });
-    }
-    
-    // 在仪表板页面显示用户信息
-    var currentUserData = localStorage.getItem('userData');
-    if (currentUserData) {
-        var currentUser = JSON.parse(currentUserData);
-        console.log('当前登录用户: ', currentUser);
-        
-        // 显示用户名
-        var userNameElement = document.getElementById('userName');
-        if (userNameElement) {
-            userNameElement.textContent = currentUser.name || '用户';
+    // 从localStorage获取用户信息
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+        try {
+            currentUser = JSON.parse(userJson);
+            console.log('当前登录用户:', currentUser);
+        } catch (e) {
+            console.error('解析用户信息失败:', e);
+            localStorage.removeItem('user');
         }
-        
-        // 切换登录/未登录状态的UI元素
-        document.querySelectorAll('.guest-controls').forEach(el => el.style.display = 'none');
-        document.querySelectorAll('.user-controls').forEach(el => el.style.display = 'block');
-        
-        // 设置用户信息
-        var userInfoElement = document.getElementById('userInfo');
-        if (userInfoElement) {
-            userInfoElement.textContent = currentUser.name;
-        }
-    } else {
-        // 未登录状态UI
-        document.querySelectorAll('.guest-controls').forEach(el => el.style.display = 'block');
-        document.querySelectorAll('.user-controls').forEach(el => el.style.display = 'none');
     }
     
-    // 登录表单提交处理
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        console.log('找到登录表单，绑定提交事件');
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            login();
-        });
-    }
-    
-    console.log('JS初始化完成');
+    // 初始化页面
+    initPage();
 });
+
+// 根据页面路径初始化不同功能
+function initPage() {
+    const path = window.location.pathname;
+    
+    // 绑定登出按钮
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+    }
+    
+    // 初始化登录表单
+    if (path === '/' || path === '/login') {
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                login(username, password);
+            });
+        }
+        
+        // 初始化注册表单
+        const registerForm = document.getElementById('registerForm');
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = {
+                    username: document.getElementById('registerUsername').value,
+                    password: document.getElementById('registerPassword').value,
+                    name: document.getElementById('name').value,
+                    role: document.getElementById('role').value
+                };
+                register(formData);
+            });
+        }
+    }
+}
 
 /**
  * 根据当前路径初始化特定的页面功能
@@ -262,146 +308,6 @@ function redirectToDashboard(role) {
     }
 }
 
-// 登录函数
-function login() {
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-    var role = document.querySelector('input[name="role"]:checked') ? document.querySelector('input[name="role"]:checked').value : 'student';
-    
-    if (!username || !password) {
-        showMessage('请输入用户名和密码', 'error');
-        return;
-    }
-
-    console.log('尝试登录:', username, '角色:', role);
-
-    // 发送登录请求
-    fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
-    })
-    .then(response => {
-        console.log('登录响应状态:', response.status);
-        if (!response.ok) {
-            throw new Error('登录失败，状态码: ' + response.status);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('登录响应完整数据:', data);
-        
-        // 存储用户信息和认证令牌
-        localStorage.setItem('token', data.token);
-        console.log('令牌已保存到localStorage');
-        
-        // 格式化并保存用户数据，使用后端返回的角色
-        const userData = {
-            id: data.user.id,
-            username: data.user.username,
-            role: data.user.role,
-            name: data.user.name || data.user.username
-        };
-        
-        console.log('准备保存到localStorage的用户数据:', userData);
-        const userDataString = JSON.stringify(userData);
-        console.log('JSON字符串化的用户数据:', userDataString);
-        
-        localStorage.setItem('userData', userDataString);
-        console.log('用户数据已保存到localStorage');
-        
-        // 获取保存后的数据，进行验证
-        const savedData = localStorage.getItem('userData');
-        console.log('验证：从localStorage中读取的userData:', savedData);
-        try {
-            const parsedData = JSON.parse(savedData);
-            console.log('验证：解析后的用户数据:', parsedData);
-        } catch(e) {
-            console.error('验证：解析用户数据出错:', e);
-        }
-        
-        // 根据用户角色重定向到相应页面
-        if (userData.role === 'teacher') {
-            console.log('用户是教师，重定向到教师仪表盘');
-            window.location.href = '/teacher/dashboard';
-        } else if (userData.role === 'student') {
-            console.log('用户是学生，重定向到学生仪表盘');
-            window.location.href = '/student/dashboard';
-        } else {
-            console.log('未知角色，重定向到首页');
-            window.location.href = '/';
-        }
-    })
-    .catch(error => {
-        console.error('登录错误:', error);
-        showMessage('登录失败，请检查用户名和密码', 'error');
-    });
-}
-
-// 注册函数
-function register() {
-    const name = document.getElementById('registerName').value;
-    const username = document.getElementById('registerUsername').value;
-    const password = document.getElementById('registerPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-    const role = document.querySelector('input[name="registerRole"]:checked').value;
-    const classId = role === 'student' ? document.getElementById('classId').value : null;
-    
-    if(!username || !password || !name || !role) {
-        showMessage("请填写所有必填字段", "error");
-        return;
-    }
-    
-    // 验证密码
-    if (password !== confirmPassword) {
-        showMessage('两次输入的密码不一致', 'error');
-        return;
-    }
-    
-    // 正常注册流程
-    const registerData = {
-        name: name,
-        username: username,
-        password: password,
-        role: role
-    };
-    
-    if (role === 'student' && classId) {
-        registerData.class_id = classId;
-    }
-    
-    axios.post('/api/auth/register', registerData)
-    .then(response => {
-        if(response.data.message) {
-            showMessage("注册成功，请登录", "success");
-            const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
-            registerModal.hide();
-            setTimeout(() => {
-                document.getElementById('username').value = username;
-                const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-                loginModal.show();
-            }, 500);
-        } else {
-            showMessage(response.data.message || "注册失败", "error");
-        }
-    })
-    .catch(error => {
-        showMessage("注册请求失败: " + (error.response?.data?.message || "未知错误"), "error");
-    });
-}
-
-// 注销函数
-function logout() {
-    localStorage.removeItem('userData');
-    localStorage.removeItem('authToken');
-    window.location.href = '/';
-}
-
 // 检查登录状态
 function checkLoginStatus() {
     console.log('检查登录状态');
@@ -476,14 +382,22 @@ function updateUIByLoginStatus(isLoggedIn, userData = null) {
     }
 }
 
-// 显示消息提示
+/**
+ * 显示消息提示
+ * @param {string} message - 消息内容
+ * @param {string} type - 消息类型（success, error, info, warning）
+ */
 function showMessage(message, type = 'info') {
     console.log(`显示消息: ${message}, 类型: ${type}`);
     
     const messageContainer = document.getElementById('messageContainer');
     if (!messageContainer) {
-        console.error('未找到消息容器');
-        return;
+        // 如果消息容器不存在，创建一个
+        const container = document.createElement('div');
+        container.id = 'messageContainer';
+        container.className = 'position-fixed top-0 end-0 p-3';
+        container.style.zIndex = '1050';
+        document.body.appendChild(container);
     }
     
     const alertClass = type === 'error' ? 'danger' : type;
@@ -496,7 +410,7 @@ function showMessage(message, type = 'info') {
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     `;
     
-    messageContainer.appendChild(alertElement);
+    document.getElementById('messageContainer').appendChild(alertElement);
     
     // 5秒后自动关闭
     setTimeout(() => {
@@ -505,6 +419,22 @@ function showMessage(message, type = 'info') {
             alertElement.remove();
         }, 150);
     }, 5000);
+}
+
+/**
+ * 显示API错误提示
+ * @param {Error} error - 错误对象
+ * @param {string} fallbackMessage - 默认错误消息
+ */
+function showApiError(error, fallbackMessage = '操作失败，请稍后重试') {
+    console.error('API错误:', error);
+    
+    let errorMessage = fallbackMessage;
+    if (error.message) {
+        errorMessage = error.message;
+    }
+    
+    showMessage(errorMessage, 'error');
 }
 
 // 初始化Socket.IO连接
@@ -787,7 +717,7 @@ function submitVote() {
     const selectedOption = voteForm.querySelector('input[name="poll-option"]:checked');
     
     if (!selectedOption) {
-        showMessage('请选择一个选项', 'error');
+        showMessage('请选择一个选项', 'warning');
         return;
     }
     
@@ -795,11 +725,9 @@ function submitVote() {
     console.log(`投票: 投票ID=${pollId}, 选项ID=${optionId}`);
     
     // 发送投票请求
-    axios.post(`/api/interaction/poll/${pollId}/vote`, {
-        option: optionId
-    })
+    API.student.votePoll(pollId, optionId)
     .then(response => {
-        console.log('投票响应:', response.data);
+        console.log('投票响应:', response);
         showMessage('投票提交成功', 'success');
         
         // 禁用表单，防止重复提交
@@ -807,10 +735,13 @@ function submitVote() {
             input.disabled = true;
         });
         document.getElementById('submit-vote').disabled = true;
+        
+        // 重新加载投票列表
+        loadActivePolls();
     })
     .catch(error => {
         console.error('投票提交错误:', error);
-        showMessage('投票提交失败: ' + (error.response?.data?.message || '服务器错误'), 'error');
+        showMessage('投票提交失败: ' + (error.message || '服务器错误'), 'error');
     });
 }
 
@@ -1234,13 +1165,17 @@ function formatTimeAgo(timestamp) {
 function loadRecentQuestions() {
     console.log('加载最近问题');
     
-    axios.get('/api/interaction/recent-questions')
+    API.student.getMyQuestions()
     .then(response => {
-        console.log('获取最近问题成功:', response.data);
-        updateRecentQuestions(response.data);
+        console.log('获取最近问题成功:', response);
+        if (response.success) {
+            updateRecentQuestions(response.questions);
+        }
     })
     .catch(error => {
         console.error('获取最近问题失败:', error);
+        showApiError(error, '加载问题列表失败');
+        
         // 使用静态数据作为后备
         const staticQuestions = [
             {
@@ -1267,22 +1202,26 @@ function loadRecentQuestions() {
 function loadActivePolls() {
     console.log('加载活跃投票');
     
-    axios.get('/api/interaction/active-polls')
+    API.student.getActivePolls()
     .then(response => {
-        console.log('获取活跃投票成功:', response.data);
-        updateActivePolls(response.data);
+        console.log('获取活跃投票成功:', response);
+        if (response.success) {
+            updateActivePolls(response.polls);
+        }
     })
     .catch(error => {
         console.error('获取活跃投票失败:', error);
+        showApiError(error, '加载投票列表失败');
+        
         // 静态数据作为后备
         const staticPoll = {
             id: '1',
             title: '你最喜欢的学习方式是？',
             options: [
-                { id: '1', text: '课堂讲解' },
-                { id: '2', text: '小组讨论' },
-                { id: '3', text: '实验操作' },
-                { id: '4', text: '自主学习' }
+                '课堂讲解', 
+                '小组讨论', 
+                '实验操作', 
+                '自主学习'
             ]
         };
         updateActivePolls([staticPoll]);
@@ -1385,29 +1324,38 @@ function updateActivePolls(polls) {
     if (polls && polls.length > 0) {
         const poll = polls[0]; // 暂时只显示第一个投票
         
-        const voteForm = document.getElementById('vote-form') || container.querySelector('form');
-        if (voteForm) {
-            voteForm.setAttribute('data-poll-id', poll.id);
-            
-            const pollQuestion = container.querySelector('.poll-question strong');
-            if (pollQuestion) {
-                pollQuestion.textContent = poll.title;
-            }
-            
-            const optionsContainer = voteForm.querySelector('.voting-options');
-            if (optionsContainer) {
-                optionsContainer.innerHTML = '';
-                
-                poll.options.forEach((option, index) => {
-                    const optionHtml = `
+        container.innerHTML = `
+            <div class="poll-question mb-3">
+                <strong>${poll.title}</strong>
+            </div>
+            <form id="vote-form" data-poll-id="${poll._id}">
+                <div class="voting-options">
+                    ${poll.options.map((option, index) => `
                         <div class="voting-option">
-                            <input type="radio" name="poll-option" id="option${index+1}" value="${option.id}" class="d-none">
-                            <label for="option${index+1}" class="option-label">${option.text}</label>
+                            <input type="radio" name="poll-option" id="option${index+1}" 
+                                value="${option}" class="d-none" 
+                                ${poll.student_vote === option ? 'checked' : ''} 
+                                ${poll.student_vote ? 'disabled' : ''}>
+                            <label for="option${index+1}" class="option-label">
+                                ${option}
+                            </label>
                         </div>
-                    `;
-                    optionsContainer.innerHTML += optionHtml;
-                });
-            }
+                    `).join('')}
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-3" id="submit-vote"
+                    ${poll.student_vote ? 'disabled' : ''}>
+                    ${poll.student_vote ? '已投票' : '提交投票'}
+                </button>
+            </form>
+        `;
+        
+        // 重新绑定表单提交事件
+        const voteForm = document.getElementById('vote-form');
+        if (voteForm) {
+            voteForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitVote();
+            });
         }
     } else {
         container.innerHTML = '<div class="text-center py-3">暂无活跃投票</div>';
@@ -1480,4 +1428,1339 @@ function initTooltips() {
     if (tooltipTriggerList.length > 0) {
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     }
+}
+
+// 互动管理相关函数
+// 教师端 - 获取待回答问题列表
+function fetchPendingQuestions() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        showAlert('请先登录', 'danger');
+        return;
+    }
+
+    fetch('/api/teacher/questions', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const questionsList = document.getElementById('pending-questions-list');
+            if (questionsList) {
+                questionsList.innerHTML = '';
+                
+                if (data.questions.length === 0) {
+                    questionsList.innerHTML = '<li class="list-group-item text-center">暂无待回答问题</li>';
+                    return;
+                }
+                
+                data.questions.forEach(question => {
+                    const urgent = question.is_urgent ? 
+                        '<span class="badge bg-danger ms-2">紧急</span>' : '';
+                    const subject = question.subject ? 
+                        `<span class="badge bg-info ms-2">${question.subject}</span>` : '';
+                    
+                    const item = document.createElement('li');
+                    item.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    item.innerHTML = `
+                        <div>
+                            <strong>${question.student_name || '学生'}</strong>: ${question.content}
+                            ${urgent}
+                            ${subject}
+                            <small class="text-muted d-block">
+                                ${new Date(question.created_at).toLocaleString()}
+                            </small>
+                        </div>
+                        <button class="btn btn-sm btn-primary answer-btn" 
+                                data-question-id="${question._id}">
+                            回答
+                        </button>
+                    `;
+                    questionsList.appendChild(item);
+                });
+                
+                // 添加回答问题按钮事件
+                document.querySelectorAll('.answer-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const questionId = this.getAttribute('data-question-id');
+                        openAnswerModal(questionId);
+                    });
+                });
+            }
+        } else {
+            showAlert(data.message || '获取问题失败', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('获取问题失败，请检查网络连接', 'danger');
+    });
+}
+
+// 教师端 - 获取已回答问题列表
+function fetchAnsweredQuestions() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        showAlert('请先登录', 'danger');
+        return;
+    }
+
+    fetch('/api/teacher/questions/answered', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const questionsList = document.getElementById('answered-questions-list');
+            if (questionsList) {
+                questionsList.innerHTML = '';
+                
+                if (data.questions.length === 0) {
+                    questionsList.innerHTML = '<li class="list-group-item text-center">暂无已回答问题</li>';
+                    return;
+                }
+                
+                data.questions.forEach(question => {
+                    const urgent = question.is_urgent ? 
+                        '<span class="badge bg-danger ms-2">紧急</span>' : '';
+                    const subject = question.subject ? 
+                        `<span class="badge bg-info ms-2">${question.subject}</span>` : '';
+                    
+                    const item = document.createElement('li');
+                    item.className = 'list-group-item';
+                    item.innerHTML = `
+                        <div>
+                            <strong>${question.student_name || '学生'}</strong>: ${question.content}
+                            ${urgent}
+                            ${subject}
+                            <small class="text-muted d-block">
+                                提问时间: ${new Date(question.created_at).toLocaleString()}
+                            </small>
+                        </div>
+                        <div class="mt-2 p-2 bg-light rounded">
+                            <strong>回答</strong>: ${question.answer.content}
+                            <small class="text-muted d-block">
+                                回答时间: ${new Date(question.answer.created_at).toLocaleString()}
+                            </small>
+                        </div>
+                    `;
+                    questionsList.appendChild(item);
+                });
+            }
+        } else {
+            showAlert(data.message || '获取问题失败', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('获取问题失败，请检查网络连接', 'danger');
+    });
+}
+
+// 教师端 - 打开回答问题模态框
+function openAnswerModal(questionId) {
+    const modal = document.getElementById('answer-modal');
+    if (modal) {
+        const questionIdInput = document.getElementById('question-id-input');
+        if (questionIdInput) {
+            questionIdInput.value = questionId;
+        }
+        
+        // 获取问题详情并填充模态框
+        fetch(`/api/interaction/${questionId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const question = data.interaction;
+                const questionContent = document.getElementById('question-content');
+                if (questionContent) {
+                    questionContent.textContent = question.content;
+                }
+                
+                // 显示模态框
+                const answerModal = new bootstrap.Modal(modal);
+                answerModal.show();
+            } else {
+                showAlert(data.message || '获取问题详情失败', 'danger');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showAlert('获取问题详情失败，请检查网络连接', 'danger');
+        });
+    }
+}
+
+// 教师端 - 提交问题回答
+function submitAnswer() {
+    const token = localStorage.getItem('token');
+    const questionId = document.getElementById('question-id-input').value;
+    const answerContent = document.getElementById('answer-content').value;
+    
+    if (!answerContent.trim()) {
+        showAlert('请输入回答内容', 'warning');
+        return;
+    }
+    
+    fetch(`/api/teacher/questions/${questionId}/answer`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            content: answerContent
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAlert('回答提交成功', 'success');
+            
+            // 关闭模态框
+            const modal = document.getElementById('answer-modal');
+            const answerModal = bootstrap.Modal.getInstance(modal);
+            answerModal.hide();
+            
+            // 刷新问题列表
+            fetchPendingQuestions();
+            fetchAnsweredQuestions();
+            
+            // 清空表单
+            document.getElementById('answer-content').value = '';
+        } else {
+            showAlert(data.message || '回答提交失败', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('回答提交失败，请检查网络连接', 'danger');
+    });
+}
+
+// 教师端 - 获取活跃投票列表
+function fetchActivePollsTeacher() {
+    fetch('/api/teacher/polls/active', {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const pollsList = document.getElementById('active-polls-list');
+            document.getElementById('active-polls-count-badge').textContent = data.polls.length;
+            
+            if (data.polls.length === 0) {
+                pollsList.innerHTML = '<div class="text-center py-3">暂无活跃投票</div>';
+                return;
+            }
+            
+            pollsList.innerHTML = data.polls.map(poll => `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">${poll.title}</h5>
+                        <div class="mb-3">
+                            ${Object.entries(poll.votes).map(([option, count]) => `
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>${option}</span>
+                                        <span>${count} 票</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" 
+                                             style="width: ${calculatePercentage(count, getTotalVotes(poll.votes))}%" 
+                                             aria-valuenow="${count}" aria-valuemin="0" 
+                                             aria-valuemax="${getTotalVotes(poll.votes)}">
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                总投票数: ${getTotalVotes(poll.votes)} · 
+                                创建时间: ${formatTimeAgo(new Date(poll.created_at))}
+                            </small>
+                            <button class="btn btn-danger btn-sm" onclick="endPoll('${poll._id}')">
+                                结束投票
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    })
+    .catch(error => console.error('获取活跃投票失败:', error));
+}
+
+// 获取已结束投票列表
+function fetchEndedPollsTeacher() {
+    fetch('/api/teacher/polls/ended', {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const pollsList = document.getElementById('ended-polls-list');
+            document.getElementById('ended-polls-count').textContent = data.polls.length;
+            
+            if (data.polls.length === 0) {
+                pollsList.innerHTML = '<div class="text-center py-3">暂无已结束投票</div>';
+                return;
+            }
+            
+            pollsList.innerHTML = data.polls.map(poll => `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">${poll.title}</h5>
+                        <div class="mb-3">
+                            ${Object.entries(poll.votes).map(([option, count]) => `
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>${option}</span>
+                                        <span>${count} 票</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-secondary" role="progressbar" 
+                                             style="width: ${calculatePercentage(count, getTotalVotes(poll.votes))}%" 
+                                             aria-valuenow="${count}" aria-valuemin="0" 
+                                             aria-valuemax="${getTotalVotes(poll.votes)}">
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <small class="text-muted">
+                            总投票数: ${getTotalVotes(poll.votes)} · 
+                            结束时间: ${formatTimeAgo(new Date(poll.updated_at))}
+                        </small>
+                    </div>
+                </div>
+            `).join('');
+        }
+    })
+    .catch(error => console.error('获取已结束投票失败:', error));
+}
+
+// 创建新投票
+function createNewPoll() {
+    const title = document.getElementById('poll-title').value;
+    const duration = parseInt(document.getElementById('poll-duration').value) || 0;
+    const optionInputs = document.querySelectorAll('.poll-option-input');
+    const options = Array.from(optionInputs).map(input => input.value.trim()).filter(Boolean);
+    
+    if (!title.trim()) {
+        showAlert('请输入投票标题', 'warning');
+        return;
+    }
+    
+    if (options.length < 2) {
+        showAlert('至少需要两个选项', 'warning');
+        return;
+    }
+    
+    fetch('/api/teacher/polls', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ title, options, duration })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAlert('投票创建成功', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('create-poll-modal')).hide();
+            // 重置表单
+            document.getElementById('poll-title').value = '';
+            document.getElementById('poll-duration').value = '';
+            resetPollOptions();
+            // 刷新投票列表
+            fetchActivePollsTeacher();
+            loadInteractionStats();
+        } else {
+            showAlert(data.message || '创建投票失败', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('创建投票失败:', error);
+        showAlert('创建投票失败，请重试', 'error');
+    });
+}
+
+// 结束投票
+function endPoll(pollId) {
+    if (!confirm('确定要结束这个投票吗？')) return;
+    
+    fetch(`/api/teacher/polls/${pollId}/end`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAlert('投票已结束', 'success');
+            // 刷新投票列表
+            fetchActivePollsTeacher();
+            fetchEndedPollsTeacher();
+            loadInteractionStats();
+        } else {
+            showAlert(data.message || '结束投票失败', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('结束投票失败:', error);
+        showAlert('结束投票失败，请重试', 'error');
+    });
+}
+
+// 添加投票选项
+function addPollOption() {
+    const container = document.getElementById('poll-options-container');
+    const optionCount = container.children.length + 1;
+    
+    const optionDiv = document.createElement('div');
+    optionDiv.className = 'mb-2 d-flex align-items-center';
+    optionDiv.innerHTML = `
+        <input type="text" class="form-control poll-option-input" placeholder="选项${optionCount}">
+        ${optionCount > 2 ? `
+            <button type="button" class="btn btn-outline-danger btn-sm ms-2" onclick="this.parentElement.remove()">
+                <i class="bi bi-trash"></i>
+            </button>
+        ` : ''}
+    `;
+    
+    container.appendChild(optionDiv);
+}
+
+// 重置投票选项
+function resetPollOptions() {
+    const container = document.getElementById('poll-options-container');
+    container.innerHTML = `
+        <div class="mb-2 d-flex align-items-center">
+            <input type="text" class="form-control poll-option-input" placeholder="选项1">
+        </div>
+        <div class="mb-2 d-flex align-items-center">
+            <input type="text" class="form-control poll-option-input" placeholder="选项2">
+        </div>
+    `;
+}
+
+// 计算百分比
+function calculatePercentage(count, total) {
+    if (total === 0) return 0;
+    return Math.round((count / total) * 100);
+}
+
+// 获取总投票数
+function getTotalVotes(votes) {
+    return Object.values(votes).reduce((sum, count) => sum + count, 0);
+}
+
+// 学生端 - 获取我的问题列表
+function fetchMyQuestions() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        showAlert('请先登录', 'danger');
+        return;
+    }
+
+    fetch('/api/student/questions', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const questionsList = document.getElementById('my-questions-list');
+            if (questionsList) {
+                questionsList.innerHTML = '';
+                
+                if (data.questions.length === 0) {
+                    questionsList.innerHTML = '<li class="list-group-item text-center">您还没有提出过问题</li>';
+                    return;
+                }
+                
+                data.questions.forEach(question => {
+                    const urgent = question.is_urgent ? 
+                        '<span class="badge bg-danger ms-2">紧急</span>' : '';
+                    const subject = question.subject ? 
+                        `<span class="badge bg-info ms-2">${question.subject}</span>` : '';
+                    
+                    const item = document.createElement('li');
+                    item.className = 'list-group-item';
+                    
+                    let answerHtml = '';
+                    if (question.answer) {
+                        answerHtml = `
+                            <div class="mt-2 p-2 bg-light rounded">
+                                <strong>教师回答</strong>: ${question.answer.content}
+                                <small class="text-muted d-block">
+                                    回答时间: ${new Date(question.answer.created_at).toLocaleString()}
+                                </small>
+                            </div>
+                        `;
+                    } else {
+                        answerHtml = `
+                            <div class="mt-2">
+                                <span class="badge bg-warning">待回答</span>
+                            </div>
+                        `;
+                    }
+                    
+                    item.innerHTML = `
+                        <div>
+                            <strong>我的提问</strong>: ${question.content}
+                            ${urgent}
+                            ${subject}
+                            <small class="text-muted d-block">
+                                提问时间: ${new Date(question.created_at).toLocaleString()}
+                            </small>
+                        </div>
+                        ${answerHtml}
+                    `;
+                    
+                    questionsList.appendChild(item);
+                });
+            }
+        } else {
+            showAlert(data.message || '获取问题失败', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('获取问题失败，请检查网络连接', 'danger');
+    });
+}
+
+// 学生端 - 提交新问题
+function submitNewQuestion() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        showAlert('请先登录', 'danger');
+        return;
+    }
+    
+    const content = document.getElementById('question-content-input').value;
+    const subject = document.getElementById('question-subject-input').value;
+    const isUrgent = document.getElementById('question-urgent-checkbox').checked;
+    
+    if (!content.trim()) {
+        showAlert('请输入问题内容', 'warning');
+        return;
+    }
+    
+    fetch('/api/student/questions', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            content: content,
+            subject: subject,
+            isUrgent: isUrgent
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAlert('问题提交成功', 'success');
+            
+            // 关闭模态框
+            const modal = document.getElementById('ask-question-modal');
+            const questionModal = bootstrap.Modal.getInstance(modal);
+            questionModal.hide();
+            
+            // 刷新我的问题列表
+            fetchMyQuestions();
+            
+            // 清空表单
+            document.getElementById('question-content-input').value = '';
+            document.getElementById('question-subject-input').value = '';
+            document.getElementById('question-urgent-checkbox').checked = false;
+        } else {
+            showAlert(data.message || '提交问题失败', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('提交问题失败，请检查网络连接', 'danger');
+    });
+}
+
+// 学生端 - 获取活跃投票列表
+function fetchActivePollsStudent() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        showAlert('请先登录', 'danger');
+        return;
+    }
+
+    fetch('/api/student/polls/active', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const pollsList = document.getElementById('active-polls-list-student');
+            if (pollsList) {
+                pollsList.innerHTML = '';
+                
+                if (data.polls.length === 0) {
+                    pollsList.innerHTML = '<div class="text-center py-3">暂无活跃投票</div>';
+                    return;
+                }
+                
+                data.polls.forEach(poll => {
+                    // 计算每个选项的投票百分比
+                    const totalVotes = Object.values(poll.votes || {}).reduce((a, b) => a + b, 0);
+                    
+                    const pollCard = document.createElement('div');
+                    pollCard.className = 'card mb-3';
+                    
+                    let optionsHtml = '';
+                    if (poll.options && Array.isArray(poll.options)) {
+                        poll.options.forEach(option => {
+                            const votes = poll.votes && poll.votes[option] ? poll.votes[option] : 0;
+                            const percentage = totalVotes > 0 ? (votes / totalVotes * 100).toFixed(1) : 0;
+                            
+                            // 检查学生是否已投票及选择了哪个选项
+                            const isSelected = poll.student_vote === option;
+                            const buttonClass = isSelected ? 'btn-success' : 'btn-outline-primary';
+                            const disabledAttr = poll.student_vote ? 'disabled' : '';
+                            
+                            optionsHtml += `
+                                <div class="mb-2">
+                                    <button class="btn ${buttonClass} w-100 text-start d-flex justify-content-between vote-btn"
+                                            data-poll-id="${poll._id}"
+                                            data-option="${option}"
+                                            ${disabledAttr}>
+                                        <span>${option}</span>
+                                        <span>${votes}票 (${percentage}%)</span>
+                                    </button>
+                                </div>
+                            `;
+                        });
+                    }
+                    
+                    pollCard.innerHTML = `
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">${poll.title}</h5>
+                            <span class="badge bg-success">活跃</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                ${optionsHtml}
+                            </div>
+                            <div class="text-muted">
+                                共计 ${totalVotes} 票 | 创建于 ${new Date(poll.created_at).toLocaleString()}
+                                ${poll.student_vote ? '<div class="text-success mt-1">您已投票</div>' : ''}
+                            </div>
+                        </div>
+                    `;
+                    
+                    pollsList.appendChild(pollCard);
+                });
+                
+                // 添加投票按钮事件
+                if (!poll.student_vote) {
+                    document.querySelectorAll('.vote-btn:not([disabled])').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const pollId = this.getAttribute('data-poll-id');
+                            const option = this.getAttribute('data-option');
+                            submitVote(pollId, option);
+                        });
+                    });
+                }
+            }
+        } else {
+            showAlert(data.message || '获取投票失败', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('获取投票失败，请检查网络连接', 'danger');
+    });
+}
+
+// 学生端 - 提交投票
+function submitVote(pollId, option) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        showAlert('请先登录', 'danger');
+        return;
+    }
+
+    fetch(`/api/student/polls/${pollId}/vote`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            optionId: option
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAlert('投票成功', 'success');
+            
+            // 刷新投票列表
+            fetchActivePollsStudent();
+        } else {
+            showAlert(data.message || '投票失败', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('投票失败，请检查网络连接', 'danger');
+    });
+}
+
+// 工具函数 - 显示提示信息
+function showAlert(message, type = 'info') {
+    const alertsContainer = document.getElementById('alerts-container');
+    if (!alertsContainer) {
+        // 如果不存在提示容器，创建一个
+        const container = document.createElement('div');
+        container.id = 'alerts-container';
+        container.className = 'position-fixed top-0 end-0 p-3';
+        container.style.zIndex = '1050';
+        document.body.appendChild(container);
+    }
+    
+    const alertId = `alert-${Date.now()}`;
+    const alertElement = document.createElement('div');
+    alertElement.className = `alert alert-${type} alert-dismissible fade show`;
+    alertElement.id = alertId;
+    alertElement.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+    
+    document.getElementById('alerts-container').appendChild(alertElement);
+    
+    // 3秒后自动关闭
+    setTimeout(() => {
+        const alert = document.getElementById(alertId);
+        if (alert) {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        }
+    }, 3000);
+}
+
+// 添加页面加载完成后的事件监听
+document.addEventListener('DOMContentLoaded', function() {
+    // 如果当前页面是教师互动管理页面
+    if (document.getElementById('teacher-interactions-page')) {
+        // 获取问题和投票列表
+        fetchPendingQuestions();
+        fetchAnsweredQuestions();
+        fetchActivePollsTeacher();
+        fetchEndedPollsTeacher();
+        
+        // 提交回答按钮事件
+        const submitAnswerBtn = document.getElementById('submit-answer-btn');
+        if (submitAnswerBtn) {
+            submitAnswerBtn.addEventListener('click', submitAnswer);
+        }
+        
+        // 创建投票按钮事件
+        const createPollBtn = document.getElementById('create-poll-btn');
+        if (createPollBtn) {
+            createPollBtn.addEventListener('click', createNewPoll);
+        }
+        
+        // 添加投票选项按钮事件
+        const addOptionBtn = document.getElementById('add-option-btn');
+        if (addOptionBtn) {
+            addOptionBtn.addEventListener('click', addPollOption);
+        }
+    }
+    
+    // 如果当前页面是学生互动页面
+    if (document.getElementById('student-interactions-page')) {
+        // 获取我的问题和活跃投票列表
+        fetchMyQuestions();
+        fetchActivePollsStudent();
+        
+        // 提交问题按钮事件
+        const submitQuestionBtn = document.getElementById('submit-question-btn');
+        if (submitQuestionBtn) {
+            submitQuestionBtn.addEventListener('click', submitNewQuestion);
+        }
+    }
+}); 
+
+// 教师互动页面初始化
+function initTeacherInteractions() {
+    if (!document.getElementById('teacher-interactions-page')) return;
+    
+    // 加载统计数据
+    loadInteractionStats();
+    // 加载问题列表
+    fetchPendingQuestions();
+    fetchAnsweredQuestions();
+    // 加载投票列表
+    fetchActivePollsTeacher();
+    fetchEndedPollsTeacher();
+    
+    // 绑定创建投票事件
+    document.getElementById('create-poll-btn').addEventListener('click', createNewPoll);
+    document.getElementById('add-option-btn').addEventListener('click', addPollOption);
+    document.getElementById('submit-answer-btn').addEventListener('click', submitAnswer);
+}
+
+/**
+ * 加载互动统计数据
+ */
+function loadInteractionStats() {
+    API.teacher.getInteractionStats()
+    .then(response => {
+        if (response.success) {
+            document.getElementById('pending-questions-count').textContent = response.stats.pending_questions;
+            document.getElementById('active-polls-count').textContent = response.stats.active_polls;
+            document.getElementById('urgent-questions-count').textContent = response.stats.urgent_questions;
+        }
+    })
+    .catch(error => {
+        console.error('加载统计数据失败:', error);
+        showApiError(error, '加载统计数据失败');
+    });
+}
+
+/**
+ * 获取待回答问题列表
+ */
+function fetchPendingQuestions() {
+    API.teacher.getPendingQuestions()
+    .then(response => {
+        if (response.success) {
+            const questionsList = document.getElementById('pending-questions-list');
+            document.getElementById('pending-count').textContent = response.questions.length;
+            
+            if (response.questions.length === 0) {
+                questionsList.innerHTML = '<li class="list-group-item text-center">暂无待回答问题</li>';
+                return;
+            }
+            
+            questionsList.innerHTML = response.questions.map(question => `
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1">${question.subject || '无主题'}</h6>
+                            <p class="mb-1">${question.content}</p>
+                            <small class="text-muted">
+                                来自: ${question.student_name || '学生'} · 
+                                ${formatTimeAgo(new Date(question.created_at))}
+                                ${question.is_urgent ? ' · <span class="badge bg-danger">紧急</span>' : ''}
+                            </small>
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="openAnswerModal('${question._id}', '${question.content}')">
+                            回答
+                        </button>
+                    </div>
+                </li>
+            `).join('');
+        }
+    })
+    .catch(error => {
+        console.error('获取待回答问题失败:', error);
+        showApiError(error, '获取待回答问题失败');
+    });
+}
+
+/**
+ * 获取已回答问题列表
+ */
+function fetchAnsweredQuestions() {
+    API.teacher.getAnsweredQuestions()
+    .then(response => {
+        if (response.success) {
+            const questionsList = document.getElementById('answered-questions-list');
+            document.getElementById('answered-count').textContent = response.questions.length;
+            
+            if (response.questions.length === 0) {
+                questionsList.innerHTML = '<li class="list-group-item text-center">暂无已回答问题</li>';
+                return;
+            }
+            
+            questionsList.innerHTML = response.questions.map(question => `
+                <li class="list-group-item">
+                    <div>
+                        <h6 class="mb-1">${question.subject || '无主题'}</h6>
+                        <p class="mb-1">${question.content}</p>
+                        <div class="bg-light p-2 rounded mt-2">
+                            <p class="mb-1"><strong>回答：</strong>${question.answer.content}</p>
+                            <small class="text-muted">
+                                回答者: ${question.answer.teacher_name || '教师'} · 
+                                ${formatTimeAgo(new Date(question.answer.created_at))}
+                            </small>
+                        </div>
+                    </div>
+                </li>
+            `).join('');
+        }
+    })
+    .catch(error => {
+        console.error('获取已回答问题失败:', error);
+        showApiError(error, '获取已回答问题失败');
+    });
+}
+
+/**
+ * 获取活跃投票列表（教师视图）
+ */
+function fetchActivePollsTeacher() {
+    API.teacher.getActivePolls()
+    .then(response => {
+        if (response.success) {
+            const pollsList = document.getElementById('active-polls-list');
+            document.getElementById('active-polls-count-badge').textContent = response.polls.length;
+            
+            if (response.polls.length === 0) {
+                pollsList.innerHTML = '<div class="text-center py-3">暂无活跃投票</div>';
+                return;
+            }
+            
+            pollsList.innerHTML = response.polls.map(poll => `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">${poll.title}</h5>
+                        <div class="mb-3">
+                            ${Object.entries(poll.votes).map(([option, count]) => `
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>${option}</span>
+                                        <span>${count} 票</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" 
+                                             style="width: ${calculatePercentage(count, getTotalVotes(poll.votes))}%" 
+                                             aria-valuenow="${count}" aria-valuemin="0" 
+                                             aria-valuemax="${getTotalVotes(poll.votes)}">
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                总投票数: ${getTotalVotes(poll.votes)} · 
+                                创建时间: ${formatTimeAgo(new Date(poll.created_at))}
+                            </small>
+                            <button class="btn btn-danger btn-sm" onclick="endPoll('${poll._id}')">
+                                结束投票
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    })
+    .catch(error => {
+        console.error('获取活跃投票失败:', error);
+        showApiError(error, '获取活跃投票失败');
+    });
+}
+
+/**
+ * 获取已结束投票列表
+ */
+function fetchEndedPollsTeacher() {
+    API.teacher.getEndedPolls()
+    .then(response => {
+        if (response.success) {
+            const pollsList = document.getElementById('ended-polls-list');
+            document.getElementById('ended-polls-count').textContent = response.polls.length;
+            
+            if (response.polls.length === 0) {
+                pollsList.innerHTML = '<div class="text-center py-3">暂无已结束投票</div>';
+                return;
+            }
+            
+            pollsList.innerHTML = response.polls.map(poll => `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">${poll.title}</h5>
+                        <div class="mb-3">
+                            ${Object.entries(poll.votes).map(([option, count]) => `
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>${option}</span>
+                                        <span>${count} 票</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-secondary" role="progressbar" 
+                                             style="width: ${calculatePercentage(count, getTotalVotes(poll.votes))}%" 
+                                             aria-valuenow="${count}" aria-valuemin="0" 
+                                             aria-valuemax="${getTotalVotes(poll.votes)}">
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <small class="text-muted">
+                            总投票数: ${getTotalVotes(poll.votes)} · 
+                            结束时间: ${formatTimeAgo(new Date(poll.ended_at || poll.updated_at))}
+                        </small>
+                    </div>
+                </div>
+            `).join('');
+        }
+    })
+    .catch(error => {
+        console.error('获取已结束投票失败:', error);
+        showApiError(error, '获取已结束投票失败');
+    });
+}
+
+// 打开回答问题模态框
+function openAnswerModal(questionId, content) {
+    document.getElementById('question-id-input').value = questionId;
+    document.getElementById('question-content').textContent = content;
+    new bootstrap.Modal(document.getElementById('answer-modal')).show();
+}
+
+// 提交问题回答
+function submitAnswer() {
+    const questionId = document.getElementById('question-id-input').value;
+    const content = document.getElementById('answer-content').value;
+    
+    if (!content.trim()) {
+        showAlert('请输入回答内容', 'warning');
+        return;
+    }
+    
+    fetch(`/api/teacher/questions/${questionId}/answer`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ content })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAlert('回答提交成功', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('answer-modal')).hide();
+            // 刷新问题列表
+            fetchPendingQuestions();
+            fetchAnsweredQuestions();
+            loadInteractionStats();
+        } else {
+            showAlert(data.message || '回答提交失败', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('提交回答失败:', error);
+        showAlert('回答提交失败，请重试', 'error');
+    });
+}
+
+// 学生互动页面初始化
+function initStudentInteractions() {
+    // 加载我的问题列表
+    fetchMyQuestions();
+    // 加载活跃投票
+    fetchActivePollsStudent();
+    
+    // 绑定提交问题事件
+    document.getElementById('submit-question-btn').addEventListener('click', submitNewQuestion);
+}
+
+// 获取我的问题列表
+async function fetchMyQuestions() {
+    try {
+        const response = await fetch('/api/student/questions', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('获取问题列表失败');
+        }
+        
+        const data = await response.json();
+        const questionsList = document.getElementById('my-questions-list');
+        
+        if (data.length === 0) {
+            questionsList.innerHTML = '<li class="list-group-item text-center">暂无问题记录</li>';
+            return;
+        }
+        
+        questionsList.innerHTML = data.map(question => `
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h6 class="mb-1">
+                            ${question.subject ? question.subject : '无主题'}
+                            ${question.is_urgent ? '<span class="badge bg-danger ms-2">紧急</span>' : ''}
+                        </h6>
+                        <p class="mb-1">${question.content}</p>
+                        <small class="text-muted">
+                            提问时间：${new Date(question.created_at).toLocaleString()}
+                        </small>
+                    </div>
+                    <span class="badge ${question.status === 'pending' ? 'bg-warning' : 'bg-success'} ms-2">
+                        ${question.status === 'pending' ? '待回答' : '已回答'}
+                    </span>
+                </div>
+                ${question.answer ? `
+                    <div class="mt-3 p-3 bg-light rounded">
+                        <p class="mb-1"><strong>教师回答：</strong>${question.answer.content}</p>
+                        <small class="text-muted">
+                            回答时间：${new Date(question.answer.created_at).toLocaleString()}
+                            回答教师：${question.answer.teacher_name}
+                        </small>
+                    </div>
+                ` : ''}
+            </li>
+        `).join('');
+        
+    } catch (error) {
+        console.error('获取问题列表失败:', error);
+        showToast('错误', '获取问题列表失败，请稍后重试', 'error');
+    }
+}
+
+// 提交新问题
+async function submitNewQuestion() {
+    const subjectInput = document.getElementById('question-subject-input');
+    const contentInput = document.getElementById('question-content-input');
+    const urgentCheckbox = document.getElementById('question-urgent-checkbox');
+    
+    if (!contentInput.value.trim()) {
+        showToast('提示', '请输入问题内容', 'warning');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/student/questions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                subject: subjectInput.value.trim(),
+                content: contentInput.value.trim(),
+                is_urgent: urgentCheckbox.checked
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('提交问题失败');
+        }
+        
+        // 清空表单
+        subjectInput.value = '';
+        contentInput.value = '';
+        urgentCheckbox.checked = false;
+        
+        // 关闭模态框
+        const modal = bootstrap.Modal.getInstance(document.getElementById('ask-question-modal'));
+        modal.hide();
+        
+        // 刷新问题列表
+        fetchMyQuestions();
+        
+        showToast('成功', '问题提交成功', 'success');
+        
+    } catch (error) {
+        console.error('提交问题失败:', error);
+        showToast('错误', '提交问题失败，请稍后重试', 'error');
+    }
+}
+
+// 获取活跃投票列表（学生视图）
+async function fetchActivePollsStudent() {
+    try {
+        const response = await fetch('/api/student/polls/active', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('获取投票列表失败');
+        }
+        
+        const data = await response.json();
+        const pollsList = document.getElementById('active-polls-list-student');
+        
+        if (data.length === 0) {
+            pollsList.innerHTML = '<div class="text-center">暂无活跃投票</div>';
+            return;
+        }
+        
+        pollsList.innerHTML = data.map(poll => `
+            <div class="poll-item mb-4">
+                <h6 class="mb-3">${poll.title}</h6>
+                <form class="poll-form" data-poll-id="${poll._id}">
+                    ${poll.options.map((option, index) => `
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" 
+                                name="poll_${poll._id}" 
+                                id="option_${poll._id}_${index}" 
+                                value="${option}"
+                                ${poll.hasVoted ? 'disabled' : ''}>
+                            <label class="form-check-label" for="option_${poll._id}_${index}">
+                                ${option}
+                                ${poll.hasVoted ? `
+                                    <span class="text-muted ms-2">
+                                        (${poll.votes[option]} 票, 
+                                        ${calculatePercentage(poll.votes[option], getTotalVotes(poll.votes))}%)
+                                    </span>
+                                ` : ''}
+                            </label>
+                        </div>
+                    `).join('')}
+                    ${!poll.hasVoted ? `
+                        <button type="button" class="btn btn-primary btn-sm mt-2" 
+                            onclick="submitVote('${poll._id}')">
+                            提交投票
+                        </button>
+                    ` : ''}
+                </form>
+            </div>
+        `).join('');
+        
+    } catch (error) {
+        console.error('获取投票列表失败:', error);
+        showToast('错误', '获取投票列表失败，请稍后重试', 'error');
+    }
+}
+
+// 提交投票
+async function submitVote(pollId) {
+    const form = document.querySelector(`form[data-poll-id="${pollId}"]`);
+    const selectedOption = form.querySelector('input[type="radio"]:checked');
+    
+    if (!selectedOption) {
+        showToast('提示', '请选择一个选项', 'warning');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/student/polls/${pollId}/vote`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                option: selectedOption.value
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('提交投票失败');
+        }
+        
+        // 刷新投票列表
+        fetchActivePollsStudent();
+        showToast('成功', '投票成功', 'success');
+        
+    } catch (error) {
+        console.error('提交投票失败:', error);
+        showToast('错误', '提交投票失败，请稍后重试', 'error');
+    }
+}
+
+// 计算投票百分比
+function calculatePercentage(votes, total) {
+    if (total === 0) return 0;
+    return Math.round((votes / total) * 100);
+}
+
+// 计算总投票数
+function getTotalVotes(votes) {
+    return Object.values(votes).reduce((a, b) => a + b, 0);
+}
+
+// 显示提示消息
+function showToast(title, message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `toast align-items-center text-white bg-${type} border-0`;
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    
+    toast.innerHTML = `
+        <div class="d-flex">
+            <div class="toast-body">
+                <strong>${title}</strong> ${message}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    `;
+    
+    const container = document.getElementById('toast-container') || createToastContainer();
+    container.appendChild(toast);
+    
+    const bsToast = new bootstrap.Toast(toast, {
+        autohide: true,
+        delay: 3000
+    });
+    bsToast.show();
+    
+    toast.addEventListener('hidden.bs.toast', () => {
+        toast.remove();
+    });
+}
+
+// 创建Toast容器
+function createToastContainer() {
+    const container = document.createElement('div');
+    container.id = 'toast-container';
+    container.className = 'toast-container position-fixed top-0 end-0 p-3';
+    document.body.appendChild(container);
+    return container;
+}
+
+// 获取授权请求头
+function getAuthHeaders() {
+    const headers = {
+        'Content-Type': 'application/json'
+    };
+    
+    const token = localStorage.getItem('token');
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    return headers;
 } 

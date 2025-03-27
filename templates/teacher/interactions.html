@@ -8,35 +8,265 @@
         padding: 20px;
     }
     
+    .nav-tabs .nav-link {
+        color: #495057;
+        font-weight: 500;
+    }
+    
+    .nav-tabs .nav-link.active {
+        color: #4e73df;
+        font-weight: 600;
+    }
+    
     .card {
-        margin-bottom: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border: 0;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 1.5rem;
+        border-radius: 0.5rem;
     }
     
     .card-header {
-        background-color: #f8f9fa;
-        border-radius: 10px 10px 0 0 !important;
-        font-weight: 500;
+        background-color: #f8f9fc;
+        border-bottom: 1px solid #e3e6f0;
+        padding: 0.75rem 1.25rem;
+        border-top-left-radius: 0.5rem !important;
+        border-top-right-radius: 0.5rem !important;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        color: white;
+        height: 100%;
+    }
+    
+    .stat-card .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+    }
+    
+    .stat-card .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+    
+    .bg-question {
+        background: linear-gradient(45deg, #4e73df, #2e59d9);
+    }
+    
+    .bg-poll {
+        background: linear-gradient(45deg, #1cc88a, #13855c);
+    }
+    
+    .bg-urgent {
+        background: linear-gradient(45deg, #e74a3b, #be2617);
+    }
+    
+    .list-group-item {
+        border-left: 0;
+        border-right: 0;
+    }
+    
+    .list-group-item:first-child {
+        border-top: 0;
+    }
+    
+    .list-group-item:last-child {
+        border-bottom: 0;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid interactions-container">
-    <h1 class="page-title">互动管理</h1>
-    
-    <div id="messageContainer"></div>
-    
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">互动历史</h4>
+<div class="interactions-container" id="teacher-interactions-page">
+    <!-- 互动统计卡片 -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="stat-card bg-question">
+                <div class="stat-value" id="pending-questions-count">--</div>
+                <div class="stat-label">待回答问题</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card bg-poll">
+                <div class="stat-value" id="active-polls-count">--</div>
+                <div class="stat-label">进行中投票</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card bg-urgent">
+                <div class="stat-value" id="urgent-questions-count">--</div>
+                <div class="stat-label">紧急问题</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 互动管理标签页 -->
+    <ul class="nav nav-tabs mb-4" id="interactionTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="questions-tab" data-bs-toggle="tab" 
+                    data-bs-target="#questions-panel" type="button" role="tab" 
+                    aria-controls="questions-panel" aria-selected="true">
+                问题管理
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="polls-tab" data-bs-toggle="tab" 
+                    data-bs-target="#polls-panel" type="button" role="tab" 
+                    aria-controls="polls-panel" aria-selected="false">
+                投票管理
+            </button>
+        </li>
+    </ul>
+
+    <!-- 标签页内容 -->
+    <div class="tab-content" id="interactionTabsContent">
+        <!-- 问题管理面板 -->
+        <div class="tab-pane fade show active" id="questions-panel" role="tabpanel" aria-labelledby="questions-tab">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">待回答问题</h5>
+                            <div>
+                                <span class="badge bg-primary">共 <span id="pending-count">0</span> 个</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group" id="pending-questions-list">
+                                <li class="list-group-item text-center">加载中...</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p class="text-center">互动管理功能正在开发中...</p>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">已回答问题</h5>
+                            <div>
+                                <span class="badge bg-success">共 <span id="answered-count">0</span> 个</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group" id="answered-questions-list">
+                                <li class="list-group-item text-center">加载中...</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- 投票管理面板 -->
+        <div class="tab-pane fade" id="polls-panel" role="tabpanel" aria-labelledby="polls-tab">
+            <div class="row mb-3">
+                <div class="col-12 text-end">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-poll-modal">
+                        <i class="bi bi-plus-circle"></i> 创建新投票
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">活跃投票</h5>
+                            <div>
+                                <span class="badge bg-success">共 <span id="active-polls-count-badge">0</span> 个</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="active-polls-list">
+                                <div class="text-center py-3">加载中...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">已结束投票</h5>
+                            <div>
+                                <span class="badge bg-secondary">共 <span id="ended-polls-count">0</span> 个</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="ended-polls-list">
+                                <div class="text-center py-3">加载中...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 回答问题模态框 -->
+<div class="modal fade" id="answer-modal" tabindex="-1" aria-labelledby="answer-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="answer-modal-label">回答问题</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="question-id-input">
+                <div class="mb-3">
+                    <label class="form-label">问题内容:</label>
+                    <div class="p-2 bg-light rounded" id="question-content"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="answer-content" class="form-label">您的回答:</label>
+                    <textarea class="form-control" id="answer-content" rows="5" placeholder="输入您的回答..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submit-answer-btn">提交回答</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 创建投票模态框 -->
+<div class="modal fade" id="create-poll-modal" tabindex="-1" aria-labelledby="create-poll-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-poll-modal-label">创建新投票</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="poll-title" class="form-label">投票标题:</label>
+                    <input type="text" class="form-control" id="poll-title" placeholder="输入投票标题...">
+                </div>
+                <div class="mb-3">
+                    <label for="poll-duration" class="form-label">投票时长(分钟):</label>
+                    <input type="number" class="form-control" id="poll-duration" placeholder="0表示不限时间" min="0">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">投票选项:</label>
+                    <div id="poll-options-container">
+                        <div class="mb-2 d-flex align-items-center">
+                            <input type="text" class="form-control poll-option-input" placeholder="选项1">
+                        </div>
+                        <div class="mb-2 d-flex align-items-center">
+                            <input type="text" class="form-control poll-option-input" placeholder="选项2">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="add-option-btn">
+                        <i class="bi bi-plus-circle"></i> 添加选项
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="create-poll-btn">创建投票</button>
             </div>
         </div>
     </div>
@@ -46,60 +276,138 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // 角色验证 - 确保只有教师可以访问该页面
-        const userData = localStorage.getItem('userData');
-        if (userData) {
-            try {
-                const user = JSON.parse(userData);
-                if (user.role !== 'teacher') {
-                    console.error('非教师角色访问教师互动管理页面');
-                    showMessage('您没有权限访问该页面，正在重定向...', 'error');
-                    setTimeout(() => {
-                        window.location.href = user.role === 'student' ? '/student/dashboard' : '/';
-                    }, 2000);
-                    return;
-                }
-                console.log('教师用户验证成功');
-            } catch (e) {
-                console.error('解析用户数据出错:', e);
+        // 标签页切换
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                
+                // 标签按钮高亮
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // 显示目标内容
+                tabContents.forEach(content => content.classList.remove('active'));
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+        
+        // 创建问题按钮
+        const createQuestionBtn = document.getElementById('create-question-btn');
+        createQuestionBtn.addEventListener('click', function() {
+            const modal = new bootstrap.Modal(document.getElementById('create-question-modal'));
+            modal.show();
+        });
+        
+        // 创建投票按钮
+        const createPollBtn = document.getElementById('create-poll-btn');
+        createPollBtn.addEventListener('click', function() {
+            const modal = new bootstrap.Modal(document.getElementById('create-poll-modal'));
+            modal.show();
+        });
+        
+        // 添加投票选项
+        const addOptionBtn = document.getElementById('add-option');
+        addOptionBtn.addEventListener('click', function() {
+            const pollOptions = document.getElementById('poll-options');
+            const newOption = document.createElement('div');
+            newOption.className = 'input-group mb-2';
+            
+            const optionCount = pollOptions.children.length + 1;
+            
+            newOption.innerHTML = `
+                <input type="text" class="form-control" placeholder="选项${optionCount}" required>
+                <button type="button" class="btn btn-outline-danger remove-option">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            pollOptions.appendChild(newOption);
+            
+            // 为新添加的删除按钮绑定事件
+            newOption.querySelector('.remove-option').addEventListener('click', function() {
+                newOption.remove();
+            });
+        });
+        
+        // 绑定现有的删除选项按钮
+        document.querySelectorAll('.remove-option').forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('.input-group').remove();
+            });
+        });
+        
+        // 提交问题
+        document.getElementById('submit-question').addEventListener('click', function() {
+            const questionText = document.getElementById('question-text').value;
+            const sendToAll = document.getElementById('send-to-all').checked;
+            
+            if (!questionText) {
+                alert('请输入问题内容');
+                return;
             }
-        } else {
-            console.error('未找到用户数据');
-            showMessage('请先登录', 'error');
-            setTimeout(() => {
-                window.location.href = '/';
-            }, 2000);
-            return;
-        }
+            
+            // 这里模拟API调用
+            console.log('创建问题:', questionText, '发送给所有学生:', sendToAll);
+            
+            // 成功后关闭模态框
+            bootstrap.Modal.getInstance(document.getElementById('create-question-modal')).hide();
+            
+            // 清空表单
+            document.getElementById('question-text').value = '';
+            document.getElementById('send-to-all').checked = false;
+            
+            // 显示成功消息
+            alert('问题创建成功！');
+        });
+        
+        // 提交投票
+        document.getElementById('submit-poll').addEventListener('click', function() {
+            const pollTitle = document.getElementById('poll-title').value;
+            const options = Array.from(document.querySelectorAll('#poll-options input')).map(input => input.value);
+            const duration = document.getElementById('poll-duration').value;
+            
+            if (!pollTitle) {
+                alert('请输入投票问题');
+                return;
+            }
+            
+            if (options.length < 2) {
+                alert('至少需要两个选项');
+                return;
+            }
+            
+            if (options.some(option => !option)) {
+                alert('所有选项不能为空');
+                return;
+            }
+            
+            // 这里模拟API调用
+            console.log('创建投票:', pollTitle, '选项:', options, '时长:', duration);
+            
+            // 成功后关闭模态框
+            bootstrap.Modal.getInstance(document.getElementById('create-poll-modal')).hide();
+            
+            // 清空表单
+            document.getElementById('poll-title').value = '';
+            document.querySelectorAll('#poll-options input').forEach(input => {
+                input.value = '';
+            });
+            
+            // 显示成功消息
+            alert('投票创建成功！');
+        });
+        
+        // 回答问题按钮
+        const answerButtons = document.querySelectorAll('.btn-primary.btn-action');
+        answerButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const questionTitle = this.closest('.interaction-item').querySelector('.interaction-title').textContent;
+                alert(`请回答问题: ${questionTitle}`);
+            });
+        });
     });
-    
-    // 显示消息函数
-    function showMessage(message, type = 'info') {
-        const messageContainer = document.getElementById('messageContainer');
-        if (!messageContainer) {
-            console.error('未找到消息容器');
-            return;
-        }
-        
-        const alertClass = type === 'error' ? 'danger' : type;
-        
-        const alertHtml = `
-            <div class="alert alert-${alertClass} alert-dismissible fade show" role="alert">
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        `;
-        
-        messageContainer.innerHTML = alertHtml;
-        
-        // 5秒后自动关闭
-        setTimeout(() => {
-            const alert = messageContainer.querySelector('.alert');
-            if (alert) {
-                alert.classList.remove('show');
-                setTimeout(() => alert.remove(), 150);
-            }
-        }, 5000);
-    }
 </script>
 {% endblock %} 
